@@ -9,7 +9,6 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
-import com.jfinal.render.ViewType;
 
 public class MainConfig extends JFinalConfig {
 	
@@ -19,7 +18,8 @@ public class MainConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
 		// 加载少量必要配置，随后可用getProperty(...)获取值
 		loadPropertyFile("a_little_config.txt");
-		me.setViewType(ViewType.JSP);
+		me.setBaseViewPath("/WEB-INF/pages");
+		me.setFreeMarkerViewExtension(".ftl");
 		me.setDevMode(getPropertyToBoolean("devMode", false));
 	}
 	

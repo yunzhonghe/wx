@@ -5,6 +5,10 @@ import com.jfinal.core.Controller;
 public class UserController extends Controller{
 
 	public void index() {
-		render("/test.jsp");
+		render("user/login.ftl");
+	}
+	
+	public void home(){
+		render("user/home.ftl");
 	}
 }
