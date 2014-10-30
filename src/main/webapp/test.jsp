@@ -1,3 +1,4 @@
+<%@page import="com.dragon.apps.web.model.User"%>
 <%@ page language="java" import="java.util.*" pageEncoding="US-ASCII"%>
 <%
 String path = request.getContextPath();
@@ -23,6 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    hello world. <br>
+    hello world. 
+    <%= User.dao.getAge() %>
+    <br>
   </body>
 </html>
