@@ -37,6 +37,7 @@ public class MainConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		me.add("/",UserController.class);
 		
+		LjConfig.configRoute(me);
 	}
 	
 	/**
@@ -53,10 +54,7 @@ public class MainConfig extends JFinalConfig {
         arp.setContainerFactory(new CaseInsensitiveContainerFactory());//大小写不敏感
         plu.add(arp);
         
-        arp.addMapping(DicRegion.getTableName(), DicRegion.CODE, DicRegion.class);
-        arp.addMapping(WxAccount.getTableName(), WxAccount.ACCOUNT, WxAccount.class);
-//        arp.addMapping(WxAccStat.getTableName(), WxAccStat.ID, WxAccStat.class);
-        arp.addMapping(WxAccType.getTableName(), WxAccType.ID, WxAccType.class);
+        LjConfig.configActiveRecordPlugin(arp);
 		
 	}
 	
