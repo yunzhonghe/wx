@@ -2,3 +2,4 @@ jdbcUrl = jdbc:mysql://182.92.99.198/wx?characterEncoding=utf8&zeroDateTimeBehav
 user = root
 password =root
 devMode = true
+driver = com.mysql.jdbc.Driver

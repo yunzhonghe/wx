@@ -1,5 +1,9 @@
 package com.dragon.apps.web.config;
 
+import com.dragon.apps.model.DicRegion;
+//import com.dragon.apps.model.WxAccStat;
+import com.dragon.apps.model.WxAccType;
+import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.web.controller.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -8,6 +12,10 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
+import com.jfinal.ext.handler.ContextPathHandler;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
+import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 
 public class MainConfig extends JFinalConfig {
@@ -34,10 +42,21 @@ public class MainConfig extends JFinalConfig {
 	/**
 	 * 配置插件
 	 */
-	public void configPlugin(Plugins me) {
+	public void configPlugin(Plugins plu) {
 		// 配置C3p0数据库连接池插件
 		C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password").trim());
-		me.add(c3p0Plugin);
+		c3p0Plugin.setDriverClass(getProperty("driver"));
+		plu.add(c3p0Plugin);
+		
+        ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
+        arp.setDialect(new MysqlDialect());//设置mysql方言
+        arp.setContainerFactory(new CaseInsensitiveContainerFactory());//大小写不敏感
+        plu.add(arp);
+        
+        arp.addMapping(DicRegion.getTableName(), DicRegion.CODE, DicRegion.class);
+        arp.addMapping(WxAccount.getTableName(), WxAccount.ACCOUNT, WxAccount.class);
+//        arp.addMapping(WxAccStat.getTableName(), WxAccStat.ID, WxAccStat.class);
+        arp.addMapping(WxAccType.getTableName(), WxAccType.ID, WxAccType.class);
 		
 	}
 	
@@ -51,8 +70,8 @@ public class MainConfig extends JFinalConfig {
 	/**
 	 * 配置处理器
 	 */
-	public void configHandler(Handlers me) {
-		
+	public void configHandler(Handlers han) {
+		han.add(new ContextPathHandler("BASE_PATH"));// in freemarker: <img src="${BASE_PATH}/images/logo.png" />
 	}
 	
 	/**
