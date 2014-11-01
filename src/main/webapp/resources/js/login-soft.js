@@ -19,10 +19,10 @@ var Login = function () {
 
 	            messages: {
 	                username: {
-	                    required: "Username is required."
+	                    required: "请输入账户"
 	                },
 	                password: {
-	                    required: "Password is required."
+	                    required: "请输入密码"
 	                }
 	            },
 
@@ -256,7 +256,7 @@ var Login = function () {
 		        "resources/img/bg/4.jpg"
 		        ], {
 		          fade: 1000,
-		          duration: 8000
+		          duration: 3000
 		    });
         }
 

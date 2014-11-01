@@ -1,1 +1,5 @@
 target
+wx.log
+.settings/org.eclipse.core.resources.prefs
+.project
+.classpath

@@ -4,11 +4,12 @@ import com.jfinal.core.Controller;
 
 public class UserController extends Controller{
 
+	
 	public void index() {
-		render("user/login.ftl");
+		render("user/login.html");
 	}
 	
 	public void home(){
-		render("user/home.ftl");
+		render("user/home.html");
 	}
 }
