@@ -1,1 +1,7 @@
 target
+classes
+.settings
+/wx.ipr
+/wx.iws
+/.classpath
+/.project
