@@ -1,7 +1,6 @@
 target
 classes
 .settings
-/wx.ipr
-/wx.iws
-/.classpath
-/.project
+wx.log
+.project
+.classpath
