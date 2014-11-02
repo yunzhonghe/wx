@@ -12,12 +12,12 @@ public class DicRegion extends Model<DicRegion>{
 		return "wx_dic_region";
 	}
 	
-	public static final String CODE = "code";//VARCHAR
+	public static final String ID = "id";//bigint
 	private static final String NAME = "name";//VARCHAR
 	private static final String TYPE = "type";//INT
-	private static final String PARENTCODE = "parentcode";//
-	public String getCode() {
-		return getStr(CODE);
+	private static final String PARENTID = "parentid";//bigint,can be null.
+	public Long getId() {
+		return getLong(ID);
 	}
 	public String getName() {
 		return getStr(NAME);
@@ -25,11 +25,11 @@ public class DicRegion extends Model<DicRegion>{
 	public int getType() {
 		return getInt(TYPE);
 	}
-	public String getParentcode() {
-		return getStr(PARENTCODE);
+	public Long getParentid() {
+		return getLong(PARENTID);
 	}
-	public DicRegion setCode(String code) {
-		return set(CODE,code);
+	public DicRegion setId(long id) {
+		return set(ID,id);
 	}
 	public DicRegion setName(String name) {
 		return set(NAME,name);
@@ -37,7 +37,7 @@ public class DicRegion extends Model<DicRegion>{
 	public DicRegion setType(int type) {
 		return set(TYPE,type);
 	}
-	public DicRegion setParentcode(String parentcode) {
-		return set(PARENTCODE,parentcode);
+	public DicRegion setParentcode(Long parentid) {
+		return set(PARENTID,parentid);
 	}
 }

@@ -15,7 +15,7 @@ public class WxAccStat extends Model<WxAccStat>{
 	}
 	
 	public static final String ID = "id";//int
-	private static final String WXACCOUNT = "wxaccount";
+	private static final String WXID = "wxid";//bigint
 	private static final String SYNCDATE = "syncdate";//datetime
 	private static final String NEWMSGNUM = "newmsgnum";//int
 	private static final String NEWFANSNUM = "newfansnum";//int
@@ -27,11 +27,11 @@ public class WxAccStat extends Model<WxAccStat>{
 	public WxAccStat setId(int id) {
 		return set(ID,id);
 	}
-	public String getWxaccount() {
-		return getStr(WXACCOUNT);
+	public Long getWxid() {
+		return getLong(WXID);
 	}
-	public WxAccStat setWxaccount(String wxaccount) {
-		return set(WXACCOUNT,wxaccount);
+	public WxAccStat setWxaccount(Long wxid) {
+		return set(WXID,wxid);
 	}
 	public Date getSyncdate() {
 		return getDate(SYNCDATE);

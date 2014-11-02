@@ -19,6 +19,7 @@ public class WxAccount extends Model<WxAccount>{
 	 * FIXME: get WxAccStat.--may use sql to query local other table records.
 	 */
 	
+	public static final String ID = "id";//bigint
 	public static final String ACCOUNT = "account";
 	private static final String NAME = "name";
 	private static final String PASSWORD = "password";
@@ -36,6 +37,12 @@ public class WxAccount extends Model<WxAccount>{
 	private static final String FUNCTIONS = "functions";
 	private static final String QRCODE = "qrcode";
 	
+	public Long getId() {
+		return getLong(ID);
+	}
+	public WxAccount setId(Long id) {
+		return set(ID,id);
+	}
 	public String getAccount() {
 		return getStr(ACCOUNT);
 	}
