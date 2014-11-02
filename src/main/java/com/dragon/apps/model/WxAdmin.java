@@ -22,6 +22,7 @@ public class WxAdmin extends Model<WxAdmin> {
     public static final String DEPARTMENT_ID = "department_id";
     public static final String POST_ID = "post_id";
     public static final String WX_ACCOUNT_ID = "wx_account_id";
+    public static final String WX_ACCOUNT_NAME = "wx_account_name";
 
     public long getId() {
         return getLong(ID);
@@ -59,6 +60,10 @@ public class WxAdmin extends Model<WxAdmin> {
         return getLong(WX_ACCOUNT_ID);
     }
 
+    public String getWxAccountName() {
+        return getStr(WX_ACCOUNT_NAME);
+    }
+
     public WxAdmin setAdminId(String adminId) {
         return set(ADMIN_ID, adminId);
     }
@@ -89,6 +94,10 @@ public class WxAdmin extends Model<WxAdmin> {
 
     public WxAdmin setWxAccountId(long wxAccountId) {
         return set(WX_ACCOUNT_ID, wxAccountId);
+    }
+
+    public WxAdmin setWxAccountName(String wxAccountName) {
+        return set(WX_ACCOUNT_NAME, wxAccountName);
     }
 
 }

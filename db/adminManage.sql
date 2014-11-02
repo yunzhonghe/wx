@@ -11,6 +11,7 @@ CREATE TABLE wx_admin (
   department_id BIGINT(20) DEFAULT NULL,
   post_id BIGINT(20) DEFAULT NULL,
   wx_accont_id BIGINT(20) DEFAULT NULL,
+  wx_account_name varchar(32) DEFAULT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM
 CHECKSUM=0
