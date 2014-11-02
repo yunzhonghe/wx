@@ -1,9 +1,5 @@
 package com.dragon.apps.web.config;
 
-import com.dragon.apps.model.DicRegion;
-//import com.dragon.apps.model.WxAccStat;
-import com.dragon.apps.model.WxAccType;
-import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.web.controller.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
