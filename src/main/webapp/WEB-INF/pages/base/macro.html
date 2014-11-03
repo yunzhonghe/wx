@@ -45,6 +45,36 @@
 			<span class="title">Frontend Theme</span>
 			</a>
 		</li>
+		<li class="">
+			<a href="javascript:;">
+			<i class="fa fa-folder-open"></i> 
+			<span class="title">微信管理</span>
+			<span class="arrow"></span>
+			</a>
+			<ul class="sub-menu">
+				<li >
+					<a href="${base}/wxaccount">
+					总概况</a>
+				</li>
+				<li >
+					<a href="${base}/wxaccount/list">
+					帐号信息总览</a>
+				</li>
+				<li >
+					<a href="${base}/wxaccount/add">
+					添加微信帐号</a>
+				</li>
+				<#-- 以下为子管理员的菜单(次标签为freemarker注释) -->
+				<li >
+					<a href="${base}/wxaccount/subindex">
+					总概况</a>
+				</li>
+				<li >
+					<a href="${base}/wxaccount/modifyself">
+					微信信息维护</a>
+				</li>
+			</ul>
+		</li>
 		
 	</ul>
 	<!-- END SIDEBAR MENU -->

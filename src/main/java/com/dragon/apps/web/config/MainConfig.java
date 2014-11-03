@@ -22,8 +22,9 @@ public class MainConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
 		// 加载少量必要配置，随后可用getProperty(...)获取值
 		loadPropertyFile("a_little_config.txt");
+//		loadPropertyFile("a_little_config_lj.txt");
 		me.setBaseViewPath("/WEB-INF/pages");
-		me.setFreeMarkerViewExtension(".ftl");
+//		me.setFreeMarkerViewExtension(".ftl");
 		me.setDevMode(getPropertyToBoolean("devMode", false));
 	}
 	

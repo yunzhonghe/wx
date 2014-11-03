@@ -4,12 +4,14 @@ import com.dragon.apps.model.DicRegion;
 //import com.dragon.apps.model.WxAccStat;
 import com.dragon.apps.model.WxAccType;
 import com.dragon.apps.model.WxAccount;
+import com.dragon.apps.web.controller.WxAccountController;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 
 public class LjConfig {
 	public static void configRoute(Routes me){
 		//FIXME
+		me.add(WxAccountController.controlerKey,WxAccountController.class);
 	}
 	public static void configActiveRecordPlugin(ActiveRecordPlugin arp){
 		//FIXME

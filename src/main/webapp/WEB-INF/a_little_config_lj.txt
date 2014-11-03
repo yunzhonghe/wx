@@ -1,0 +1,5 @@
+jdbcUrl = jdbc:mysql://localhost/wx?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = lj
+password =ljsnake
+devMode = true
+driver = com.mysql.jdbc.Driver
