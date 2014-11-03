@@ -1,15 +1,19 @@
 package com.dragon.apps.model;
 
-import com.jfinal.plugin.activerecord.Model;
 /**
  * wx_dic_region, use cache to query.
  */
-public class DicRegion extends Model<DicRegion>{
+public class DicRegion extends BaseModel<DicRegion>{
 	private static final long serialVersionUID = 1L;
 	public static DicRegion dao = new DicRegion();
+	public static final String tableName = "wx_dic_region";
 	
-	public static String getTableName(){
-		return "wx_dic_region";
+	@Override
+	protected String geyPrimaryKeyName() {
+		return ID;
+	}
+	protected String getTableName(){
+		return tableName;
 	}
 	
 	public static final String ID = "id";//bigint

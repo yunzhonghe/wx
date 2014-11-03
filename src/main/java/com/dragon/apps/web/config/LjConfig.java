@@ -15,9 +15,9 @@ public class LjConfig {
 	}
 	public static void configActiveRecordPlugin(ActiveRecordPlugin arp){
 		//FIXME
-		arp.addMapping(DicRegion.getTableName(), DicRegion.ID, DicRegion.class);
-        arp.addMapping(WxAccount.getTableName(), WxAccount.ID, WxAccount.class);
+		arp.addMapping(DicRegion.tableName, DicRegion.ID, DicRegion.class);
+        arp.addMapping(WxAccount.tableName, WxAccount.ID, WxAccount.class);
 //        arp.addMapping(WxAccStat.getTableName(), WxAccStat.ID, WxAccStat.class);
-        arp.addMapping(WxAccType.getTableName(), WxAccType.ID, WxAccType.class);
+        arp.addMapping(WxAccType.tableName, WxAccType.ID, WxAccType.class);
 	}
 }

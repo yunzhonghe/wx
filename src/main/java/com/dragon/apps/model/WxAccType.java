@@ -1,15 +1,19 @@
 package com.dragon.apps.model;
 
-import com.jfinal.plugin.activerecord.Model;
 /**
  * wx_account_type, use cache to query.
  */
-public class WxAccType extends Model<WxAccType>{
+public class WxAccType extends BaseModel<WxAccType>{
 	private static final long serialVersionUID = 1L;
 	public static WxAccType dao = new WxAccType();
+	public static final String tableName = "wx_account_type";
 	
-	public static String getTableName(){
-		return "wx_account_type";
+	@Override
+	protected String geyPrimaryKeyName() {
+		return ID;
+	}
+	protected String getTableName(){
+		return tableName;
 	}
 	
 	public static final String ID = "id";//int

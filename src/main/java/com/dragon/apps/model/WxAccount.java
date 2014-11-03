@@ -7,11 +7,10 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxAccount extends Model<WxAccount>{
 	private static final long serialVersionUID = 1L;
 	public static WxAccount dao = new WxAccount();
+	public static final String tableName = "wx_account";
 	
-	public static String getTableName(){
-		return "wx_account";
-	}
 	public WxAccType getWxAccType(){
+//		return WxAccType.dao.findModelByCache(getTypeid());
 		return WxAccType.dao.findById(getTypeid());
 	}
 	//get sys user by escrowuser.
