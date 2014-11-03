@@ -33,8 +33,9 @@ public class MainConfig extends JFinalConfig {
 	 */
 	public void configRoute(Routes me) {
 		me.add("/",UserController.class);
-		
+
 		LjConfig.configRoute(me);
+        WxAdminConfig.configRoute(me);
 	}
 	
 	/**
@@ -52,6 +53,7 @@ public class MainConfig extends JFinalConfig {
         plu.add(arp);
         
         LjConfig.configActiveRecordPlugin(arp);
+        WxAdminConfig.configActiveRecordPlugin(arp);
 		
 	}
 	
