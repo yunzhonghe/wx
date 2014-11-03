@@ -5,7 +5,7 @@ CREATE TABLE `wx_account` (
   `name` VARCHAR(20) NULL,
   `password` VARCHAR(45) NULL,
   `typeid` INT NULL,
-  `escrowuser` VARCHAR(45) NULL COMMENT '托管用户(系统管理员)',
+  `escrowuser` BIGINT NULL COMMENT '托管用户(系统管理员)',
   `originalid` VARCHAR(45) NULL,
   `isdevmode` CHAR(1) NULL,
   `url` VARCHAR(200) NULL,

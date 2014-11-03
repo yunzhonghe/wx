@@ -14,8 +14,11 @@ public class WxAccount extends Model<WxAccount>{
 	public WxAccType getWxAccType(){
 		return WxAccType.dao.findById(getTypeid());
 	}
+	//get sys user by escrowuser.
+	public WxAdmin getWxAdmin(){
+		return WxAdmin.dao.findById(getEscrowuser());
+	}
 	/**
-	 * FIXME: get escrowuser by escrowuser.
 	 * FIXME: get WxAccStat.--may use sql to query local other table records.
 	 */
 	
@@ -24,7 +27,7 @@ public class WxAccount extends Model<WxAccount>{
 	private static final String NAME = "name";
 	private static final String PASSWORD = "password";
 	private static final String TYPEID = "typeid";//int
-	private static final String ESCROWUSER = "escrowuser";
+	private static final String ESCROWUSER = "escrowuser";//bigint
 	private static final String ORIGINALID = "originalid";
 	private static final String ISDEVMODE = "isdevmode";
 	private static final String URL = "url";
@@ -67,10 +70,10 @@ public class WxAccount extends Model<WxAccount>{
 	public WxAccount setTypeid(int typeid) {
 		return set(TYPEID,typeid);
 	}
-	public String getEscrowuser() {
-		return getStr(ESCROWUSER);
+	public Long getEscrowuser() {
+		return getLong(ESCROWUSER);
 	}
-	public WxAccount setEscrowuser(String escrowuser) {
+	public WxAccount setEscrowuser(Long escrowuser) {
 		return set(ESCROWUSER,escrowuser);
 	}
 	public String getOriginalid() {
