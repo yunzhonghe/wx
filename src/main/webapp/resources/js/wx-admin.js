@@ -68,20 +68,17 @@ var WxAdmin = function() {
                 ['Other browsers','All others','-','-','U']
             ];
 
-            $(document).ready(function() {
-                $('#demo').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>' );
-
-                $('#example').dataTable( {
-                    "data": dataSet,
-                    "columns": [
-                        { "title": "Engine" },
-                        { "title": "Browser" },
-                        { "title": "Platform" },
-                        { "title": "Version", "class": "center" },
-                        { "title": "Grade", "class": "center" }
-                    ]
-                } );
+            $('#example').dataTable( {
+                "data": dataSet,
+                "columns": [
+                    { "title": "Engine" },
+                    { "title": "Browser" },
+                    { "title": "Platform" },
+                    { "title": "Version", "class": "center" },
+                    { "title": "Grade", "class": "center" }
+                ]
             } );
+
         }
     }
-}
+}();
