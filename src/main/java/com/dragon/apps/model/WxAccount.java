@@ -20,6 +20,12 @@ public class WxAccount extends Model<WxAccount>{
 	/**
 	 * FIXME: get WxAccStat.--may use sql to query local other table records.
 	 */
+	public WxAccount getWxAccountByAccount(String account){
+		if(account==null || "".equals(account)){
+			return null;
+		}
+		return findFirst("select * from "+tableName+" where "+ACCOUNT+"='"+account+"'");
+	}
 	
 	public static final String ID = "id";//bigint
 	public static final String ACCOUNT = "account";

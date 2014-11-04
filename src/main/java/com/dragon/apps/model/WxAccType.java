@@ -1,5 +1,7 @@
 package com.dragon.apps.model;
 
+import java.util.List;
+
 /**
  * wx_account_type, use cache to query.
  */
@@ -14,6 +16,9 @@ public class WxAccType extends BaseModel<WxAccType>{
 	}
 	protected String getTableName(){
 		return tableName;
+	}
+	public List<WxAccType> getWxAccTypeList(){
+		return find("select * from "+tableName);
 	}
 	
 	public static final String ID = "id";//int

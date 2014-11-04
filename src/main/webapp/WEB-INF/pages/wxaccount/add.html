@@ -1,0 +1,82 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+	    <@nav index=3/>
+		<div class="page-content">
+            <@title name="添加微信帐号" menus='{"微信管理":"${base}/wxaccount","添加微信帐号":"javascript:;"}'/>
+            <#if _opresult??>
+            	${_opresult}
+            <#else>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="booking-search">
+							<form action="${base}/wxaccount/adddo" role="form" method="post" onsubmit="return checkSub();">
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信帐号：</label>
+										<input class="form-control" type="text" id="account" name="wxAccount.account" placeholder="请输入微信的帐号">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信密码：</label>
+										<input class="form-control" type="password" id="password" name="wxAccount.password">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信帐号类型：</label>
+										<select class="form-control" name="wxAccount.typeid">
+											<#if accountTypes??>
+												<#list accountTypes as atype>
+													<option value="${atype.id}">${atype.name}</option>
+												</#list>
+											<#else>
+												<option>无</option>
+											</#if>
+										</select>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信Token：</label>
+										<input class="form-control" type="text"  id="token" name="wxAccount.token">
+									</div>
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="btn blue">保存</button>
+									<button type="reset" class="btn default">重置</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</#if>
+		</div>
+	</div>
+	<@footer/>
+	<script>
+	jQuery(document).ready(function() {    
+	   App.init();
+	   //add your javascript here
+	});
+	function checkSub(){
+		var errmsg = '';
+		if(document.getElementById("account").value==''){
+			errmsg += "请输入帐号\n";
+		}
+		if(document.getElementById("password").value==''){
+			errmsg += "请输入密码\n";
+		}
+		if(document.getElementById("token").value==''){
+			errmsg += "请输入Token\n";
+		}
+		if(errmsg!=''){
+			alert(errmsg);
+			return false;
+		}
+		return true;
+	}
+</script>
+</@layout>

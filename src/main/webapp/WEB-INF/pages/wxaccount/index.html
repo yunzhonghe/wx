@@ -11,7 +11,7 @@
 						<#list accountList as account>
 							<div class="portlet box blue">
 								<div class="portlet-title">
-									<div class="caption"><i class="fa"></i>${account.name}(${account.account})</div>
+									<div class="caption"><i class="fa"></i>${account.name?default('')}(${account.account})</div>
 									<div class="tools">
 										<a href="javascript:;" class="collapse"></a>
 										<a href="javascript:;" class="reload"></a>
@@ -22,9 +22,7 @@
 										<tbody>
 											<tr>
 												<td rowspan="2">
-													<#if account.avatar??>
-														<img src="${account.avatar}"/>
-													</#if>
+													<img src="${account.avatar?default('')}"/>
 												</td>
 												<td width="15%" align="right">帐号类型：</td>
 												<td width="30%">${account.getWxAccType().name}</td>

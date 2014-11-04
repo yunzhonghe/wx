@@ -4,8 +4,9 @@ public class FixME_Lj {
 	/**
 	 * total FIXME:
 	 * WxAccount
-	 * WxAccountController-index
+	 * WxAccountController
 	 * wxaccount/index.html 一些属性值未传递显示
+	 * wxaccount/list.html 分页
 	 * 
 	 */
 }
