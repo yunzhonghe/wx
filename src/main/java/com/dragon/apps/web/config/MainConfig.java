@@ -68,7 +68,7 @@ public class MainConfig extends JFinalConfig {
 	 * 配置处理器
 	 */
 	public void configHandler(Handlers han) {
-		han.add(new ContextPathHandler("BASE_PATH"));// in freemarker: <img src="${BASE_PATH}/images/logo.png" />
+		han.add(new ContextPathHandler("base"));// in freemarker: <img src="${BASE_PATH}/images/logo.png" />
 	}
 	
 	/**
