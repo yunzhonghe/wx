@@ -9,10 +9,14 @@ import java.util.List;
  * Created by Administrator on 2014/11/2.
  */
 public class WxAdminController extends Controller {
+
+    public void index() {
+        forwardAction("/wx-admin/list");
+    }
     public void list() {
         List<WxAdmin> list = WxAdmin.dao.find("select * from wx_admin");
         setAttr("adminList", list);
-        render("/wx-admin/list");
+        render("list.html");
     }
 
     public void get() {
