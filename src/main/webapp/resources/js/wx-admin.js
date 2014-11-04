@@ -76,7 +76,9 @@ var WxAdmin = function() {
                     { "title": "Platform" },
                     { "title": "Version", "class": "center" },
                     { "title": "Grade", "class": "center" }
-                ]
+                ],
+                bJQueryUI: true,
+                bLengthChange: false
             } );
 
         }
