@@ -16,6 +16,7 @@ public class WxAdminController extends Controller {
     public void list() {
         List<WxAdmin> list = WxAdmin.dao.find("select * from wx_admin");
         setAttr("adminList", list);
+        System.out.println(list);
         render("list.html");
     }
 
