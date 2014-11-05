@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.utils.PageSet;
+import com.dragon.apps.utils.StrUtils;
 import com.jfinal.plugin.activerecord.Db;
 
 public class WxAccountService implements Serializable{
@@ -34,13 +35,24 @@ public class WxAccountService implements Serializable{
 	 * get accounts whose escrowuser is null, means that accounts have not been related with admin-user.
 	 */
 	public List<WxAccount> getUnEscrowAccount(){
-		return WxAccount.dao.find("select * from " + WxAccount.tableName + " where "+WxAccount.ESCROWUSER + " is null");
+		return getUnEscrowAccount(null);
+	}
+	public List<WxAccount> getUnEscrowAccount(String input){
+		String sql = "select * from " + WxAccount.tableName + " where "+WxAccount.ESCROWUSER + " is null";
+		if(StrUtils.isNotEmpty(input)){
+			input = StrUtils.checkRemoveQuoteMark(input);
+			sql += " and ("+WxAccount.ACCOUNT+" like '"+input+"%' or "+WxAccount.NAME+" like '"+input+"%')";
+		}
+		return WxAccount.dao.find(sql);
 	}
 	/**
 	 * get accounts`s json-array string, whose escrowuser is null.
 	 */
 	public String getUnEscrowAccountJson(){
-		List<WxAccount> ls = getUnEscrowAccount();
+		return getUnEscrowAccountJson(null);
+	}
+	public String getUnEscrowAccountJson(String input){
+		List<WxAccount> ls = getUnEscrowAccount(input);
 		StringBuilder json = new StringBuilder();
 		if(ls!=null && ls.size()>0){
 			//[{"id":"1","name":"amao"},{"id":"2","name":"amao"}]
@@ -59,6 +71,7 @@ public class WxAccountService implements Serializable{
 		}
 		return json.toString();
 	}
+	
 	/**
 	 * get WxAccount by its account.
 	 */

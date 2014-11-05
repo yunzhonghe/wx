@@ -25,7 +25,7 @@ public class WxAccount extends Model<WxAccount>{
 	
 	public static final String ID = "id";//bigint
 	public static final String ACCOUNT = "account";
-	private static final String NAME = "name";
+	public static final String NAME = "name";
 	private static final String PASSWORD = "password";
 	private static final String TYPEID = "typeid";//int
 	public static final String ESCROWUSER = "escrowuser";//bigint
