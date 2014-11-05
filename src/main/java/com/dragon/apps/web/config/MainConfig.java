@@ -1,6 +1,8 @@
 package com.dragon.apps.web.config;
 
 import com.dragon.apps.web.controller.UserController;
+import com.dragon.apps.web.interceptor.LoginInterceptor;
+import com.dragon.core.jFplugins.ShiroPlugin;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -53,6 +55,8 @@ public class MainConfig extends JFinalConfig {
         arp.setContainerFactory(new CaseInsensitiveContainerFactory());//大小写不敏感
         plu.add(arp);
         
+        plu.add(new ShiroPlugin()); 
+        
         LjConfig.configActiveRecordPlugin(arp);
         WxAdminConfig.configActiveRecordPlugin(arp);
 		
@@ -62,14 +66,14 @@ public class MainConfig extends JFinalConfig {
 	 * 配置全局拦截器
 	 */
 	public void configInterceptor(Interceptors me) {
-		
+		me.add(new LoginInterceptor());
 	}
 	
 	/**
 	 * 配置处理器
 	 */
 	public void configHandler(Handlers han) {
-		han.add(new ContextPathHandler("base"));// in freemarker: <img src="${BASE_PATH}/images/logo.png" />
+		han.add(new ContextPathHandler("base"));
 	}
 	
 	/**
