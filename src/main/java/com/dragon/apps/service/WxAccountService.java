@@ -1,4 +1,4 @@
-package com.dragon.apps.web.service;
+package com.dragon.apps.service;
 
 import java.io.Serializable;
 import java.util.List;
