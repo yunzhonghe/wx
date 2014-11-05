@@ -4,10 +4,8 @@
 <div class="page-container">
     <@nav index=61/>
     <div class="page-content">
-        <@title name="管理员列表" menus='{"管理员维护":"${base}/wx-admin","管理员列表":"javascript:;"}'/>
-        <div id="adminTableDiv"><table cellpadding="0" cellspacing="0" border="0" class="display" id="adminTable"></table></div>
-        <div id="adminEdit" style="width: 300px;">
-            <div class="hide" style="margin-top: 10px; margin-bottom: 10px;"><span class="pull-left">id : </span> <input id="id" type="text" class="pull-right"/>   <br/> </div>
+        <@title name="管理员列表" menus='{"管理员维护":"${base}/wx-admin","添加管理员":"javascript:;"}'/>
+        <div id="adminAdd" style="width: 300px;">
             <div style="margin-top: 10px; margin-bottom: 10px;"><span class="pull-left">登录名 : </span> <input id="adminId" type="text" class="pull-right"/>   <br/> </div>
             <div style="margin-top: 10px; margin-bottom: 10px;"><span class="pull-left">登录密码 : </span> <input id="password" type="password" class="pull-right"/>  <br/></div>
             <div style="margin-top: 10px; margin-bottom: 10px;"><span class="pull-left">再次输入登录密码 : </span> <input id="password2" type="password" class="pull-right"/>   <br/></div>
@@ -39,9 +37,8 @@
 <script>
     jQuery(document).ready(function() {
         App.init();
-        var list = ${adminList};
-        WxAdmin.adminTableInit(list);
         //add your javascript here
+        WxAdmin.adminAddInit();
     });
 </script>
 </@layout>

@@ -5,82 +5,143 @@
  * Time: 2:15 PM
  * To change this template use File | Settings | File Templates.
  */
-var WxAdmin = function() {
+var WxAdmin = function () {
     return {
-        init: function() {
-            var dataSet = [
-                ['Trident','Internet Explorer 4.0','Win 95+','4','X'],
-                ['Trident','Internet Explorer 5.0','Win 95+','5','C'],
-                ['Trident','Internet Explorer 5.5','Win 95+','5.5','A'],
-                ['Trident','Internet Explorer 6','Win 98+','6','A'],
-                ['Trident','Internet Explorer 7','Win XP SP2+','7','A'],
-                ['Trident','AOL browser (AOL desktop)','Win XP','6','A'],
-                ['Gecko','Firefox 1.0','Win 98+ / OSX.2+','1.7','A'],
-                ['Gecko','Firefox 1.5','Win 98+ / OSX.2+','1.8','A'],
-                ['Gecko','Firefox 2.0','Win 98+ / OSX.2+','1.8','A'],
-                ['Gecko','Firefox 3.0','Win 2k+ / OSX.3+','1.9','A'],
-                ['Gecko','Camino 1.0','OSX.2+','1.8','A'],
-                ['Gecko','Camino 1.5','OSX.3+','1.8','A'],
-                ['Gecko','Netscape 7.2','Win 95+ / Mac OS 8.6-9.2','1.7','A'],
-                ['Gecko','Netscape Browser 8','Win 98SE+','1.7','A'],
-                ['Gecko','Netscape Navigator 9','Win 98+ / OSX.2+','1.8','A'],
-                ['Gecko','Mozilla 1.0','Win 95+ / OSX.1+',1,'A'],
-                ['Gecko','Mozilla 1.1','Win 95+ / OSX.1+',1.1,'A'],
-                ['Gecko','Mozilla 1.2','Win 95+ / OSX.1+',1.2,'A'],
-                ['Gecko','Mozilla 1.3','Win 95+ / OSX.1+',1.3,'A'],
-                ['Gecko','Mozilla 1.4','Win 95+ / OSX.1+',1.4,'A'],
-                ['Gecko','Mozilla 1.5','Win 95+ / OSX.1+',1.5,'A'],
-                ['Gecko','Mozilla 1.6','Win 95+ / OSX.1+',1.6,'A'],
-                ['Gecko','Mozilla 1.7','Win 98+ / OSX.1+',1.7,'A'],
-                ['Gecko','Mozilla 1.8','Win 98+ / OSX.1+',1.8,'A'],
-                ['Gecko','Seamonkey 1.1','Win 98+ / OSX.2+','1.8','A'],
-                ['Gecko','Epiphany 2.20','Gnome','1.8','A'],
-                ['Webkit','Safari 1.2','OSX.3','125.5','A'],
-                ['Webkit','Safari 1.3','OSX.3','312.8','A'],
-                ['Webkit','Safari 2.0','OSX.4+','419.3','A'],
-                ['Webkit','Safari 3.0','OSX.4+','522.1','A'],
-                ['Webkit','OmniWeb 5.5','OSX.4+','420','A'],
-                ['Webkit','iPod Touch / iPhone','iPod','420.1','A'],
-                ['Webkit','S60','S60','413','A'],
-                ['Presto','Opera 7.0','Win 95+ / OSX.1+','-','A'],
-                ['Presto','Opera 7.5','Win 95+ / OSX.2+','-','A'],
-                ['Presto','Opera 8.0','Win 95+ / OSX.2+','-','A'],
-                ['Presto','Opera 8.5','Win 95+ / OSX.2+','-','A'],
-                ['Presto','Opera 9.0','Win 95+ / OSX.3+','-','A'],
-                ['Presto','Opera 9.2','Win 88+ / OSX.3+','-','A'],
-                ['Presto','Opera 9.5','Win 88+ / OSX.3+','-','A'],
-                ['Presto','Opera for Wii','Wii','-','A'],
-                ['Presto','Nokia N800','N800','-','A'],
-                ['Presto','Nintendo DS browser','Nintendo DS','8.5','C/A<sup>1</sup>'],
-                ['KHTML','Konqureror 3.1','KDE 3.1','3.1','C'],
-                ['KHTML','Konqureror 3.3','KDE 3.3','3.3','A'],
-                ['KHTML','Konqureror 3.5','KDE 3.5','3.5','A'],
-                ['Tasman','Internet Explorer 4.5','Mac OS 8-9','-','X'],
-                ['Tasman','Internet Explorer 5.1','Mac OS 7.6-9','1','C'],
-                ['Tasman','Internet Explorer 5.2','Mac OS 8-X','1','C'],
-                ['Misc','NetFront 3.1','Embedded devices','-','C'],
-                ['Misc','NetFront 3.4','Embedded devices','-','A'],
-                ['Misc','Dillo 0.8','Embedded devices','-','X'],
-                ['Misc','Links','Text only','-','X'],
-                ['Misc','Lynx','Text only','-','X'],
-                ['Misc','IE Mobile','Windows Mobile 6','-','C'],
-                ['Misc','PSP browser','PSP','-','C'],
-                ['Other browsers','All others','-','-','U']
-            ];
+        adminTableInit: function (list) {
+            var dataSet = [];
 
-            $('#example').dataTable( {
+            $('#adminEdit').hide();
+            $.each(list, function(n, item){
+                var operation = '<a class="edit" data-line="' + n + '" href="javascript:void(0);"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete" data-line="' + n + '" href="javascript:void(0);"><i class="glyphicon glyphicon-trash"></i></a>';
+
+                var temp = item.attrs;
+                temp.OPERATION = operation;
+                dataSet.push(item.attrs);
+            });
+
+            var col = [
+                {sTitle: "登录名", mData: "ADMIN_ID"},
+                {sTitle: "姓名", mData: "NAME"},
+                {sTitle: "邮箱", mData: "EMAIL"},
+                {sTitle: "电话", mData: "TELEPHONE"},
+                {sTitle: "关联微信账户", mData: "WX_ACCOUNT_NAME"},
+                {sTitle: "操作", mData: "OPERATION"}
+            ]
+
+            $('#adminTable').dataTable({
                 "data": dataSet,
-                "columns": [
-                    { "title": "Engine" },
-                    { "title": "Browser" },
-                    { "title": "Platform" },
-                    { "title": "Version", "class": "center" },
-                    { "title": "Grade", "class": "center" }
-                ],
+                "columns": col,
                 bJQueryUI: true,
                 bLengthChange: false
-            } );
+            });
 
+
+            initTableEvent();
+
+        },
+
+        adminAddInit: function() {
+            $("#submit").click(function(){
+                var adminId = $("#adminId").val();
+                var password = $("#password").val();
+                var password2 = $("#password2").val();
+                var name = $("#name").val();
+                var telephone = $("#telephone").val();
+                var email = $("#email").val();
+                var wxAccountId = $("#wx_account option:selected").val();
+                var wxAccountName = $("#wx_account option:selected").text();
+
+                if(adminId === "" || password === "" || password2 === "" || name === "" || telephone === "" || email === "") {
+                    alert("请填写完整");
+                    return;
+                }
+
+                if(password !== password2) {
+                    alert("两次输入的密码不一致");
+                    return;
+                }
+
+                var reqStr = "wxAdmin.admin_id=" + adminId + "&wxAdmin.password=" + password + "&wxAdmin.name=" + name + "&wxAdmin.telephone=" + telephone
+                    + "&wxAdmin.email=" + email + "&wxAdmin.wx_account_id=" + wxAccountId + "&wxAdmin.wx_account_name=" + wxAccountName;
+
+                $.post("/wx-admin/add", reqStr, function() {
+                    location.href = './list';
+                });
+            })
         }
     }
+
+    function initTableEvent() {
+        $("#adminTable tr a.edit").click(function(e){
+            var tar = e.currentTarget;
+            var line = $(tar).data("line");
+            var data = $('#adminTable').dataTable().fnGetData(line);
+            editAdmin(line, data);
+        });
+
+        $("#adminTable tr a.delete").click(function(e){
+            var tar = e.currentTarget;
+            var line = $(tar).data("line");
+            var data = $('#adminTable').dataTable().fnGetData(line);
+            deleteAdmin(line, data);
+        });
+
+        $("#adminEdit #submit").click(function(){
+            var id = $("#id").val();
+            var adminId = $("#adminId").val();
+            var password = $("#password").val();
+            var password2 = $("#password2").val();
+            var name = $("#name").val();
+            var telephone = $("#telephone").val();
+            var email = $("#email").val();
+            var wxAccountId = $("#wx_account option:selected").val();
+            var wxAccountName = $("#wx_account option:selected").text();
+
+            if(id === "") {
+                alert("数据来源不正确， 请点击修改进入该模块");
+                return;
+            }
+
+            if(adminId === "" || password === "" || password2 === "" || name === "" || telephone === "" || email === "") {
+                alert("请填写完整");
+                return;
+            }
+
+            if(password !== password2) {
+                alert("两次输入的密码不一致");
+                return;
+            }
+
+            var reqStr = "wxAdmin.id=" + id + "&wxAdmin.admin_id=" + adminId + "&wxAdmin.password=" + password + "&wxAdmin.name=" + name + "&wxAdmin.telephone=" + telephone
+                + "&wxAdmin.email=" + email + "&wxAdmin.wx_account_id=" + wxAccountId + "&wxAdmin.wx_account_name=" + wxAccountName;
+
+            $.post("/wx-admin/update", reqStr, function() {
+                location.href = './list';
+            });
+        })
+    };
+
+    function editAdmin(row, data) {
+        console.log(data);
+        $('#adminTableDiv').hide();
+        $("#id").val(data.ID);
+        $("#adminId").val(data.ADMIN_ID);
+        $("#password").val(data.PASSWORD);
+        $("#password2").val(data.PASSWORD);
+        $("#name").val(data.NAME);
+        $("#telephone").val(data.TELEPHONE);
+        $("#email").val(data.EMAIL);
+        $("#wx_account").find("option[value=" + data.WX_ACCOUNT_ID +"]").addClass("selected");
+        $('#adminEdit').show();
+
+    };
+
+    function deleteAdmin(row, data) {
+        console.log(data);
+
+        $.post("/wx-admin/delete", "id=" + data.ID, function() {
+            location.href = './list';
+            $('#adminTable').dataTable().fnDeleteRow(row);
+        });
+    };
 }();

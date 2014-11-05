@@ -1,7 +1,9 @@
 package com.dragon.apps.web.controller;
 
 import com.dragon.apps.model.WxAdmin;
+import com.google.gson.Gson;
 import com.jfinal.core.Controller;
+import org.eclipse.jetty.util.ajax.JSON;
 
 import java.util.List;
 
@@ -15,33 +17,32 @@ public class WxAdminController extends Controller {
     }
     public void list() {
         List<WxAdmin> list = WxAdmin.dao.find("select * from wx_admin");
-        setAttr("adminList", list);
-        setAttr("test", 123444);
-        System.out.println(list);
+        setAttr("adminList", new Gson().toJson(list));
         render("list.html");
     }
 
     public void get() {
         WxAdmin wxAdmin = WxAdmin.dao.findById(getParaToLong());
         setAttr("admin", wxAdmin);
-        render("/wx-admin/update");
     }
 
     public void add() {
-        WxAdmin wxAdmin = getModel(WxAdmin.class);
+        WxAdmin wxAdmin = getModel(WxAdmin.class, "wxAdmin");
         wxAdmin.save();
-        render("/wx-admin/list");
+    }
+
+    public void preAdd() {
+        render("add.html");
     }
 
     public void update() {
         WxAdmin wxAdmin = getModel(WxAdmin.class);
         wxAdmin.update();
-        render("/wx-admin/list");
     }
 
     public void delete() {
-        WxAdmin wxAdmin = WxAdmin.dao.findById(getParaToLong());
+        WxAdmin wxAdmin = WxAdmin.dao.findById(getParaToLong("id"));
         wxAdmin.delete();
-        render("/wx-admin/list");
+
     }
 }
