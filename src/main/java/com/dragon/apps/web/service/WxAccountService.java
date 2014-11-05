@@ -37,6 +37,29 @@ public class WxAccountService implements Serializable{
 		return WxAccount.dao.find("select * from " + WxAccount.tableName + " where "+WxAccount.ESCROWUSER + " is null");
 	}
 	/**
+	 * get accounts`s json-array string, whose escrowuser is null.
+	 */
+	public String getUnEscrowAccountJson(){
+		List<WxAccount> ls = getUnEscrowAccount();
+		StringBuilder json = new StringBuilder();
+		if(ls!=null && ls.size()>0){
+			//[{"id":"1","name":"amao"},{"id":"2","name":"amao"}]
+			json.append("[");
+			for(int i=0;i<ls.size();i++){
+				WxAccount wa = ls.get(i);
+				if(i>0){
+					json.append(",");
+				}
+				json.append("{");
+				json.append("\"id\":\""+wa.getId()+"\",");
+				json.append("\"name\":\""+wa.getName()+"\"");
+				json.append("}");
+			}
+			json.append("]");
+		}
+		return json.toString();
+	}
+	/**
 	 * get WxAccount by its account.
 	 */
 	public WxAccount getWxAccountByAccount(String account){
