@@ -43,6 +43,7 @@ public class WxAccountService implements Serializable{
 			input = StrUtils.checkRemoveQuoteMark(input);
 			sql += " and ("+WxAccount.ACCOUNT+" like '"+input+"%' or "+WxAccount.NAME+" like '"+input+"%')";
 		}
+		//sql += " limit 0,20";
 		return WxAccount.dao.find(sql);
 	}
 	/**
