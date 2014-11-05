@@ -35,6 +35,7 @@ public class MainConfig extends JFinalConfig {
 		me.add("/",UserController.class);
 
 		LjConfig.configRoute(me);
+		ClConfig.configRoute(me);
         WxAdminConfig.configRoute(me);
 	}
 	
