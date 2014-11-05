@@ -12,13 +12,19 @@ public class UserController extends Controller{
 
 	
 	public void index() {
+		Subject subject = SecurityUtils.getSubject();
+		if(subject.isAuthenticated() || subject.isRemembered()){
+			this.redirect("/wxaccount");
+			return;
+		}
 		render("user/login.html");
 	}
 	
 	public void login(){
 		String userName=this.getPara("username");
 		String password=this.getPara("password");
-		UsernamePasswordToken token = new UsernamePasswordToken(userName,password);
+		boolean rememberMe=this.getParaToBoolean("rememberMe",false);
+		UsernamePasswordToken token = new UsernamePasswordToken(userName,password,rememberMe);
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(token);
@@ -26,11 +32,12 @@ public class UserController extends Controller{
 			this.redirect("/");
 			return;
 		}
-		render("user/home.html");
+		this.redirect("/wxaccount");
 	}
 	
 	public void logout(){
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
+		this.redirect("/");
 	}
 }
