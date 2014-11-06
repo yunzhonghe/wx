@@ -10,7 +10,7 @@
 			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 		</li>
 		
-		<li class="start <#if index gt 0 && index lt 10>active</#if>">
+		<li class="start <#if index gt 0>active</#if>">
 			<a href="javascript:;">
 			<i class="fa fa-folder-open"></i> 
 			<span class="title">微信管理</span>
@@ -49,8 +49,8 @@
                             管理员列表
                             </a>
                         </li>
-                        <li <#if index = 2>class="active"</#if> >
-                            <a href="javascript:;">
+                        <li <#if index = 62>class="active"</#if> >
+                            <a href="${base}/wx-admin/preAdd">
                             添加管理员
                             </a>
                         </li>
