@@ -3,7 +3,7 @@ package com.dragon.apps.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.dragon.apps.exception.ServiceException;
-import com.dragon.apps.web.service.WeChatService;
+import com.dragon.apps.service.WeChatService;
 
 public class WeChatController extends AbstractAPIController {
 

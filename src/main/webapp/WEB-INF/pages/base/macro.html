@@ -9,32 +9,33 @@
 			<div class="sidebar-toggler hidden-phone"></div>
 			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 		</li>
-		<li <#if index gt 0>class="start active"</#if>>
+		
+		<li class="start <#if index gt 0 && index lt 10>active</#if>">
 			<a href="javascript:;">
 			<i class="fa fa-folder-open"></i> 
 			<span class="title">微信管理</span>
-			<span class="arrow open"></span>
-			<span class="selected"></span>
+			<#if index gt 0 && index lt 10>
+				<span class="arrow open"></span>
+				<span class="selected"></span>
+			<#else>
+				<span class="arrow"></span>
+			</#if>
 			</a>
 			<ul class="sub-menu">
 				<li <#if index = 1>class="active"</#if> >
 					<a href="${base}/wxaccount">总概况</a>
 				</li>
 				<li <#if index = 2>class="active"</#if>>
-					<a href="${base}/wxaccount/list">
-					帐号信息总览</a>
+					<a href="${base}/wxaccount/list">帐号信息总览</a>
 				</li>
 				<li <#if index = 3>class="active"</#if>>
-					<a href="${base}/wxaccount/add">
-					添加微信帐号</a>
+					<a href="${base}/wxaccount/add">添加微信帐号</a>
 				</li>
 				<li <#if index = 4>class="active"</#if>>
-					<a href="${base}/wxaccount/subindex">
-					总概况</a>
+					<a href="${base}/wxaccount/subindex">总概况</a>
 				</li>
 				<li <#if index = 5>class="active"</#if>>
-					<a href="${base}/wxaccount/modifyself">
-					微信信息维护</a>
+					<a href="${base}/wxaccount/modifyself">微信信息维护</a>
 				</li>
                 <li <#if index gt 60 && index lt 70>class="active"</#if>>
                     <a href="${base}/wx-admin/list">
@@ -49,7 +50,7 @@
                             </a>
                         </li>
                         <li <#if index = 2>class="active"</#if> >
-                            <a href="${base}/wx-admin/preAdd">
+                            <a href="javascript:;">
                             添加管理员
                             </a>
                         </li>

@@ -17,22 +17,18 @@ public class WxAccount extends Model<WxAccount>{
 	public WxAdmin getWxAdmin(){
 		return WxAdmin.dao.findById(getEscrowuser());
 	}
+	
 	/**
 	 * FIXME: get WxAccStat.--may use sql to query local other table records.
 	 */
-	public WxAccount getWxAccountByAccount(String account){
-		if(account==null || "".equals(account)){
-			return null;
-		}
-		return findFirst("select * from "+tableName+" where "+ACCOUNT+"='"+account+"'");
-	}
+	
 	
 	public static final String ID = "id";//bigint
 	public static final String ACCOUNT = "account";
-	private static final String NAME = "name";
+	public static final String NAME = "name";
 	private static final String PASSWORD = "password";
 	private static final String TYPEID = "typeid";//int
-	private static final String ESCROWUSER = "escrowuser";//bigint
+	public static final String ESCROWUSER = "escrowuser";//bigint
 	private static final String ORIGINALID = "originalid";
 	private static final String ISDEVMODE = "isdevmode";
 	private static final String URL = "url";

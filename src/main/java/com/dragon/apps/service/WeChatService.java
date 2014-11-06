@@ -1,4 +1,4 @@
-package com.dragon.apps.web.service;
+package com.dragon.apps.service;
 
 import com.dragon.apps.exception.ServiceException;
 import com.dragon.apps.model.WeChatModel;
