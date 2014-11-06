@@ -3,24 +3,30 @@ package com.dragon.apps.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.dragon.apps.exception.ServiceException;
-import com.dragon.apps.service.WeChatService;
 
-public class WeChatController extends AbstractAPIController {
+public class WeChatController extends WxAbstractAPIController {
 
 	
 	public void index() throws ServiceException {		
 		HttpServletRequest request = this.getRequest();		
 		if (request.getMethod().equals("POST")) {
-			
-		}else{		
-			String echostr = this.getAttrForStr("echostr");// 随机字符串
-			WeChatService service = new WeChatService();
-			if(service.doSigure("")){
-				renderText("fasdfasdaer");
-			}else{
-				renderText(echostr);
-			}
-			
+			if (!isLegal(request)) {
+				renderText("post");
+	        }
+			renderText(processRequest(request));
+		}else{
+			if (isLegal(request)) {
+	            //绑定微信服务器成功
+				renderText(this.getAttrForStr("echostr"));
+	        } else {
+	            //绑定微信服务器失败
+	        	renderText("get");
+	        }
 		}	
+	}
+
+	@Override
+	protected String getToken() {
+		return null;
 	}
 }
