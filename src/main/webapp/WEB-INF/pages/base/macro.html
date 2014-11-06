@@ -37,27 +37,23 @@
 				<li <#if index = 5>class="active"</#if>>
 					<a href="${base}/wxaccount/modifyself">微信信息维护</a>
 				</li>
-                <li <#if index gt 60 && index lt 70>class="active"</#if>>
-                    <a href="${base}/wx-admin/list">
-                        <span class="title">管理员维护</span>
-                    </a>
-                    <span class="arrow open"></span>
-                    <span class="selected"></span>
-                    <ul class="sub-menu">
-                        <li <#if index = 61>class="active"</#if> >
-                            <a href="${base}/wx-admin/list">
-                            管理员列表
-                            </a>
-                        </li>
-                        <li <#if index = 62>class="active"</#if> >
-                            <a href="${base}/wx-admin/preAdd">
-                            添加管理员
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 			</ul>
-		</li>
+		<li <#if index gt 60 && index lt 70>class="active"</#if>>
+            <a href="${base}/wx-admin/list">
+                <span class="title">管理员维护</span>
+            </a>
+            <span class="arrow open"></span>
+            <span class="selected"></span>
+            <ul class="sub-menu">
+                <li <#if index = 61>class="active"</#if> >
+                    <a href="${base}/wx-admin/list">管理员列表</a>
+                </li>
+                <li <#if index = 62>class="active"</#if> >
+                    <a href="${base}/wx-admin/preAdd">添加管理员</a>
+                </li>
+            </ul>
+         </li>
+	</ul>
 	<!-- END SIDEBAR MENU -->
 </div>
 <!-- END SIDEBAR -->

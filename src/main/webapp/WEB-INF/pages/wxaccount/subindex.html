@@ -1,0 +1,129 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+	    <@nav index=4/>
+		<div class="page-content">
+            <@title name="总概况" menus='{"微信管理":"${base}/wxaccount","总概况":"javascript:;"}'/>
+             <#if wxAccount??>
+				<div class="row form-group">
+					<div class="col-md-9">
+						<table class="table">
+							<tr><td align="center">新消息：</td><td align="center">新增人数：</td></tr>
+						</table>
+					</div>
+					<div class="col-md-3">
+						<table class="table">
+							<tr><td align="center">总用户数：</td></tr>
+						</table>
+					</div>
+				</div>
+            	<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">头像：</label></div>
+					<div class="col-md-9">
+						<img src="${wxAccount.avatar?default('')}"/>
+					</div>
+				</div>
+            	<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">微信名称：</label></div>
+					<div class="col-md-9">
+						${wxAccount.name?default('')}
+					</div>
+				</div>
+            	<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">原始id：</label></div>
+					<div class="col-md-9">
+						${wxAccount.originalid?default('')}
+					</div>
+				</div>
+            	<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">微信号：</label></div>
+					<div class="col-md-9">
+						${wxAccount.account?default('')}
+					</div>
+				</div>
+            	<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">类型：</label></div>
+					<div class="col-md-9">
+						${account.getWxAccType().name}
+					</div>
+				</div>
+            	<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">认证情况：</label></div>
+					<div class="col-md-9">
+						<#if wxAccount.authstatus??>
+							<#if wxAccount.authstatus=='1'>
+								已认证
+							<#else>
+								未认证
+							</#if>
+						</#if>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">隐私设置：</label></div>
+					<div class="col-md-9">
+						<#if wxAccount.secretset??>
+							<#if wxAccount.secretset=='1'>
+								已允许
+							<#else>
+								未允许
+							</#if>
+						</#if>
+					</div>
+				</div>
+            	<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">开发模式：</label></div>
+					<div class="col-md-9">
+						<#if wxAccount.isdevmode??>
+							<#if wxAccount.isdevmode=='1'>
+								已开启
+							<#else>
+								未开启
+							</#if>
+						</#if>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">url：</label></div>
+					<div class="col-md-9">
+						${wxAccount.url?default('')}
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">token：</label></div>
+					<div class="col-md-9">
+						${wxAccount.token?default('')}
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">地区：</label></div>
+					<div class="col-md-9">
+						${wxAccount.region?default('')}
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">功能介绍：</label></div>
+					<div class="col-md-9">
+						${wxAccount.functions?default('')}
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-3"><label class="control-label">二维码：</label></div>
+					<div class="col-md-9">
+						<img src="${wxAccount.qrcode?default('')}"/>
+					</div>
+				</div>
+            <#else>
+            	没有对应的微信帐号
+			</#if>
+		</div>
+	</div>
+	<@footer/>
+	<script>
+	jQuery(document).ready(function() {    
+	   App.init();
+	   //add your javascript here
+	});
+</script>
+</@layout>

@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.dragon.apps.model.WxAccount;
+import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.utils.PageSet;
+import com.dragon.apps.utils.RoleUtils;
 import com.dragon.apps.utils.StrUtils;
 import com.jfinal.plugin.activerecord.Db;
 
@@ -113,6 +115,9 @@ public class WxAccountService implements Serializable{
 			if(exists!=null){
 				exists.setPassword(wxAccount.getPassword());
 				exists.setToken(wxAccount.getToken());
+				if(wxAccount.getTypeid()!=0){
+					exists.setTypeid(wxAccount.getTypeid());
+				}
 				//FIXME may need to update other columns.
 				if(exists.update()){
 					result = "修改成功";
@@ -151,6 +156,18 @@ public class WxAccountService implements Serializable{
 	public boolean updateAccountEscrowuser(Long accountId,Long escrowuserId){
 		String sql = "update "+WxAccount.tableName+" set "+WxAccount.ESCROWUSER+"="+escrowuserId+" where "+WxAccount.ID+"="+accountId;
 		return Db.update(sql)>0;
+	}
+	/**
+	 * 获取当前账户对应的微信帐号
+	 * @return
+	 */
+	public WxAccount getCurrentWxAccount(){
+		WxAdmin wxAdmin = WxAdmin.dao.findById(RoleUtils.getCurrentUserId());
+		if(wxAdmin!=null && wxAdmin.getWxAccountId()!=null){
+			WxAccount wxAccount = WxAccount.dao.findById(wxAdmin.getWxAccountId());
+			return wxAccount;
+		}
+		return null;
 	}
 	
 	public static WxAccountService getInstance(){

@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * wx_account_type, use cache to query.
+ * 微信帐号类型(公众服务号、订阅号等)
+ * @author LiuJian
  */
 public class WxAccType extends BaseModel<WxAccType>{
 	private static final long serialVersionUID = 1L;
