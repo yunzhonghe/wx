@@ -7,11 +7,11 @@
  */
 var WxAdmin = function () {
     return {
-        adminTableInit: function (list) {
+        adminTableInit: function (adminList, accountList) {
             var dataSet = [];
 
             $('#adminEdit').hide();
-            $.each(list, function(n, item){
+            $.each(adminList, function(n, item){
                 var operation = '<a class="edit" data-line="' + n + '" href="javascript:void(0);"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete" data-line="' + n + '" href="javascript:void(0);"><i class="glyphicon glyphicon-trash"></i></a>';
 
                 var temp = item.attrs;
@@ -40,34 +40,17 @@ var WxAdmin = function () {
 
         },
 
-        adminAddInit: function() {
-            $("#submit").click(function(){
-                var adminId = $("#adminId").val();
-                var password = $("#password").val();
-                var password2 = $("#password2").val();
-                var name = $("#name").val();
-                var telephone = $("#telephone").val();
-                var email = $("#email").val();
-                var wxAccountId = $("#wx_account option:selected").val();
-                var wxAccountName = $("#wx_account option:selected").text();
+        adminAddInit: function(accountList) {
 
-                if(adminId === "" || password === "" || password2 === "" || name === "" || telephone === "" || email === "") {
-                    alert("请填写完整");
-                    return;
-                }
+            console.log(accountList);
+            $.each(accountList, function(n, item){
+                var temp = item.attrs;
+                var option = '<option value="' + temp.ID + '">' + temp.NAME + '</option>';
 
-                if(password !== password2) {
-                    alert("两次输入的密码不一致");
-                    return;
-                }
+                $("#wx_account").append(option);
+            });
 
-                var reqStr = "wxAdmin.admin_id=" + adminId + "&wxAdmin.password=" + password + "&wxAdmin.name=" + name + "&wxAdmin.telephone=" + telephone
-                    + "&wxAdmin.email=" + email + "&wxAdmin.wx_account_id=" + wxAccountId + "&wxAdmin.wx_account_name=" + wxAccountName;
-
-                $.post("/wx-admin/add", reqStr, function() {
-                    location.href = './list';
-                });
-            })
+            initAdminAddEvent();
         }
     }
 
@@ -90,7 +73,6 @@ var WxAdmin = function () {
             var id = $("#id").val();
             var adminId = $("#adminId").val();
             var password = $("#password").val();
-            var password2 = $("#password2").val();
             var name = $("#name").val();
             var telephone = $("#telephone").val();
             var email = $("#email").val();
@@ -102,13 +84,8 @@ var WxAdmin = function () {
                 return;
             }
 
-            if(adminId === "" || password === "" || password2 === "" || name === "" || telephone === "" || email === "") {
+            if(adminId === "" || password === "" || name === "" || telephone === "" || email === "") {
                 alert("请填写完整");
-                return;
-            }
-
-            if(password !== password2) {
-                alert("两次输入的密码不一致");
                 return;
             }
 
@@ -119,7 +96,49 @@ var WxAdmin = function () {
                 location.href = './list';
             });
         })
+
+        $("#cancel").click(function(){
+            $("#adminId").val("");
+            $("#password").val("");
+            $("#name").val("");
+            $("#telephone").val("");
+            $("#email").val("");
+
+            $('#adminEdit').hide();
+            $('#adminTableDiv').show();
+
+        })
     };
+
+    function initAdminAddEvent() {
+        $("#submit").click(function(){
+            var adminId = $("#adminId").val();
+            var password = $("#password").val();
+            var password2 = $("#password2").val();
+            var name = $("#name").val();
+            var telephone = $("#telephone").val();
+            var email = $("#email").val();
+            var wxAccountId = $("#wx_account option:selected").val();
+            var wxAccountName = $("#wx_account option:selected").text();
+
+            if(adminId === "" || password === "" || password2 === "" || name === "" || telephone === "" || email === "") {
+                alert("请填写完整");
+                return;
+            }
+
+            if(password !== password2) {
+                alert("两次输入的密码不一致");
+                return;
+            }
+
+            var reqStr = "wxAdmin.admin_id=" + adminId + "&wxAdmin.password=" + password + "&wxAdmin.name=" + name + "&wxAdmin.telephone=" + telephone
+                + "&wxAdmin.email=" + email + "&wxAdmin.wx_account_id=" + wxAccountId + "&wxAdmin.wx_account_name=" + wxAccountName;
+
+            $.post("/wx-admin/add", reqStr, function() {
+                location.href = './list';
+            });
+        })
+    }
 
     function editAdmin(row, data) {
         console.log(data);
@@ -131,7 +150,7 @@ var WxAdmin = function () {
         $("#name").val(data.NAME);
         $("#telephone").val(data.TELEPHONE);
         $("#email").val(data.EMAIL);
-        $("#wx_account").find("option[value=" + data.WX_ACCOUNT_ID +"]").addClass("selected");
+        $("#wx_account").val(data.WX_ACCOUNT_ID);
         $('#adminEdit').show();
 
     };

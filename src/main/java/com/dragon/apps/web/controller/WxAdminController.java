@@ -1,5 +1,6 @@
 package com.dragon.apps.web.controller;
 
+import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAdmin;
 import com.google.gson.Gson;
 import com.jfinal.core.Controller;
@@ -18,6 +19,8 @@ public class WxAdminController extends Controller {
     public void list() {
         List<WxAdmin> list = WxAdmin.dao.find("select * from wx_admin");
         setAttr("adminList", new Gson().toJson(list));
+        List<WxAccount> accountList = WxAccount.dao.find("select id, name from wx_account");
+        setAttr("accountList", new Gson().toJson(accountList));
         render("list.html");
     }
 
@@ -32,6 +35,8 @@ public class WxAdminController extends Controller {
     }
 
     public void preAdd() {
+        List<WxAccount> list = WxAccount.dao.find("select id, name from wx_account");
+        setAttr("accountList", new Gson().toJson(list));
         render("add.html");
     }
 
