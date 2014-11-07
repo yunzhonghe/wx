@@ -41,7 +41,7 @@ import com.jfinal.core.Controller;
  */
 public abstract class WxAbstractAPIController extends Controller {
 
-	private final static boolean isDevModel = true;
+	private final static boolean isDevModel = false;
 
 	/**
 	 * 微信消息处理器列表

@@ -23,10 +23,10 @@ public class WxMessageModel extends Model<WxMessageModel> {
 	private String messageId = "message_id";
 	private String from = "from";
 	private String to = "to";
-	private String content = "content";
+	private String contentId = "content_id";
 	private String type = "type";
 	private String createTime = "create_time";
-	private String rspContent = "rsp_content";
+	private String rspContent = "rsp_content_id";
 	private String rspType = "rsp_type";
 	private String rspTime = "rsp_time";
 
@@ -79,12 +79,12 @@ public class WxMessageModel extends Model<WxMessageModel> {
 		return set(this.to,to);
 	}
 
-	public String getContent() {
-		return getStr(content);
+	public String getContentId() {
+		return getStr(contentId);
 	}
 
-	public WxMessageModel setContent(String content) {
-		return set(this.content,content);
+	public WxMessageModel setContentId(long contentId) {
+		return set(this.contentId,contentId);
 	}
 
 	public int getType() {

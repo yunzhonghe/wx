@@ -1,6 +1,12 @@
 package com.dragon.apps.service;
 
 import com.dragon.apps.model.WxMessageModel;
+import com.dragon.apps.model.WxMsgImageModel;
+import com.dragon.apps.model.WxMsgLinkModel;
+import com.dragon.apps.model.WxMsgLocationModel;
+import com.dragon.apps.model.WxMsgTextModel;
+import com.dragon.apps.model.WxMsgVideoModel;
+import com.dragon.apps.model.WxMsgVoiceModel;
 import com.dragon.spider.message.BaseMsg;
 import com.dragon.spider.message.TextMsg;
 import com.dragon.spider.message.req.BaseEvent;
@@ -35,10 +41,16 @@ public class MessageHandleService {
 	 */
 	public boolean handleTextMsg(TextReqMsg msg) {		
 		WxMessageModel model =WxMessageModel.getInstance();
-		model = handerBase(msg,model);		
-		model.setContent(msg.getContent());
-		model.setType(ReqType.TEXTID);
-		return model.save();		
+		model = handerBase(msg,model);	
+		WxMsgTextModel text = WxMsgTextModel.getInstance();
+		text.setContent(msg.getContent());
+		boolean isSave = text.save();
+		if(isSave){
+			model.setContentId(text.getId());
+			model.setType(ReqType.TEXTID);
+			return model.save();	
+		}
+		return false;	
 	}
 
 	private WxMessageModel handerBase(BaseReqMsg msg, WxMessageModel model) {
@@ -58,10 +70,17 @@ public class MessageHandleService {
 	 */
 	protected boolean handleImageMsg(ImageReqMsg msg) {
 		WxMessageModel model =WxMessageModel.getInstance();
-		model = handerBase(msg,model);		
-		model.setContent(msg.getPicUrl());		
-		model.setType(ReqType.TEXTID);
-		return model.save();
+		model = handerBase(msg,model);	
+		WxMsgImageModel image = WxMsgImageModel.getInstance();
+		image.setMediaId(msg.getMediaId());
+		image.setPicUrl(msg.getPicUrl());	
+		boolean isSave = image.save();
+		if(isSave){
+			model.setContentId(image.getId());
+			model.setType(ReqType.IMAGEID);
+			return model.save();	
+		}
+		return false;	
 	}
 
 	/**
@@ -71,8 +90,19 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected BaseMsg handleVoiceMsg(VoiceReqMsg msg) {
-		return handleDefaultMsg(msg);
+	protected boolean handleVoiceMsg(VoiceReqMsg msg) {
+		WxMessageModel model =WxMessageModel.getInstance();
+		model = handerBase(msg,model);	
+		WxMsgVoiceModel voice = WxMsgVoiceModel.getInstance();
+		voice.setMediaId(msg.getMediaId());
+		voice.setFormat(msg.getFormat());
+		boolean isSave = voice.save();
+		if(isSave){
+			model.setContentId(voice.getId());
+			model.setType(ReqType.VOICEID);
+			return model.save();	
+		}
+		return false;	
 	}
 
 	/**
@@ -82,8 +112,19 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected BaseMsg handleVideoMsg(VideoReqMsg msg) {
-		return handleDefaultMsg(msg);
+	protected boolean handleVideoMsg(VideoReqMsg msg) {
+		WxMessageModel model =WxMessageModel.getInstance();
+		model = handerBase(msg,model);	
+		WxMsgVideoModel vedio = WxMsgVideoModel.getInstance();
+		vedio.setMediaId(msg.getMediaId());
+		vedio.setThunbMediaId(msg.getThumbMediaId());
+		boolean isSave = vedio.save();
+		if(isSave){
+			model.setContentId(vedio.getId());
+			model.setType(ReqType.VIDEOID);
+			return model.save();	
+		}
+		return false;	
 	}
 
 	/**
@@ -93,8 +134,21 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected BaseMsg handleLocationMsg(LocationReqMsg msg) {
-		return handleDefaultMsg(msg);
+	protected boolean handleLocationMsg(LocationReqMsg msg) {
+		WxMessageModel model =WxMessageModel.getInstance();
+		model = handerBase(msg,model);	
+		WxMsgLocationModel location = WxMsgLocationModel.getInstance();
+		location.setLocationX(String.valueOf(msg.getLocationX()));
+		location.setLocationY(String.valueOf(msg.getLocationY()));
+		location.setScale(msg.getScale());
+		location.setLabel(msg.getLabel());
+		boolean isSave = location.save();
+		if(isSave){
+			model.setContentId(location.getId());
+			model.setType(ReqType.LOCATIONID);
+			return model.save();	
+		}
+		return false;	
 	}
 
 	/**
@@ -104,8 +158,20 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected BaseMsg handleLinkMsg(LinkReqMsg msg) {
-		return handleDefaultMsg(msg);
+	protected boolean handleLinkMsg(LinkReqMsg msg) {
+		WxMessageModel model =WxMessageModel.getInstance();
+		model = handerBase(msg,model);	
+		WxMsgLinkModel link = WxMsgLinkModel.getInstance();
+		link.setTitle(msg.getTitle());
+		link.setDescription(msg.getDescription());
+		link.setUrl(msg.getUrl());
+		boolean isSave = link.save();
+		if(isSave){
+			model.setContentId(link.getId());
+			model.setType(ReqType.LINKID);
+			return model.save();	
+		}
+		return false;	
 	}
 
 	/**
