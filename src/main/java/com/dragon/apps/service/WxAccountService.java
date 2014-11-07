@@ -149,8 +149,8 @@ public class WxAccountService implements Serializable{
 	/**
 	 * 当管理员与微信帐号关联绑定时，调用该方法更新微信帐号的托管账户id；
 	 * 在修改关联微信时，该方法可能需要调用两次，一次解除之前的微信帐号托管，一次更新之后的微信帐号托管。
-	 * @param accountId微信帐号的id
-	 * @param escrowuserId托管账户(管理员)的id，可以为null(进行解除).
+	 * @param accountId
+	 * @param escrowuserId(管理员)的id，可以为null(进行解除).
 	 * @return
 	 */
 	public boolean updateAccountEscrowuser(Long accountId,Long escrowuserId){
@@ -163,7 +163,7 @@ public class WxAccountService implements Serializable{
 	 */
 	public WxAccount getCurrentWxAccount(){
 		WxAdmin wxAdmin = WxAdmin.dao.findById(RoleUtils.getCurrentUserId());
-		if(wxAdmin!=null && wxAdmin.getWxAccountId()!=null){
+		if(wxAdmin!=null && wxAdmin.getWxAccountId() > 0){
 			WxAccount wxAccount = WxAccount.dao.findById(wxAdmin.getWxAccountId());
 			return wxAccount;
 		}
