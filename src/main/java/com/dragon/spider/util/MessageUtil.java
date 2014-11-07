@@ -30,7 +30,7 @@ public final class MessageUtil {
      * @param request http请求对象
      * @return 微信消息或者事件Map
      */
-    public static Map<String, String> parseXml(HttpServletRequest request) {
+    public static Map<String, String> parseXml(HttpServletRequest request) {    	
         Map<String, String> map = new HashMap<String, String>();
 
         InputStream inputStream = null;

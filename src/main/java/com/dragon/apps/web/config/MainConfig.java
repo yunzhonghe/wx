@@ -56,7 +56,7 @@ public class MainConfig extends JFinalConfig {
         plu.add(arp);
         
         plu.add(new ShiroPlugin()); 
-        
+        ClConfig.configActiveRecordPlugin(arp);
         LjConfig.configActiveRecordPlugin(arp);
         WxAdminConfig.configActiveRecordPlugin(arp);
 		

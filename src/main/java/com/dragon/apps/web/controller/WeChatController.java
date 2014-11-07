@@ -3,17 +3,21 @@ package com.dragon.apps.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.dragon.apps.exception.ServiceException;
+import com.jfinal.aop.ClearInterceptor;
 
+@ClearInterceptor
 public class WeChatController extends WxAbstractAPIController {
 
 	
 	public void index() throws ServiceException {		
 		HttpServletRequest request = this.getRequest();		
-		if (request.getMethod().equals("POST")) {
+		if (request.getMethod().equalsIgnoreCase("POST")) {
 			if (!isLegal(request)) {
 				renderText("post");
 	        }
-			renderText(processRequest(request));
+			String text = processRequest(request);
+			System.out.println(text);
+			renderText(text);
 		}else{
 			if (isLegal(request)) {
 	            //绑定微信服务器成功

@@ -1,7 +1,7 @@
 package com.dragon.apps.service;
 
 import com.dragon.apps.exception.ServiceException;
-import com.dragon.apps.model.WeChatModel;
+import com.dragon.apps.model.WxMessageModel;
 
 
 
@@ -13,7 +13,7 @@ public class WeChatService {
 	 * @throws ServiceException
 	 */
 	public boolean doSigure(String token) throws ServiceException {
-		WeChatModel model = WeChatModel.getInstance().getByToken(token);
+		WxMessageModel model = WxMessageModel.getInstance().getByToken(token);
 		if (null != model) {
 			return true;
 		} else {
