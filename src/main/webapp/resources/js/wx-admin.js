@@ -36,13 +36,20 @@ var WxAdmin = function () {
             });
 
 
+            $.each(accountList, function(n, item){
+                var temp = item.attrs;
+                var option = '<option value="' + temp.ID + '">' + temp.NAME + '</option>';
+
+                $("#wx_account").append(option);
+            });
+
+
             initTableEvent();
 
         },
 
         adminAddInit: function(accountList) {
 
-            console.log(accountList);
             $.each(accountList, function(n, item){
                 var temp = item.attrs;
                 var option = '<option value="' + temp.ID + '">' + temp.NAME + '</option>';

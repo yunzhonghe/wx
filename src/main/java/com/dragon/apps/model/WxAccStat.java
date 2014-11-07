@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * wx_account_statusinfo
  * may be not use this table.
+ * @author LiuJian
  */
 public class WxAccStat extends Model<WxAccStat>{
 	private static final long serialVersionUID = 1L;

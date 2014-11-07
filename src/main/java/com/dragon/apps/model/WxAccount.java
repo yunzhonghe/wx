@@ -2,7 +2,8 @@ package com.dragon.apps.model;
 
 import com.jfinal.plugin.activerecord.Model;
 /**
- * wx_account
+ * wx_account微信帐号
+ * @author LiuJian
  */
 public class WxAccount extends Model<WxAccount>{
 	private static final long serialVersionUID = 1L;

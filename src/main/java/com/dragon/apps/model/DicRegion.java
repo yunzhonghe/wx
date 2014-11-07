@@ -2,6 +2,8 @@ package com.dragon.apps.model;
 
 /**
  * wx_dic_region, use cache to query.
+ * 微信地区字典表
+ * @author LiuJian
  */
 public class DicRegion extends BaseModel<DicRegion>{
 	private static final long serialVersionUID = 1L;

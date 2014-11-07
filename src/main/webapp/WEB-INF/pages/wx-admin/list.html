@@ -16,8 +16,6 @@
             <div style="margin-top: 10px; margin-bottom: 10px;">
                 <span class="pull-left">关联微信 : </span>
                 <select id="wx_account" class="pull-right form-control" data-style="btn-primary" style="width: 160px;">
-                    <option value="1234">test_wx@wx.com</option>
-                    <option value="5678">wx_test@wx.com</option>
                 </select>
                 <br/>
             </div>
@@ -38,8 +36,9 @@
 <script>
     jQuery(document).ready(function() {
         App.init();
-        var list = ${adminList};
-        WxAdmin.adminTableInit(list);
+        var adminList = ${adminList};
+        var accountList = ${accountList};
+        WxAdmin.adminTableInit(adminList, accountList);
         //add your javascript here
     });
 </script>

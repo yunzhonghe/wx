@@ -1,0 +1,95 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+	    <@nav index=5/>
+		<div class="page-content">
+            <@title name="微信信息维护" menus='{"微信管理":"${base}/wxaccount","微信信息维护":"javascript:;"}'/>
+			 <#if _opresult??>
+            	${_opresult}
+            <#elseif wxAccount??>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="booking-search">
+							<form action="${base}/wxaccount/modifyselfdo" role="form" method="post" onsubmit="return checkSub();">
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信帐号：</label>
+										<input class="form-control" type="text" id="account" name="wxAccount.account" 
+											readonly="readonly" value="${wxAccount.account}">
+										<input type="hidden" name="wxAccount.id" value="${wxAccount.id}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信密码：</label>
+										<input class="form-control" type="password" id="password" name="wxAccount.password" value="${wxAccount.password}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信帐号类型：</label>
+										<input class="form-control" type="text" id="originalid" name="wxAccount.originalid"
+											readonly="readonly" value="${wxAccount.originalid}">
+									</div>
+									<div class="col-md-12">
+										<label class="control-label">微信帐号类型：</label>
+										<select class="form-control" name="wxAccount.typeid">
+											<#if accountTypes??>
+												<#list accountTypes as atype>
+													<option value="${atype.id}" <#if atype.id==wxAccount.typeid>selected</#if>>${atype.name}</option>
+												</#list>
+											<#else>
+												<option>无</option>
+											</#if>
+										</select>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信原始id：</label>
+										<input class="form-control" type="text" id="originalid" name="wxAccount.originalid"
+											readonly="readonly" value="${wxAccount.originalid}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">微信Token：</label>
+										<input class="form-control" type="text" id="token" name="wxAccount.token" value="${wxAccount.token?default('')}">
+									</div>
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="btn blue">保存</button>
+									<button type="reset" class="btn default">重置</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+            <#else>
+            	没有对应的微信帐号
+			</#if>
+		</div>
+	</div>
+	<@footer/>
+	<script>
+	jQuery(document).ready(function() {    
+	   App.init();
+	   //add your javascript here
+	});
+	function checkSub(){
+		var errmsg = '';
+		if(document.getElementById("password").value==''){
+			errmsg += "请输入密码\n";
+		}
+		if(document.getElementById("token").value==''){
+			errmsg += "请输入Token\n";
+		}
+		if(errmsg!=''){
+			alert(errmsg);
+			return false;
+		}
+		return true;
+	}
+</script>
+</@layout>
