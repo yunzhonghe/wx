@@ -56,8 +56,8 @@ public class WxAdmin extends Model<WxAdmin> {
         return getLong(POST_ID);
     }
 
-    public String getWxAccountId() {
-        return getStr(WX_ACCOUNT_ID);
+    public long getWxAccountId() {
+        return getLong(WX_ACCOUNT_ID);
     }
 
     public String getWxAccountName() {
@@ -92,7 +92,7 @@ public class WxAdmin extends Model<WxAdmin> {
         return set(POST_ID, postId);
     }
 
-    public WxAdmin setWxAccountId(String wxAccountId) {
+    public WxAdmin setWxAccountId(long wxAccountId) {
         return set(WX_ACCOUNT_ID, wxAccountId);
     }
 
