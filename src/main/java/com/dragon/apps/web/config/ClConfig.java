@@ -1,5 +1,6 @@
 package com.dragon.apps.web.config;
 
+import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.model.WxMsgImageModel;
 import com.dragon.apps.model.WxMsgLinkModel;
@@ -30,6 +31,7 @@ public class ClConfig {
 	}
 	public static void configActiveRecordPlugin(ActiveRecordPlugin arp){
 		//FIXME
+		arp.addMapping(WX_FANS_TABLE, WxFansModel.class); 
 		arp.addMapping(WX_MESSAGE_TABLE, WxMessageModel.class); 
 		arp.addMapping(WX_MESSAGE_IMAGE_TABLE, WxMsgImageModel.class); 
 		arp.addMapping(WX_MESSAGE_LINK_TABLE, WxMsgLinkModel.class); 

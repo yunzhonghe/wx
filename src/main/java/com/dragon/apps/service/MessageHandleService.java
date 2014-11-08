@@ -68,7 +68,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected boolean handleImageMsg(ImageReqMsg msg) {
+	public boolean handleImageMsg(ImageReqMsg msg) {
 		WxMessageModel model =WxMessageModel.getInstance();
 		model = handerBase(msg,model);	
 		WxMsgImageModel image = WxMsgImageModel.getInstance();
@@ -90,7 +90,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected boolean handleVoiceMsg(VoiceReqMsg msg) {
+	public boolean handleVoiceMsg(VoiceReqMsg msg) {
 		WxMessageModel model =WxMessageModel.getInstance();
 		model = handerBase(msg,model);	
 		WxMsgVoiceModel voice = WxMsgVoiceModel.getInstance();
@@ -112,7 +112,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected boolean handleVideoMsg(VideoReqMsg msg) {
+	public boolean handleVideoMsg(VideoReqMsg msg) {
 		WxMessageModel model =WxMessageModel.getInstance();
 		model = handerBase(msg,model);	
 		WxMsgVideoModel vedio = WxMsgVideoModel.getInstance();
@@ -134,7 +134,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected boolean handleLocationMsg(LocationReqMsg msg) {
+	public boolean handleLocationMsg(LocationReqMsg msg) {
 		WxMessageModel model =WxMessageModel.getInstance();
 		model = handerBase(msg,model);	
 		WxMsgLocationModel location = WxMsgLocationModel.getInstance();
@@ -158,7 +158,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	protected boolean handleLinkMsg(LinkReqMsg msg) {
+	public boolean handleLinkMsg(LinkReqMsg msg) {
 		WxMessageModel model =WxMessageModel.getInstance();
 		model = handerBase(msg,model);	
 		WxMsgLinkModel link = WxMsgLinkModel.getInstance();
@@ -226,6 +226,8 @@ public class MessageHandleService {
 	 * @return 响应消息对象
 	 */
 	protected BaseMsg handleSubscribe(BaseEvent event) {
+		
+		
 		return new TextMsg("感谢您的关注!");
 	}
 

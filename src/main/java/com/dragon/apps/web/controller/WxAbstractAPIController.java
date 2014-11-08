@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.dragon.apps.service.MessageHandleService;
+import com.dragon.apps.service.WxFansHandleService;
 import com.dragon.spider.handle.EventHandle;
 import com.dragon.spider.handle.MessageHandle;
 import com.dragon.spider.message.BaseMsg;
@@ -110,23 +111,26 @@ public abstract class WxAbstractAPIController extends Controller {
 			if (isNotBlank(ticket)) {
 				String eventKey = reqMap.get("EventKey");
 				QrCodeEvent event = new QrCodeEvent(eventKey, ticket);
-				buildBasicEvent(reqMap, event);
-				msg = handleQrCodeEvent(event);
+				buildBasicEvent(reqMap, event);							
+				WxFansHandleService service = new WxFansHandleService();
+				msg = service.handleQrCodeEvent(event);				
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
 			}
 			if (eventType.equals(EventType.SUBSCRIBE)) {
 				BaseEvent event = new BaseEvent();
-				buildBasicEvent(reqMap, event);
-				msg = handleSubscribe(event);
+				buildBasicEvent(reqMap, event);				
+				WxFansHandleService service = new WxFansHandleService();
+				msg =service.handleSubscribe(event);				
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
 			} else if (eventType.equals(EventType.UNSUBSCRIBE)) {
 				BaseEvent event = new BaseEvent();
-				buildBasicEvent(reqMap, event);
-				msg = handleUnsubscribe(event);
+				buildBasicEvent(reqMap, event);				
+				WxFansHandleService service = new WxFansHandleService();
+				msg =service.handleUnsubscribe(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
@@ -173,6 +177,8 @@ public abstract class WxAbstractAPIController extends Controller {
 				String mediaId = reqMap.get("MediaId");
 				ImageReqMsg imageReqMsg = new ImageReqMsg(picUrl, mediaId);
 				buildBasicReqMsg(reqMap, imageReqMsg);
+				MessageHandleService service = new MessageHandleService();
+				service.handleImageMsg(imageReqMsg);
 				msg = handleImageMsg(imageReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(imageReqMsg);
@@ -183,6 +189,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String recognition = reqMap.get("Recognition");
 				VoiceReqMsg voiceReqMsg = new VoiceReqMsg(mediaId, format, recognition);
 				buildBasicReqMsg(reqMap, voiceReqMsg);
+				
+				MessageHandleService service = new MessageHandleService();
+				service.handleVoiceMsg(voiceReqMsg);
+				
 				msg = handleVoiceMsg(voiceReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(voiceReqMsg);
@@ -192,6 +202,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String mediaId = reqMap.get("MediaId");
 				VideoReqMsg videoReqMsg = new VideoReqMsg(mediaId, thumbMediaId);
 				buildBasicReqMsg(reqMap, videoReqMsg);
+				
+				MessageHandleService service = new MessageHandleService();
+				service.handleVideoMsg(videoReqMsg);				
+				
 				msg = handleVideoMsg(videoReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(videoReqMsg);
@@ -203,6 +217,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String label = reqMap.get("Label");
 				LocationReqMsg locationReqMsg = new LocationReqMsg(locationX, locationY, scale, label);
 				buildBasicReqMsg(reqMap, locationReqMsg);
+				
+				MessageHandleService service = new MessageHandleService();
+				service.handleLocationMsg(locationReqMsg);		
+				
 				msg = handleLocationMsg(locationReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(locationReqMsg);
@@ -213,6 +231,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String url = reqMap.get("Url");
 				LinkReqMsg linkReqMsg = new LinkReqMsg(title, description, url);
 				buildBasicReqMsg(reqMap, linkReqMsg);
+				
+				MessageHandleService service = new MessageHandleService();
+				service.handleLinkMsg(linkReqMsg);
+				
 				msg = handleLinkMsg(linkReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(linkReqMsg);
@@ -337,18 +359,7 @@ public abstract class WxAbstractAPIController extends Controller {
 	protected BaseMsg handleLinkMsg(LinkReqMsg msg) {
 		return handleDefaultMsg(msg);
 	}
-
-	/**
-	 * 处理扫描二维码事件，有需要时子类重写
-	 * 
-	 * @param event
-	 *            扫描二维码事件对象
-	 * @return 响应消息对象
-	 */
-	protected BaseMsg handleQrCodeEvent(QrCodeEvent event) {
-		return handleDefaultEvent(event);
-	}
-
+	
 	/**
 	 * 处理地理位置事件，有需要时子类重写
 	 * 
@@ -392,6 +403,10 @@ public abstract class WxAbstractAPIController extends Controller {
 	protected BaseMsg handleSubscribe(BaseEvent event) {
 		return new TextMsg("感谢您的关注!");
 	}
+	
+	  protected BaseMsg handleQrCodeEvent(QrCodeEvent event) {
+	        return handleDefaultEvent(event);
+	    }
 
 	/**
 	 * 处理取消关注事件，有需要时子类重写
