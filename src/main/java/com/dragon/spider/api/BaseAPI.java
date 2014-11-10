@@ -51,7 +51,6 @@ public abstract class BaseAPI {
             config.refreshing = true;
             String url = BASE_API_URL + "cgi-bin/token?grant_type=client_credential&appid=" + this.config.getAppid() + "&secret=" + this.config.getSecret();
             NetWorkCenter.get(url, null, new NetWorkCenter.ResponseCallback() {
-                @Override
                 public void onResponse(int resultCode, String resultJson) {
                     if (200 == resultCode) {
                         GetTokenResponse response = JSONUtil.toBean(resultJson, GetTokenResponse.class);

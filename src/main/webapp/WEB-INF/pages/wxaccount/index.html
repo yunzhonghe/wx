@@ -25,15 +25,19 @@
 													<img src="${account.avatar?default('')}"/>
 												</td>
 												<td width="15%" align="right">帐号类型：</td>
-												<td width="30%">${account.getWxAccType().name}</td>
+												<td width="30%">
+													<#if account.getWxAccType()??>
+														${account.getWxAccType().name}
+													</#if>
+												</td>
 												<td width="15%" align="right">最后同步时间：</td>
 												<td width="30%"></td>
 											</tr>
 											<tr>
 												<td align="right">托管状态：</td>
 												<td colspan="3">
-													<#if account.escrowuser??>
-														${account.getWxAdmin().name}
+													<#if account.wxadmin??>
+														${account.wxadmin.name?default('')}
 													</#if>
 												</td>
 											</tr>

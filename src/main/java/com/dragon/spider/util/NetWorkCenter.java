@@ -121,7 +121,6 @@ public final class NetWorkCenter {
     public static BaseResponse post(String url, String paramData) {
         final BaseResponse[] response = new BaseResponse[]{null};
         post(url, paramData, new ResponseCallback() {
-            @Override
             public void onResponse(int resultCode, String resultJson) {
                 if(200 == resultCode) {
                     BaseResponse r = JSONUtil.toBean(resultJson, BaseResponse.class);
@@ -179,7 +178,6 @@ public final class NetWorkCenter {
     public static BaseResponse get(String url) {
         final BaseResponse[] response = new BaseResponse[]{null};
         doRequest(RequestMethod.GET, url, null, null, new ResponseCallback() {
-            @Override
             public void onResponse(int resultCode, String resultJson) {
                 if(200 == resultCode) {
                     BaseResponse r = JSONUtil.toBean(resultJson, BaseResponse.class);

@@ -61,7 +61,6 @@ public class MenuButton implements Model {
         this.sub_button = sub_button;
     }
 
-    @Override
     public String toJsonString() {
         return JSONUtil.toJson(this);
     }

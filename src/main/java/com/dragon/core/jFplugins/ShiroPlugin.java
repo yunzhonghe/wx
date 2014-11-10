@@ -11,7 +11,6 @@ import com.jfinal.plugin.IPlugin;
 
 public class ShiroPlugin implements IPlugin{
 
-	@Override
 	public boolean start() {
 		Factory<SecurityManager> factory = new IniSecurityManagerFactory("classpath:shiro.ini");
 		SecurityManager securityManager=factory.getInstance();
@@ -19,7 +18,6 @@ public class ShiroPlugin implements IPlugin{
 		return true;
 	}
 
-	@Override
 	public boolean stop() {
 		return false;
 	}

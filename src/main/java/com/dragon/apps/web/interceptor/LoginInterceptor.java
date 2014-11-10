@@ -9,7 +9,6 @@ import com.jfinal.core.Controller;
 
 public class LoginInterceptor implements Interceptor{
 
-	@Override
 	public void intercept(ActionInvocation ai) {
 		
 		Controller controller = ai.getController();

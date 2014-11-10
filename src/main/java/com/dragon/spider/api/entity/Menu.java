@@ -20,7 +20,6 @@ public class Menu implements Model {
         this.button = button;
     }
 
-    @Override
     public String toJsonString() {
         return JSONUtil.toJson(this);
     }
