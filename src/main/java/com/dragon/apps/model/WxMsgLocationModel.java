@@ -14,14 +14,14 @@ public class WxMsgLocationModel extends Model<WxMsgLocationModel> {
 	private String label = "label";
 	private String id ="id";
 
-	private WxMsgLocationModel() {
+/*	private WxMsgLocationModel() {
 	};
 
 	private static WxMsgLocationModel instance = new WxMsgLocationModel();
 
 	public static WxMsgLocationModel getInstance() {
 		return instance;
-	}
+	}*/
 
 	public String getLocationX() {
 		return getStr(locationX);

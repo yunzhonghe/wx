@@ -21,10 +21,11 @@ public class WeChatController extends WxAbstractAPIController {
 		}else{
 			if (isLegal(request)) {
 	            //绑定微信服务器成功
-				renderText(this.getAttrForStr("echostr"));
+				renderText(this.getPara("echostr"));
 	        } else {
 	            //绑定微信服务器失败
-	        	renderText("get");
+	        	System.out.println(this.getPara("echostr"));
+	        	renderText(this.getPara("echostr"));
 	        }
 		}	
 	}

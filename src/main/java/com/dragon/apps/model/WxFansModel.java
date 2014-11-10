@@ -18,7 +18,7 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxFansModel extends Model<WxFansModel> {
 
 	private static final long serialVersionUID = 1L;
-	private static final WxFansModel dao = new WxFansModel();
+	//private static final WxFansModel dao = new WxFansModel();
 
 	private String id = "id";
 	private String openId = "open_id";
@@ -30,17 +30,17 @@ public class WxFansModel extends Model<WxFansModel> {
 	private String createTime = "create_time";
 	private String sourceFrom = "source_from";
 	
-	private WxFansModel() {
+	/*private WxFansModel() {
 
 	}
-	
+	*/
 	public WxFansModel getByOpenId(String openId){
-		return dao.findFirst("select * from " +ClConfig.WX_FANS_TABLE + " where open_id = " + openId);
+		return findFirst("select * from " +ClConfig.WX_FANS_TABLE + " where open_id = '" + openId+"'");
 	}
 
-	public static WxFansModel getInstance() {
+	/*public static WxFansModel getInstance() {
 		return dao;
-	}
+	}*/
 	
 
 	public long getId() {

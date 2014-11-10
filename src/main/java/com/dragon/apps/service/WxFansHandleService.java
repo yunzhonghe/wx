@@ -17,7 +17,7 @@ public class WxFansHandleService {
 	 * @return 响应消息对象
 	 */
 	public BaseMsg handleQrCodeEvent(QrCodeEvent event) {
-		WxFansModel model = WxFansModel.getInstance();		
+		WxFansModel model =new WxFansModel();		
 		String openId = event.getFromUserName();		
 		model = model.getByOpenId(openId);
 		if (null != model) {
@@ -25,7 +25,7 @@ public class WxFansHandleService {
 			model.setSourceFrom(event.getTicket());
 			model.update();
 		}else{
-			model = WxFansModel.getInstance();	
+			model = new WxFansModel();	
 			model.setName(event.getFromUserName());
 			model.setCreateTime(event.getCreateTime());
 			model.setOpenId(event.getFromUserName());
@@ -44,7 +44,7 @@ public class WxFansHandleService {
 	 * @return 响应消息对象
 	 */
 	public BaseMsg handleSubscribe(BaseEvent event) {
-		WxFansModel model = WxFansModel.getInstance();
+		WxFansModel model = new WxFansModel();
 		model.setName(event.getFromUserName());
 		model.setCreateTime(event.getCreateTime());
 		model.setOpenId(event.getFromUserName());
@@ -63,7 +63,7 @@ public class WxFansHandleService {
 	public BaseMsg handleUnsubscribe(BaseEvent event) {
 		if (event != null) {
 			String openId = event.getFromUserName();
-			WxFansModel model = WxFansModel.getInstance();
+			WxFansModel model = new WxFansModel();
 			model = model.getByOpenId(openId);
 			if (null != model) {
 				model.setSubscribe(ConstantWx.unSubscribe);

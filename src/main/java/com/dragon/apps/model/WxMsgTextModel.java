@@ -11,14 +11,14 @@ public class WxMsgTextModel extends Model<WxMsgTextModel> {
 	private String content ="content";
 	private String id ="id";
 
-	private WxMsgTextModel() {
+	/*private WxMsgTextModel() {
 	};
 
 	private static WxMsgTextModel instance = new WxMsgTextModel();
 
 	public static WxMsgTextModel getInstance() {
 		return instance;
-	}
+	}*/
 
 	public String getContent() {
 		return getStr(content);

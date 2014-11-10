@@ -13,7 +13,7 @@ public class WxMsgLinkModel extends Model<WxMsgLinkModel> {
 	private String url = "url";
 	private String id ="id";
 
-	private WxMsgLinkModel() {
+	/*private WxMsgLinkModel() {
 	};
 
 	private static WxMsgLinkModel instance = new WxMsgLinkModel();
@@ -21,7 +21,7 @@ public class WxMsgLinkModel extends Model<WxMsgLinkModel> {
 	public static WxMsgLinkModel getInstance() {
 		return instance;
 	}
-
+*/
 	public String getTitle() {
 		return getStr(title);
 	}

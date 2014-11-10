@@ -40,9 +40,9 @@ public class MessageHandleService {
 	 * @return 响应消息对象
 	 */
 	public boolean handleTextMsg(TextReqMsg msg) {		
-		WxMessageModel model =WxMessageModel.getInstance();
+		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
-		WxMsgTextModel text = WxMsgTextModel.getInstance();
+		WxMsgTextModel text =new WxMsgTextModel();
 		text.setContent(msg.getContent());
 		boolean isSave = text.save();
 		if(isSave){
@@ -69,9 +69,9 @@ public class MessageHandleService {
 	 * @return 响应消息对象
 	 */
 	public boolean handleImageMsg(ImageReqMsg msg) {
-		WxMessageModel model =WxMessageModel.getInstance();
+		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
-		WxMsgImageModel image = WxMsgImageModel.getInstance();
+		WxMsgImageModel image = new WxMsgImageModel();
 		image.setMediaId(msg.getMediaId());
 		image.setPicUrl(msg.getPicUrl());	
 		boolean isSave = image.save();
@@ -91,9 +91,9 @@ public class MessageHandleService {
 	 * @return 响应消息对象
 	 */
 	public boolean handleVoiceMsg(VoiceReqMsg msg) {
-		WxMessageModel model =WxMessageModel.getInstance();
+		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
-		WxMsgVoiceModel voice = WxMsgVoiceModel.getInstance();
+		WxMsgVoiceModel voice = new WxMsgVoiceModel();
 		voice.setMediaId(msg.getMediaId());
 		voice.setFormat(msg.getFormat());
 		boolean isSave = voice.save();
@@ -113,9 +113,9 @@ public class MessageHandleService {
 	 * @return 响应消息对象
 	 */
 	public boolean handleVideoMsg(VideoReqMsg msg) {
-		WxMessageModel model =WxMessageModel.getInstance();
+		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
-		WxMsgVideoModel vedio = WxMsgVideoModel.getInstance();
+		WxMsgVideoModel vedio =new WxMsgVideoModel();
 		vedio.setMediaId(msg.getMediaId());
 		vedio.setThunbMediaId(msg.getThumbMediaId());
 		boolean isSave = vedio.save();
@@ -135,9 +135,9 @@ public class MessageHandleService {
 	 * @return 响应消息对象
 	 */
 	public boolean handleLocationMsg(LocationReqMsg msg) {
-		WxMessageModel model =WxMessageModel.getInstance();
+		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
-		WxMsgLocationModel location = WxMsgLocationModel.getInstance();
+		WxMsgLocationModel location =new WxMsgLocationModel();
 		location.setLocationX(String.valueOf(msg.getLocationX()));
 		location.setLocationY(String.valueOf(msg.getLocationY()));
 		location.setScale(msg.getScale());
@@ -159,9 +159,9 @@ public class MessageHandleService {
 	 * @return 响应消息对象
 	 */
 	public boolean handleLinkMsg(LinkReqMsg msg) {
-		WxMessageModel model =WxMessageModel.getInstance();
+		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
-		WxMsgLinkModel link = WxMsgLinkModel.getInstance();
+		WxMsgLinkModel link =new WxMsgLinkModel();
 		link.setTitle(msg.getTitle());
 		link.setDescription(msg.getDescription());
 		link.setUrl(msg.getUrl());
@@ -218,29 +218,7 @@ public class MessageHandleService {
 		return handleDefaultEvent(event);
 	}
 
-	/**
-	 * 处理添加关注事件，有需要时子类重写
-	 * 
-	 * @param event
-	 *            添加关注事件对象
-	 * @return 响应消息对象
-	 */
-	protected BaseMsg handleSubscribe(BaseEvent event) {
-		
-		
-		return new TextMsg("感谢您的关注!");
-	}
-
-	/**
-	 * 处理取消关注事件，有需要时子类重写
-	 * 
-	 * @param event
-	 *            取消关注事件对象
-	 * @return 响应消息对象
-	 */
-	protected BaseMsg handleUnsubscribe(BaseEvent event) {
-		return null;
-	}
+	
 
 	protected BaseMsg handleDefaultMsg(BaseReqMsg msg) {
 		BaseMsg base = new BaseMsg();

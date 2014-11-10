@@ -77,7 +77,9 @@ public abstract class WxAbstractAPIController extends Controller {
 	 * 
 	 * @return token值
 	 */
-	protected abstract String getToken();
+	protected String getToken() {
+		return "yjkkop1412736255";
+	};
 
 	/**
 	 * 处理微信服务器发来的请求方法
@@ -89,20 +91,20 @@ public abstract class WxAbstractAPIController extends Controller {
 	String processRequest(HttpServletRequest request) {
 
 		Map<String, String> reqMap = new HashMap<String, String>();
-		reqMap.put("FromUserName","chenlong");
-		reqMap.put("ToUserName","liujian");
-		reqMap.put("MsgType","text");
-		reqMap.put("Content","helllofasdfa");
-		reqMap.put("MsgId","1234567890123456");
-		reqMap.put("CreateTime",String.valueOf(Calendar.getInstance().getTimeInMillis()));
+		reqMap.put("FromUserName", "chenlong");
+		reqMap.put("ToUserName", "liujian");
+		reqMap.put("MsgType", "text");
+		reqMap.put("Content", "helllofasdfa");
+		reqMap.put("MsgId", "1234567890123456");
+		reqMap.put("CreateTime", String.valueOf(Calendar.getInstance().getTimeInMillis()));
 		if (!isDevModel) {
 			reqMap = MessageUtil.parseXml(request);
-		} 
+		}
 
 		String fromUserName = reqMap.get("FromUserName");
 		String toUserName = reqMap.get("ToUserName");
 		String msgType = reqMap.get("MsgType");
-		
+
 		BaseMsg msg = null;
 
 		if (msgType.equals(ReqType.EVENT)) {
@@ -111,26 +113,26 @@ public abstract class WxAbstractAPIController extends Controller {
 			if (isNotBlank(ticket)) {
 				String eventKey = reqMap.get("EventKey");
 				QrCodeEvent event = new QrCodeEvent(eventKey, ticket);
-				buildBasicEvent(reqMap, event);							
+				buildBasicEvent(reqMap, event);
 				WxFansHandleService service = new WxFansHandleService();
-				msg = service.handleQrCodeEvent(event);				
+				msg = service.handleQrCodeEvent(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
 			}
 			if (eventType.equals(EventType.SUBSCRIBE)) {
 				BaseEvent event = new BaseEvent();
-				buildBasicEvent(reqMap, event);				
+				buildBasicEvent(reqMap, event);
 				WxFansHandleService service = new WxFansHandleService();
-				msg =service.handleSubscribe(event);				
+				msg = service.handleSubscribe(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
 			} else if (eventType.equals(EventType.UNSUBSCRIBE)) {
 				BaseEvent event = new BaseEvent();
-				buildBasicEvent(reqMap, event);				
+				buildBasicEvent(reqMap, event);
 				WxFansHandleService service = new WxFansHandleService();
-				msg =service.handleUnsubscribe(event);
+				msg = service.handleUnsubscribe(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
@@ -162,7 +164,7 @@ public abstract class WxAbstractAPIController extends Controller {
 				}
 			}
 		} else {
-			if (msgType.equals(ReqType.TEXT)) {				
+			if (msgType.equals(ReqType.TEXT)) {
 				String content = reqMap.get("Content");
 				TextReqMsg textReqMsg = new TextReqMsg(content);
 				MessageHandleService service = new MessageHandleService();
@@ -189,10 +191,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String recognition = reqMap.get("Recognition");
 				VoiceReqMsg voiceReqMsg = new VoiceReqMsg(mediaId, format, recognition);
 				buildBasicReqMsg(reqMap, voiceReqMsg);
-				
+
 				MessageHandleService service = new MessageHandleService();
 				service.handleVoiceMsg(voiceReqMsg);
-				
+
 				msg = handleVoiceMsg(voiceReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(voiceReqMsg);
@@ -202,10 +204,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String mediaId = reqMap.get("MediaId");
 				VideoReqMsg videoReqMsg = new VideoReqMsg(mediaId, thumbMediaId);
 				buildBasicReqMsg(reqMap, videoReqMsg);
-				
+
 				MessageHandleService service = new MessageHandleService();
-				service.handleVideoMsg(videoReqMsg);				
-				
+				service.handleVideoMsg(videoReqMsg);
+
 				msg = handleVideoMsg(videoReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(videoReqMsg);
@@ -217,10 +219,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String label = reqMap.get("Label");
 				LocationReqMsg locationReqMsg = new LocationReqMsg(locationX, locationY, scale, label);
 				buildBasicReqMsg(reqMap, locationReqMsg);
-				
+
 				MessageHandleService service = new MessageHandleService();
-				service.handleLocationMsg(locationReqMsg);		
-				
+				service.handleLocationMsg(locationReqMsg);
+
 				msg = handleLocationMsg(locationReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(locationReqMsg);
@@ -231,10 +233,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				String url = reqMap.get("Url");
 				LinkReqMsg linkReqMsg = new LinkReqMsg(title, description, url);
 				buildBasicReqMsg(reqMap, linkReqMsg);
-				
+
 				MessageHandleService service = new MessageHandleService();
 				service.handleLinkMsg(linkReqMsg);
-				
+
 				msg = handleLinkMsg(linkReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(linkReqMsg);
@@ -295,11 +297,9 @@ public abstract class WxAbstractAPIController extends Controller {
 	 * @return 响应消息对象
 	 */
 	protected BaseMsg handleTextMsg(TextReqMsg msg) {
-		/*if(null==msg){
-			return null;
-		}else{
-			return msg.getContent();
-		}*/
+		/*
+		 * if(null==msg){ return null; }else{ return msg.getContent(); }
+		 */
 		TextMsg tReqMsg = new TextMsg("vbafaksdjbakdfad");
 		tReqMsg.setMsgType("Text");
 		return tReqMsg;
@@ -359,7 +359,7 @@ public abstract class WxAbstractAPIController extends Controller {
 	protected BaseMsg handleLinkMsg(LinkReqMsg msg) {
 		return handleDefaultMsg(msg);
 	}
-	
+
 	/**
 	 * 处理地理位置事件，有需要时子类重写
 	 * 
@@ -403,10 +403,10 @@ public abstract class WxAbstractAPIController extends Controller {
 	protected BaseMsg handleSubscribe(BaseEvent event) {
 		return new TextMsg("感谢您的关注!");
 	}
-	
-	  protected BaseMsg handleQrCodeEvent(QrCodeEvent event) {
-	        return handleDefaultEvent(event);
-	    }
+
+	protected BaseMsg handleQrCodeEvent(QrCodeEvent event) {
+		return handleDefaultEvent(event);
+	}
 
 	/**
 	 * 处理取消关注事件，有需要时子类重写
@@ -419,7 +419,7 @@ public abstract class WxAbstractAPIController extends Controller {
 		return null;
 	}
 
-	protected BaseMsg handleDefaultMsg(BaseReqMsg msg) {		
+	protected BaseMsg handleDefaultMsg(BaseReqMsg msg) {
 		return null;
 	}
 
@@ -448,7 +448,8 @@ public abstract class WxAbstractAPIController extends Controller {
 		String signature = request.getParameter("signature");
 		String timestamp = request.getParameter("timestamp");
 		String nonce = request.getParameter("nonce");
-		return SignUtil.checkSignature(getToken(), signature, timestamp, nonce);
+		String token = this.getToken();
+		return SignUtil.checkSignature("yjkkop1412736255", signature, timestamp, nonce);
 	}
 
 	@Override

@@ -12,12 +12,12 @@ public class WeChatService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public boolean doSigure(String token) throws ServiceException {
-		WxMessageModel model = WxMessageModel.getInstance().getByToken(token);
+	/*public boolean doSigure(String token) throws ServiceException {
+		WxMessageModel model = new WxMessageModel.getInstance().getByToken(token);
 		if (null != model) {
 			return true;
 		} else {
 			return false;
 		}
-	}
+	}*/
 }

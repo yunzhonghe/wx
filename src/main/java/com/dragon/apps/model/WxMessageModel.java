@@ -17,7 +17,7 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxMessageModel extends Model<WxMessageModel> {
 
 	private static final long serialVersionUID = 1L;
-	private static final WxMessageModel dao = new WxMessageModel();
+	//private static final WxMessageModel dao = new WxMessageModel();
 
 	private String id = "id";
 	private String messageId = "message_id";
@@ -30,16 +30,16 @@ public class WxMessageModel extends Model<WxMessageModel> {
 	private String rspType = "rsp_type";
 	private String rspTime = "rsp_time";
 
-	private WxMessageModel() {
+	/*private WxMessageModel() {
 
 	}
 
 	public static WxMessageModel getInstance() {
 		return dao;
-	}
+	}*/
 
 	public WxMessageModel getByToken(String token) throws ServiceException {
-		List<WxMessageModel> lists = dao.find("select * from wx_account where token = " + token);
+		List<WxMessageModel> lists = this.find("select * from wx_account where token = " + token);
 		if (null == lists || lists.size() > 1) {
 			throw new ServiceException(ErrorCode.TOKENERROR);
 		} else {

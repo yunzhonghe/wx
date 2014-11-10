@@ -12,7 +12,7 @@ public class WxMsgImageModel extends Model<WxMsgImageModel> {
 	private String mediaId = "media_id";
 	private String id ="id";
 
-	private WxMsgImageModel() {
+/*	private WxMsgImageModel() {
 	};
 
 	private static WxMsgImageModel instance = new WxMsgImageModel();
@@ -20,7 +20,7 @@ public class WxMsgImageModel extends Model<WxMsgImageModel> {
 	public static WxMsgImageModel getInstance() {
 		return instance;
 	}
-
+*/
 	public String getPicUrl() {
 		return getStr(picUrl);
 	}

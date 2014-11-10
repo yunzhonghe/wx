@@ -12,14 +12,14 @@ public class WxMsgVoiceModel extends Model<WxMsgVoiceModel> {
 	private String mediaId = "media_id";
 	private String id ="id";
 
-	private WxMsgVoiceModel() {
+	/*private WxMsgVoiceModel() {
 	};
 
 	private static WxMsgVoiceModel instance = new WxMsgVoiceModel();
 
 	public static WxMsgVoiceModel getInstance() {
 		return instance;
-	}
+	}*/
 
 	public String getFormat() {
 		return getStr(format);

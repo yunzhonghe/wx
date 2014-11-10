@@ -12,7 +12,7 @@ public class WxMsgVideoModel extends Model<WxMsgVideoModel> {
 	private String mediaId = "media_id";
 	private String id ="id";
 
-	private WxMsgVideoModel() {
+/*	private WxMsgVideoModel() {
 	};
 
 	private static WxMsgVideoModel instance = new WxMsgVideoModel();
@@ -20,7 +20,7 @@ public class WxMsgVideoModel extends Model<WxMsgVideoModel> {
 	public static WxMsgVideoModel getInstance() {
 		return instance;
 	}
-
+*/
 	public String getThunbMediaId() {
 		return getStr(thunbMediaId);
 	}
