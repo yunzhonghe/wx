@@ -10,7 +10,7 @@
 			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 		</li>
 		
-		<li class="start <#if index gt 0>active</#if>">
+		<li class="start <#if index gt 0 && index lt 10>active</#if>">
 			<a href="javascript:;">
 			<i class="fa fa-folder-open"></i> 
 			<span class="title">微信管理</span>
@@ -38,6 +38,7 @@
 					<a href="${base}/wxaccount/modifyself">微信信息维护</a>
 				</li>
 			</ul>
+		</li>
 		<li <#if index gt 60 && index lt 70>class="active"</#if>>
             <a href="${base}/wx-admin/list">
                 <i class="fa fa-folder-open"></i>
