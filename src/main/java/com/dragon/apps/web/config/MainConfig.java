@@ -27,7 +27,7 @@ public class MainConfig extends JFinalConfig {
 //		loadPropertyFile("a_little_config_lj.txt");
 		me.setBaseViewPath("/WEB-INF/pages");
 //		me.setFreeMarkerViewExtension(".ftl");
-		me.setDevMode(getPropertyToBoolean("devMode", false));
+		me.setDevMode(getPropertyToBoolean("devMode",true));
 	}
 	
 	/**
