@@ -1,68 +1,81 @@
 <#include "../base/layout.html"/>
 <@layout>
+	<link href="${base}/resources/css/pages/profile.css" rel="stylesheet" type="text/css"/>
 	<!-- BEGIN CONTAINER -->
 	<div class="page-container">
 	    <@nav index=1/>
 		<div class="page-content">
             <@title name="总概况" menus='{"微信管理":"${base}/wxaccount","总概况":"javascript:;"}'/>
-			<div class="row">
+			<!-- BEGIN PAGE CONTENT-->
+			<div class="row profile">
 				<div class="col-md-12">
-					<#if (accountList??) && (accountList?size > 0)>
-						<#list accountList as account>
-							<div class="portlet box blue">
-								<div class="portlet-title">
-									<div class="caption"><i class="fa"></i>${account.name?default('')}(${account.account})</div>
-									<div class="tools">
-										<a href="javascript:;" class="collapse"></a>
-										<a href="javascript:;" class="reload"></a>
+					<!--BEGIN TABS-->
+					<div class="tabbable tabbable-custom tabbable-full-width">
+						<div class="tab-pane active">
+							<#if accountList?has_content>
+							<#list accountList as account>
+							<div class="row portfolio-block">
+								<div class="col-md-6">
+									<div class="portfolio-text">
+										<img src="${base}/resources/img/logo_metronic.jpg" alt="" />
+										<div class="portfolio-text-info">
+											<h4>长虹公司( changhongjituan )</h4>
+											<span>账号类型:认证订阅</span>
+											<span style="margin-left:10px;">托管状态：user</span><br/>
+											<span>最后同步时间：2014-11-05 05:24</span>
+										</div>
 									</div>
 								</div>
-								<div class="portlet-body">
-									<table class="table">
-										<tbody>
-											<tr>
-												<td rowspan="2">
-													<img src="${account.avatar?default('')}"/>
-												</td>
-												<td width="15%" align="right">帐号类型：</td>
-												<td width="30%">
-													<#if account.getWxAccType()??>
-														${account.getWxAccType().name}
-													</#if>
-												</td>
-												<td width="15%" align="right">最后同步时间：</td>
-												<td width="30%"></td>
-											</tr>
-											<tr>
-												<td align="right">托管状态：</td>
-												<td colspan="3">
-													<#if account.wxadmin??>
-														${account.wxadmin.name?default('')}
-													</#if>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									<div class="row form-group">
-										<div class="col-md-9">
-											<table class="table">
-												<tr><td align="center">新消息：</td><td align="center">新增人数：</td></tr>
-											</table>
-										</div>
-										<div class="col-md-3">
-											<table class="table">
-												<tr><td align="center">总用户数：</td></tr>
-											</table>
-										</div>
+								<div class="col-md-6">
+									<div class="portfolio-info">
+										新消息
+										<span>187</span>
+									</div>
+									<div class="portfolio-info">
+										新增人数
+										<span>1789</span>
+									</div>
+									<div class="portfolio-info">
+										总用户数
+										<span>12123131</span>
 									</div>
 								</div>
 							</div>
-						</#list>
-					<#else>
-						暂无微信帐号
-					</#if>
+							<div class="row portfolio-block">
+								<div class="col-md-6">
+									<div class="portfolio-text">
+										<img src="${base}/resources/img/logo_metronic.jpg" alt="" />
+										<div class="portfolio-text-info">
+											<h4>长虹公司( changhongjituan )</h4>
+											<span>账号类型:认证订阅</span>
+											<span style="margin-left:10px;">托管状态：user</span><br/>
+											<span>最后同步时间：2014-11-05 05:24</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="portfolio-info">
+										新消息
+										<span>187</span>
+									</div>
+									<div class="portfolio-info">
+										新增人数
+										<span>1789</span>
+									</div>
+									<div class="portfolio-info">
+										总用户数
+										<span>12123131</span>
+									</div>
+								</div>
+							</div>
+							</#list>
+							</#if>
+						</div>
+					</div>
+					<!--END TABS-->
 				</div>
 			</div>
+			<!-- END PAGE CONTENT-->
 		</div>
 	</div>
 	<@footer/>
