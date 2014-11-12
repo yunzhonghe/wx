@@ -11,6 +11,11 @@ import com.dragon.spider.message.req.LocationReqMsg;
 import com.dragon.spider.message.req.TextReqMsg;
 import com.dragon.spider.message.req.VideoReqMsg;
 import com.dragon.spider.message.req.VoiceReqMsg;
+
+/**
+ *  FIXME
+ *  需要在WxAbstractAPIController中去掉WxFansHandleService的定义，并添加当前类的引用
+ */
 public class MessageService implements MessageHandle{
 	private MessageHandleService hanleService = null;//接受消息、自动回复
 	private MessageRspHandleService service = null;//主动发送消息
