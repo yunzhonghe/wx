@@ -1,6 +1,7 @@
 package com.dragon.apps.service;
 
 import com.dragon.apps.model.WxAdmin;
+import com.dragon.apps.utils.Logger;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +18,11 @@ public class WxAdminService implements Serializable {
 
     public WxAdmin getWxAdminByWxAccountId(long wxAccountId) {
         List<WxAdmin> wxAdminList = WxAdmin.dao.find("select * from wx_admin where wx_account_id = " + wxAccountId);
+
+        if (wxAdminList.size() > 1) {
+            Logger.warn(this, String.format("the result length of get wx admin by wx account id is bigger than 1....[resultSize:%d]", wxAdminList.size()));
+        }
+
         if(wxAdminList.size() > 0) {
             return wxAdminList.get(0);
         } else {
