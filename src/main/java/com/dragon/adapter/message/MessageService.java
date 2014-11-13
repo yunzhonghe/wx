@@ -1,5 +1,6 @@
 package com.dragon.adapter.message;
 
+import com.dragon.adapter.AutoReplyRule;
 import com.dragon.apps.service.MessageHandleService;
 import com.dragon.apps.service.MessageRspHandleService;
 import com.dragon.spider.handle.MessageHandle;
@@ -27,32 +28,29 @@ public class MessageService implements MessageHandle{
 	 * @return BaseMsg 已经封装好toXml
 	 */
 	public BaseMsg handle(BaseReqMsg message) {
+		if(message==null){
+			return null;
+		}
 		if(message instanceof TextReqMsg){
 			TextReqMsg msg = (TextReqMsg)message;
 			hanleService.handleTextMsg(msg);
-			//FIXME
 		}else if(message instanceof ImageReqMsg){
 			ImageReqMsg msg = (ImageReqMsg)message;
 			hanleService.handleImageMsg(msg);
-			//FIXME
 		}else if(message instanceof VoiceReqMsg){
 			VoiceReqMsg msg = (VoiceReqMsg)message;
 			hanleService.handleVoiceMsg(msg);
-			//FIXME
 		}else if(message instanceof VideoReqMsg){
 			VideoReqMsg msg = (VideoReqMsg)message;
 			hanleService.handleVideoMsg(msg);
-			//FIXME
 		}else if(message instanceof LocationReqMsg){
 			LocationReqMsg msg = (LocationReqMsg)message;
 			hanleService.handleLocationMsg(msg);
-			//FIXME
 		}else if(message instanceof LinkReqMsg){
 			LinkReqMsg msg = (LinkReqMsg)message;
 			hanleService.handleLinkMsg(msg);
-			//FIXME
 		}
-		return null;
+		return AutoReplyRule.getInstance().autoReply(message);
 	}
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=发送客服消息
@@ -63,7 +61,7 @@ public class MessageService implements MessageHandle{
 	 */
 	public boolean sendMessage(String toUserOpenid,Object message){
 		boolean result = true;
-		//FIXME 1, does service.createMenu should return error?
+		//FIXME 1, does service.sendCustomMessage should return error?
 		service.sendCustomMessage(toUserOpenid, MessageAdapter.getMsgByModel(message));
 		return result;
 	}
