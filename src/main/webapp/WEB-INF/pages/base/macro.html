@@ -77,6 +77,22 @@
                 </li>
             </ul>
          </li>
+        <li <#if index gt 70 && index lt 80>class="active"</#if>>
+            <a href="${base}/wx-answer-rule/list">
+                <i class="fa fa-folder-open"></i>
+                <span class="title">应答规则维护</span>
+                <span class="arrow open"></span>
+            </a>
+            <span class="selected"></span>
+            <ul class="sub-menu">
+                <li <#if index = 71>class="active"</#if> >
+                <a href="${base}/wx-answer-rule/list">应答规则列表</a>
+                </li>
+                <li <#if index = 72>class="active"</#if> >
+                <a href="${base}/wx-answer-rule/preAdd">添加应答规则</a>
+                </li>
+            </ul>
+        </li>
 	</ul>
 	<!-- END SIDEBAR MENU -->
 </div>

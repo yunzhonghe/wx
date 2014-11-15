@@ -38,7 +38,7 @@ public class MainConfig extends JFinalConfig {
 
 		LjConfig.configRoute(me);
 		ClConfig.configRoute(me);
-        WxAdminConfig.configRoute(me);
+        LxConfig.configRoute(me);
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class MainConfig extends JFinalConfig {
         plu.add(new ShiroPlugin()); 
         ClConfig.configActiveRecordPlugin(arp);
         LjConfig.configActiveRecordPlugin(arp);
-        WxAdminConfig.configActiveRecordPlugin(arp);
+        LxConfig.configActiveRecordPlugin(arp);
 		
 	}
 	
