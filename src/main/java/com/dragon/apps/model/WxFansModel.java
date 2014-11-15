@@ -1,10 +1,10 @@
 package com.dragon.apps.model;
 
-import java.sql.Timestamp;
-import java.util.List;
+//import java.sql.Timestamp;
+//import java.util.List;
 
-import com.dragon.apps.exception.ErrorCode;
-import com.dragon.apps.exception.ServiceException;
+//import com.dragon.apps.exception.ErrorCode;
+//import com.dragon.apps.exception.ServiceException;
 import com.dragon.apps.web.config.ClConfig;
 import com.jfinal.plugin.activerecord.Model;
 
@@ -29,6 +29,7 @@ public class WxFansModel extends Model<WxFansModel> {
 	private String subscribe = "subscribe";
 	private String createTime = "create_time";
 	private String sourceFrom = "source_from";
+	private String relateId = "relate_id";//关联微信号的主键
 	
 	/*private WxFansModel() {
 
@@ -113,6 +114,12 @@ public class WxFansModel extends Model<WxFansModel> {
 
 	public WxFansModel setSourceFrom(String sourceFrom) {
 		return set(this.sourceFrom,sourceFrom);
+	}
+	public Long getRelateId() {
+		return getLong(relateId);
+	}
+	public WxFansModel setRelateId(Long relateId) {
+		return set(this.relateId,relateId);
 	}
 	
 	

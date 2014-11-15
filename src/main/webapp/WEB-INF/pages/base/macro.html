@@ -9,7 +9,6 @@
 			<div class="sidebar-toggler hidden-phone"></div>
 			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 		</li>
-		
 		<li class="start <#if index gt 0 && index lt 10>active</#if>">
 			<a href="javascript:;">
 			<i class="fa fa-folder-open"></i> 
@@ -36,6 +35,29 @@
 				</li>
 				<li <#if index = 5>class="active"</#if>>
 					<a href="${base}/wxaccount/modifyself">微信信息维护</a>
+				</li>
+			</ul>
+		</li>
+		<li class="start <#if index gt 10 && index lt 20>active</#if>">
+			<a href="javascript:;">
+			<i class="fa fa-folder-open"></i> 
+			<span class="title">粉丝管理</span>
+			<#if index gt 10 && index lt 20>
+				<span class="arrow open"></span>
+				<span class="selected"></span>
+			<#else>
+				<span class="arrow"></span>
+			</#if>
+			</a>
+			<ul class="sub-menu">
+				<li <#if index = 11>class="active"</#if> >
+					<a href="${base}/wxfans">粉丝管理</a>
+				</li>
+				<li <#if index = 12>class="active"</#if>>
+					<a href="${base}/wxfans/tag">标签管理</a>
+				</li>
+				<li <#if index = 13>class="active"</#if>>
+					<a href="${base}/wxfans/msg">会话管理</a>
 				</li>
 			</ul>
 		</li>
