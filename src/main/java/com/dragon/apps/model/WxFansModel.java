@@ -18,7 +18,7 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxFansModel extends Model<WxFansModel> {
 
 	private static final long serialVersionUID = 1L;
-	//private static final WxFansModel dao = new WxFansModel();
+	public static final WxFansModel dao = new WxFansModel();
 
 	private String id = "id";
 	private String openId = "open_id";
@@ -32,22 +32,28 @@ public class WxFansModel extends Model<WxFansModel> {
 	private String sourceFrom = "source_from";
 //	private String relateId = "relate_id";//关联微信号的主键
 	
-	/*private WxFansModel() {
-
-	}
-	*/
 	public WxFansModel getByOpenId(String openId){
 		return findFirst("select * from " +ClConfig.WX_FANS_TABLE + " where open_id = '" + openId+"'");
 	}
 	public WxFansInfo getWxFansInfo(){
-		return WxFansInfo.dao.findByOpenId(getOpenId());
+		if(info==null){
+			info = WxFansInfo.dao.findByOpenId(getOpenId());
+		}
+		return info;
 	}
-
+	private WxFansInfo info = null;
+	public WxFansInfo getInfo() {
+		return info;
+	}
+	public void setInfo(WxFansInfo info) {
+		this.info = info;
+	}
 	/*public static WxFansModel getInstance() {
 		return dao;
 	}*/
 	
 
+	
 	public long getId() {
 		return getLong(id);		
 	}

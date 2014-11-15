@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.dragon.apps.model.WxFansInfo;
+import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.service.UserHandleService;
+import com.dragon.apps.utils.ModeUtils;
 import com.dragon.apps.utils.StrUtils;
 import com.dragon.spider.api.response.CreateGroupResponse;
 import com.dragon.spider.api.response.GetGroupsResponse;
@@ -122,18 +125,62 @@ public class FansService {
 	 * @param fansOpenid
 	 * @return
 	 */
-	public Object getFansInfo(String fansOpenid){
-		Object result = null;
-		result = FansAdapter.getModelByResponse(service.getUserInfo(fansOpenid));
+	public WxFansModel getFansInfo(String fansOpenid){
+		WxFansModel result = FansAdapter.getModelByResponse(service.getUserInfo(fansOpenid));
 		return result;
 	}
-	
+	/**
+	 * 初始化粉丝信息
+	 */
+	public void initAllFansData(){
+		//FIXME get to know whose data it is.
+		List<String> openids = getAllFans();
+		if(openids!=null && openids.size()>0){
+			for(String openid : openids){
+				WxFansModel wxFansModel = getFansInfo(openid);
+				updateWxFansModelToDb(wxFansModel);
+			}
+		}
+	}
+	private void updateWxFansModelToDb(WxFansModel wxFansModel){
+		if(wxFansModel!=null){
+			String openid = wxFansModel.getOpenId();
+			if(openid!=null){
+				WxFansModel existsModel = WxFansModel.dao.getByOpenId(openid);
+				if(existsModel==null){
+					wxFansModel.save();
+				}else{
+					existsModel.setSubscribe(wxFansModel.getSubscribe());
+					//FIXME others info.
+					existsModel.update();
+				}
+				WxFansInfo info = wxFansModel.getInfo();
+				if(info!=null){
+					WxFansInfo existsInfo = WxFansInfo.dao.findByOpenId(openid);
+					if(existsInfo==null){
+						info.save();
+					}else{
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.nickname);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.sex);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.city);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.country);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.province);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.language);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.headimgurl);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.subscribe_time);
+						ModeUtils.setModelProperty(info, existsInfo, WxFansInfo.unionid);
+						existsInfo.update();
+					}
+				}
+				
+			}
+		}
+	}
 	private void setOpenidsToList(String[] openids,List<String> result){
 		for(int i=0;i<openids.length;i++){
 			result.add(openids[i]);
 		}
 	}
-	
 	private static FansService instance = null;
 	public static FansService getInstance(){
 		if(instance==null){

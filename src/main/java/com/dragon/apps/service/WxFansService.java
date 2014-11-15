@@ -3,6 +3,7 @@ package com.dragon.apps.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.dragon.adapter.fans.FansService;
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.model.WxTag;
 import com.dragon.apps.model.bean.WxFansListCon;
@@ -45,11 +46,19 @@ public class WxFansService implements Serializable{
 					List<Record> ls = Db.find(sql);
 					pageSet.setResultList(ls);
 				}else{
-					//FIXME call service to get fans in new thread.
+					initFans();//call service to get fans in new thread.
 				}
 			}
 		}
 		return pageSet;
+	}
+	private void initFans(){
+		new Thread(){
+			public void run() {
+				super.run();
+				FansService.getInstance().initAllFansData();
+			}
+		}.start();
 	}
 	public List<WxTag> getWxTagList(){
 		WxAdmin admin = BaseController.gerCurUser();
