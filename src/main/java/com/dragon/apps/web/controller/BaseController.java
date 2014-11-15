@@ -9,9 +9,10 @@ import com.dragon.apps.utils.PageSet;
 import com.jfinal.core.Controller;
 
 public class BaseController extends Controller{
+	protected String OPERATION_RESULT = "_opresult";//by ljsnake
+	protected String BEAN_ENTITY = "_bean";//by ljsnake
 	
-	
-	public WxAdmin gerCurUser(){
+	public static WxAdmin gerCurUser(){
 		Subject subject = SecurityUtils.getSubject();
 		if(subject.isAuthenticated() || subject.isRemembered() || subject.getPrincipal()==null){
 			throw new  AuthenticationException();
@@ -20,7 +21,6 @@ public class BaseController extends Controller{
 		return admin;
 	} 
 	
-	protected String operationResult = "_opresult";//by ljsnake
 	protected PageSet getPageSet() {//by ljsnake
 		PageSet pageSet = null;
 		//FIXME parameters name may be other names.

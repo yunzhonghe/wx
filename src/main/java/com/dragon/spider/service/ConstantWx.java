@@ -2,8 +2,8 @@ package com.dragon.spider.service;
 
 public class ConstantWx {
 	
-	public static final int subscribe =0 ;
-	public static final int unSubscribe =1;
+	public static final int subscribe =1 ;
+	public static final int unSubscribe =0;
 	
 	public static String loginUrl = "https://mp.weixin.qq.com/cgi-bin/loginpage?t=wxm2-login&lang=zh_CN";
 

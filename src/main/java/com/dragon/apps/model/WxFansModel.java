@@ -22,6 +22,7 @@ public class WxFansModel extends Model<WxFansModel> {
 
 	private String id = "id";
 	private String openId = "open_id";
+	private String wxAccountId = "wx_account_id";//关联微信号的主键
 	private String name = "name";
 	private String markName = "mark_name";
 	private String location = "location";
@@ -29,7 +30,7 @@ public class WxFansModel extends Model<WxFansModel> {
 	private String subscribe = "subscribe";
 	private String createTime = "create_time";
 	private String sourceFrom = "source_from";
-	private String relateId = "relate_id";//关联微信号的主键
+//	private String relateId = "relate_id";//关联微信号的主键
 	
 	/*private WxFansModel() {
 
@@ -37,6 +38,9 @@ public class WxFansModel extends Model<WxFansModel> {
 	*/
 	public WxFansModel getByOpenId(String openId){
 		return findFirst("select * from " +ClConfig.WX_FANS_TABLE + " where open_id = '" + openId+"'");
+	}
+	public WxFansInfo getWxFansInfo(){
+		return WxFansInfo.dao.findByOpenId(getOpenId());
 	}
 
 	/*public static WxFansModel getInstance() {
@@ -115,11 +119,11 @@ public class WxFansModel extends Model<WxFansModel> {
 	public WxFansModel setSourceFrom(String sourceFrom) {
 		return set(this.sourceFrom,sourceFrom);
 	}
-	public Long getRelateId() {
-		return getLong(relateId);
+	public Long getWxAccountId() {
+		return getLong(wxAccountId);
 	}
-	public WxFansModel setRelateId(Long relateId) {
-		return set(this.relateId,relateId);
+	public WxFansModel setWxAccountId(Long wxAccountId) {
+		return set(this.wxAccountId,wxAccountId);
 	}
 	
 	
