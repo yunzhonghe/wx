@@ -16,16 +16,14 @@
 							<div class="row form-group">
 								<div class="col-md-6">
 									<label class="control-label" style="width: 28%;">粉丝昵称</label>
-									<div class="input-icon" style="display: inline-block;width: 70%;">
-										<i class="fa fa-map-marker"></i>
-										<input class="form-control" type="text" name="wxFansListCon.nickName" 
+									<div style="display: inline-block;width: 70%;">
+										<input class="form-control" type="text" name="wxFansListCon.nickName"  
 											value="<#if con??>${con.nickName?default('')}</#if>"/>
 									</div>
 								</div>
 								<div class="col-md-6">
-									<label class="control-label" style="width: 28%;">备注昵称</label>
-									<div class="input-icon" style="display: inline-block;width: 70%;">
-										<i class="fa fa-map-marker"></i>
+									<label class="control-label" style="width: 28%;">备注名称</label>
+									<div style="display: inline-block;width: 70%;">
 										<input class="form-control" type="text" name="wxFansListCon.nickName"
 											value="<#if con??>${con.markName?default('')}</#if>"/>
 									</div>
@@ -48,8 +46,8 @@
 									-->
 								</div>
 							</div>
-							<button class="btn blue btn-block margin-top-20" onclick="javascript:document.forms[0].submit();">
-								SEARCH <i class="m-icon-swapright m-icon-white"></i>
+							<button class="btn  btn-block margin-top-20" onclick="javascript:document.forms[0].submit();">
+								<b>SEARCH</b> <i class="m-icon-swapright m-icon-white"></i>
 							</button>
 						
 					</div>
@@ -102,7 +100,9 @@
 											</tr>
 										</#list>
 									<#else>
-										暂无数据，请稍候再尝试
+										<tr>
+											<td colspan="6">暂无数据，请稍候再尝试</td>
+										</tr>
 									</#if>
 								</tbody>
 							</table>

@@ -20,6 +20,13 @@ public class BaseController extends Controller{
 		WxAdmin admin=(WxAdmin) subject.getPrincipal();
 		return admin;
 	} 
+	public static Long gerCurAccountId(){
+		WxAdmin admin = gerCurUser();
+		if(admin!=null){
+			return admin.getWxAccountId();
+		}
+		return null;
+	} 
 	
 	protected PageSet getPageSet() {//by ljsnake
 		PageSet pageSet = null;

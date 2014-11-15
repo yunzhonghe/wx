@@ -8,7 +8,7 @@ import com.jfinal.plugin.activerecord.Model;
  * 标签
  */
 public class WxTag extends Model<WxTag> {
-	public static final String tableName = "wx_fans_info";
+	public static final String tableName = "wx_tag";
 
 	private static final long serialVersionUID = 1L;
 	public static final WxTag dao = new WxTag();
@@ -21,6 +21,6 @@ public class WxTag extends Model<WxTag> {
 		if(accountId==null){
 			return null;
 		}
-		return find("select * from "+tableName+" where "+accountId+"="+accountId);
+		return find("select * from "+WxTag.tableName+" where "+WxTag.accountId+"="+accountId);
 	}
 }

@@ -18,7 +18,7 @@ public enum OperationUtil {
 					return op;
 				}
 			}
-		return OperationUtil.values()[0];
+		return LIST;
 	}
 
 	OperationUtil(String identify, String name) {

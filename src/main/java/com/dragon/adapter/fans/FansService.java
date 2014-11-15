@@ -9,6 +9,7 @@ import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.service.UserHandleService;
 import com.dragon.apps.utils.ModeUtils;
 import com.dragon.apps.utils.StrUtils;
+import com.dragon.apps.web.controller.BaseController;
 import com.dragon.spider.api.response.CreateGroupResponse;
 import com.dragon.spider.api.response.GetGroupsResponse;
 import com.dragon.spider.api.response.GetUsersResponse;
@@ -133,25 +134,29 @@ public class FansService {
 	 * 初始化粉丝信息
 	 */
 	public void initAllFansData(){
-		//FIXME get to know whose data it is.
 		List<String> openids = getAllFans();
 		if(openids!=null && openids.size()>0){
+			//FIXME 
+			//get account_id??? to know whose data it is.
+			//current way is not correct, the correct way is get from https/token.
+			Long account_id = BaseController.gerCurUser().getWxAccountId();
 			for(String openid : openids){
 				WxFansModel wxFansModel = getFansInfo(openid);
-				updateWxFansModelToDb(wxFansModel);
+				updateWxFansModelToDb(wxFansModel,account_id);
 			}
 		}
 	}
-	private void updateWxFansModelToDb(WxFansModel wxFansModel){
+	private void updateWxFansModelToDb(WxFansModel wxFansModel,Long account_id){
 		if(wxFansModel!=null){
 			String openid = wxFansModel.getOpenId();
 			if(openid!=null){
+				wxFansModel.setWxAccountId(account_id);
 				WxFansModel existsModel = WxFansModel.dao.getByOpenId(openid);
 				if(existsModel==null){
 					wxFansModel.save();
 				}else{
 					existsModel.setSubscribe(wxFansModel.getSubscribe());
-					//FIXME others info.
+					//XXX may be has other info?.
 					existsModel.update();
 				}
 				WxFansInfo info = wxFansModel.getInfo();
