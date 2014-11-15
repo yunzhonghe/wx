@@ -14,7 +14,7 @@ public class BaseController extends Controller{
 	
 	public static WxAdmin gerCurUser(){
 		Subject subject = SecurityUtils.getSubject();
-		if(subject.isAuthenticated() || subject.isRemembered() || subject.getPrincipal()==null){
+		if(subject.getPrincipal()==null){
 			throw new  AuthenticationException();
 		}
 		WxAdmin admin=(WxAdmin) subject.getPrincipal();
