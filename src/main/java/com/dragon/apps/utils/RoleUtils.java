@@ -16,12 +16,4 @@ public class RoleUtils {
 		}
 		return false;
 	}
-	/**
-	 * 获取当前用户的id.
-	 * @return
-	 */
-	public static Long getCurrentUserId(){
-		//FIXME
-		return 1l;
-	}
 }

@@ -23,14 +23,14 @@
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label class="control-label">微信密码：</label>
-										<input class="form-control" type="password" id="password" name="wxAccount.password" value="${wxAccount.password}">
+										<input class="form-control" type="password" id="password" name="wxAccount.password" value="${wxAccount.password?default('')}">
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label class="control-label">微信原始id：</label>
 										<input class="form-control" type="text" id="originalid" name="wxAccount.originalid"
-											readonly="readonly" value="${wxAccount.originalid}">
+											readonly="readonly" value="${wxAccount.originalid?default('')}">
 									</div>
 								</div>
 								<div class="row form-group">
@@ -42,6 +42,7 @@
 								<div class="form-actions">
 									<button type="submit" class="btn blue">保存</button>
 									<button type="reset" class="btn default">重置</button>
+									<input type="button" class="btn default" onclick="javascript:window.history.go(-1);" value="返回"/>
 								</div>
 							</form>
 						</div>
