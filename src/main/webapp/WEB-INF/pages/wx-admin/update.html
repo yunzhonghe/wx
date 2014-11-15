@@ -55,9 +55,9 @@
 										<div class="col-md-4">
 											<select id="form_2_select2" class="form-control select2me" name="wxAdmin.wx_account_id">
 												<option value="">--请选择--</option>
-												<#if accountList?has_content>	
+												<#if accountList?has_content>
 												<#list accountList as account>
-												<#if (wxAccountId.wxAccountId)?has_content && account.id=admin.wxAccountId>
+												<#if (admin.wxAccountId)?has_content && account.id=admin.wxAccountId>
 													<option value="${account.id}" selected="selected">${account.name}</option>
 												<#else>
 													<option value="${account.id}">${account.name}</option>
