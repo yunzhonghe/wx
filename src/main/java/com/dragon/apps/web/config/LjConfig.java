@@ -13,7 +13,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 
 public class LjConfig {
 	public static void configRoute(Routes me){
-		//FIXME
+		//FIXME//
 		me.add(WxAccountController.controlerKey,WxAccountController.class);
 		me.add(WxFansController.controlerKey,WxFansController.class);
 	}
