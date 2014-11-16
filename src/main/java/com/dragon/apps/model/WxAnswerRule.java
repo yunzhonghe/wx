@@ -36,12 +36,12 @@ public class WxAnswerRule extends Model<WxAnswerRule> {
         return getInt(ANSWER_TYPE);
     }
 
-    public long getMaterialId() {
+    public Long getMaterialId() {
         return getLong(MATERIAL_ID);
     }
 
-    public Object getMaterialPath() {
-        return get(MATERIAL_PATH);
+    public String getMaterialPath() {
+        return getStr(MATERIAL_PATH);
     }
 
     public WxAnswerRule setKeyword(String keyword) {
@@ -56,11 +56,11 @@ public class WxAnswerRule extends Model<WxAnswerRule> {
         return set(ANSWER_TYPE, answerType);
     }
 
-    public WxAnswerRule setMaterialId(long materialId) {
+    public WxAnswerRule setMaterialId(Long materialId) {
         return set(MATERIAL_ID, materialId);
     }
 
-    public WxAnswerRule setMaterialPath(Object materialPath) {
+    public WxAnswerRule setMaterialPath(String materialPath) {
         return set(MATERIAL_PATH, materialPath);
     }
 

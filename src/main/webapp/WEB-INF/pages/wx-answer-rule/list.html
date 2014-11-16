@@ -32,7 +32,7 @@
                                         <#if rule.answerType = 0>
 										<td>${(rule.answer)?default('')}</td>
                                         <#else>
-										<td>${(rule.materialPath)?default('')}</td>
+										<td><img height="20px" width="200px" src="${(rule.materialPath)?default('')}" /></td>
                                         </#if>
 										<td>
 											<a class="btn default btn-xs blue-stripe" href="${base}/wx-answer-rule/preUpdate?id=${(rule.id)?default('')}">修改</a>
