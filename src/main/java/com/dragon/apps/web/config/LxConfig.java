@@ -5,6 +5,7 @@ import com.dragon.apps.model.WxAnswerRule;
 import com.dragon.apps.model.WxMaterial;
 import com.dragon.apps.web.controller.WxAdminController;
 import com.dragon.apps.web.controller.WxAnwserRuleController;
+import com.dragon.apps.web.controller.WxMaterialController;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 
@@ -15,6 +16,7 @@ public class LxConfig {
     public static void configRoute(Routes me){
         me.add("/wx-admin", WxAdminController.class);
         me.add("/wx-answer-rule",WxAnwserRuleController.class);
+        me.add("/wx-material",WxMaterialController.class);
     }
     public static void configActiveRecordPlugin(ActiveRecordPlugin arp){
         arp.addMapping(WxAdmin.getTableName(), WxAdmin.ID, WxAdmin.class);

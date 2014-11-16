@@ -93,6 +93,22 @@
                 </li>
             </ul>
         </li>
+        <li <#if index gt 80 && index lt 90>class="active"</#if>>
+            <a href="${base}/wx-material/list">
+                <i class="fa fa-folder-open"></i>
+                <span class="title">素材维护</span>
+                <span class="arrow open"></span>
+            </a>
+            <span class="selected"></span>
+            <ul class="sub-menu">
+                <li <#if index = 81>class="active"</#if> >
+                <a href="${base}/wx-material/list">素材列表</a>
+                </li>
+                <li <#if index = 82>class="active"</#if> >
+                <a href="${base}/wx-material/preAdd">添加素材</a>
+                </li>
+            </ul>
+        </li>
 	</ul>
 	<!-- END SIDEBAR MENU -->
 </div>
