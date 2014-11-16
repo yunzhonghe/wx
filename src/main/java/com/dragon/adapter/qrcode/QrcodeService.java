@@ -1,5 +1,6 @@
 package com.dragon.adapter.qrcode;
 
+import com.dragon.adapter.NeedFix;
 import com.dragon.apps.service.QrcodeHandleService;
 import com.dragon.spider.api.response.QrcodeResponse;
 
@@ -35,7 +36,6 @@ public class QrcodeService {
 		return instance;
 	}
 	private QrcodeService(){
-		//FIXME need ApiConfig.
-//		service = new QrcodeHandleService();
+		service = new QrcodeHandleService(NeedFix.getApiConfig());
 	}
 }

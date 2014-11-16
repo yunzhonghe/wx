@@ -1,0 +1,91 @@
+<#include "../base/layout.html"/>
+<@layout>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <@nav index=13/>
+    <div class="page-content">
+        <@title name="消息聊天" menus='{"粉丝管理":"${base}/wxfans","消息管理":"${base}/wxfans/msg","消息聊天":"javascript:;"}'/>
+        <#if _opresult??>
+         	${_opresult}
+        <#else>
+        <!-- BEGIN PAGE CONTENT-->
+		<div class="row">
+			<div class="col-md-12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption"><i class="fa fa-edit"></i>消息列表</div>
+					</div>
+					<div class="portlet-body">
+						<#if (list??) && (list?size > 0)>
+							<#list pageSet.resultList as record>
+								<#if record.fromfans=='1'>
+									<div class="col-md-9" style="text-align:left;">
+										<img src="${record.headimgurl?default('')}"/>
+										${record.fansname?default('')}
+										${record.content?default('')}
+									</div>
+									<div class="col-md-3">
+										&nbsp;
+									</div>
+								<#else>
+									<div class="col-md-3">
+										&nbsp;
+									</div>
+									<div class="col-md-3" style="text-align:right;">
+										${record.content?default('')}
+									</div>
+								</#if>
+							</#list>
+						<#else>
+							<div class="col-md-12">暂无消息记录</div>
+						</#if>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+			</div>
+		</div>
+		<form action="${base}/wxfans/msgchatadd" role="form" method="post" onsubmit="return checkSub();">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="booking-search">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<label class="control-label">发送(回复)消息：</label>
+								<input class="form-control" type="text" id="msg" name="msg" placeholder="请输入消息内容">
+								<input type="hidden" name="openid" value="${openid?default('')}">
+							</div>
+						</div>
+						<div class="form-actions">
+							<button type="submit" class="btn blue">发送</button>
+							&nbsp;
+							<input type="button" class="btn default" onclick="javascript:window.history.go(-1);" value="返回"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		</#if>
+			<!-- END PAGE CONTENT -->
+    </div>
+</div>
+<@footer/>
+<script src="${base}/resources/js/wx-admin.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function() {
+        App.init();
+        WxAdmin.init();
+    });
+    function checkSub(){
+		var errmsg = '';
+		if(document.getElementById("msg").value==''){
+			errmsg += "请输入消息内容\n";
+		}
+		if(errmsg!=''){
+			alert(errmsg);
+			return false;
+		}
+		return true;
+	}
+</script>
+</@layout>

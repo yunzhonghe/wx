@@ -4,6 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.subject.Subject;
 
+import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.utils.PageSet;
 import com.jfinal.core.Controller;
@@ -26,7 +27,21 @@ public class BaseController extends Controller{
 			return admin.getWxAccountId();
 		}
 		return null;
-	} 
+	}
+	public static WxAccount getCurAccount(){
+		Long accountId = gerCurAccountId();
+		if(accountId!=null){
+			return WxAccount.dao.findById(accountId);
+		}
+		return null;
+	}
+	public static String getCurAccountOriginalId(){
+		WxAccount account = getCurAccount();
+		if(account!=null){
+			return account.getOriginalid();
+		}
+		return null;
+	}
 	
 	protected PageSet getPageSet() {//by ljsnake
 		PageSet pageSet = null;

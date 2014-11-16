@@ -4,6 +4,7 @@ import com.jfinal.plugin.activerecord.Model;
 
 public class WxMsgImageModel extends Model<WxMsgImageModel> {
 
+	public static WxMsgImageModel dao = new WxMsgImageModel();
 	/**
 	 * 
 	 */

@@ -37,12 +37,17 @@ public class WxFansModel extends Model<WxFansModel> {
 	}
 	public WxFansInfo getWxFansInfo(){
 		if(info==null){
-			info = WxFansInfo.dao.findByOpenId(getOpenId());
+			if(getOpenId()!=null){
+				info = WxFansInfo.dao.findByOpenId(getOpenId());
+			}
 		}
 		return info;
 	}
 	private WxFansInfo info = null;
 	public WxFansInfo getInfo() {
+		if(info==null){
+			info = getWxFansInfo();
+		}
 		return info;
 	}
 	public void setInfo(WxFansInfo info) {

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.dragon.adapter.NeedFix;
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.service.UserHandleService;
 import com.dragon.apps.utils.ModeUtils;
 import com.dragon.apps.utils.StrUtils;
-import com.dragon.apps.web.controller.BaseController;
 import com.dragon.spider.api.response.CreateGroupResponse;
 import com.dragon.spider.api.response.GetGroupsResponse;
 import com.dragon.spider.api.response.GetUsersResponse;
@@ -136,10 +136,7 @@ public class FansService {
 	public void initAllFansData(){
 		List<String> openids = getAllFans();
 		if(openids!=null && openids.size()>0){
-			//FIXME 
-			//get account_id??? to know whose data it is.
-			//current way is not correct, the correct way is get from https/token.
-			Long account_id = BaseController.gerCurUser().getWxAccountId();
+			Long account_id = NeedFix.getApiAccountId(service);
 			for(String openid : openids){
 				WxFansModel wxFansModel = getFansInfo(openid);
 				updateWxFansModelToDb(wxFansModel,account_id);
@@ -197,7 +194,6 @@ public class FansService {
 		return instance;
 	}
 	private FansService(){
-		//FIXME need ApiConfig.
-//		service = new UserHandleService(ApiConfig);
+		service = new UserHandleService(NeedFix.getApiConfig());
 	}
 }

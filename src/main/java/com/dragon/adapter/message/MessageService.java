@@ -1,6 +1,8 @@
 package com.dragon.adapter.message;
 
 import com.dragon.adapter.AutoReplyRule;
+import com.dragon.adapter.NeedFix;
+import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.service.MessageHandleService;
 import com.dragon.apps.service.MessageRspHandleService;
 import com.dragon.spider.handle.MessageHandle;
@@ -59,8 +61,8 @@ public class MessageService implements MessageHandle{
 	 * @param message
 	 * @return
 	 */
-	public boolean sendMessage(String toUserOpenid,Object message){
 		boolean result = true;
+		public boolean sendMessage(String toUserOpenid,WxMessageModel message){
 		//FIXME 1, does service.sendCustomMessage should return error?
 		service.sendCustomMessage(toUserOpenid, MessageAdapter.getMsgByModel(message));
 		return result;
@@ -78,7 +80,6 @@ public class MessageService implements MessageHandle{
 	}
 	private MessageService(){
 		hanleService = new MessageHandleService();
-		//FIXME
-//		service = new MessageRspHandleService(config);
+		service = new MessageRspHandleService(NeedFix.getApiConfig());
 	}
 }

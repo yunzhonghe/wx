@@ -1,5 +1,6 @@
 package com.dragon.adapter.menu;
 
+import com.dragon.adapter.NeedFix;
 import com.dragon.apps.service.MenuHandleService;
 /**
  * 菜单维护
@@ -52,7 +53,6 @@ public class MenuService {
 		return instance;
 	}
 	private MenuService(){
-		//FIXME need ApiConfig.
-//		service = new MenuHandleService();
+		service = new MenuHandleService(NeedFix.getApiConfig());
 	}
 }

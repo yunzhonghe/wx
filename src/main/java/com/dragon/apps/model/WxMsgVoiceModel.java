@@ -4,6 +4,7 @@ import com.jfinal.plugin.activerecord.Model;
 
 public class WxMsgVoiceModel extends Model<WxMsgVoiceModel> {
 
+	public static WxMsgVoiceModel dao = new WxMsgVoiceModel();
 	/**
 	 * 
 	 */

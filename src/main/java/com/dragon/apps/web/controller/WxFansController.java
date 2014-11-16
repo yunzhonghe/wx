@@ -68,7 +68,26 @@ public class WxFansController extends BaseController {
 		render("fans_tag.html");
 	}
 	public void msg(){//消息管理
-		
+		PageSet pageSet = getPageSet();
+		setAttr("pageSet", getService().getFansMsgList(pageSet));
+		render("msg_list.html");
+	}
+	public void msgchat(){//消息聊天
+		String openid = getPara("openid");
+		setAttr("list", getService().getFansMsgs(openid));
+		setAttr("openid", openid);
+		render("msg_chat.html");
+	}
+	public void msgchatadd(){//聊天消息添加
+		String openid = getPara("openid");
+		String msg = getPara("msg");
+		String operationMsg = getService().sendMsg(openid, msg);
+		if(operationMsg==null){//发送成功
+			redirect("/msg");
+		}else{
+			setAttr(OPERATION_RESULT, operationMsg);
+			render("msg_chat.html");
+		}
 	}
 	
 	private WxFansService getService(){

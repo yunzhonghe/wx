@@ -1,9 +1,11 @@
 package com.dragon.apps.model;
 
+import com.dragon.apps.web.config.ClConfig;
 import com.jfinal.plugin.activerecord.Model;
 
 public class WxMsgTextModel extends Model<WxMsgTextModel> {
 
+	public static WxMsgTextModel dao = new WxMsgTextModel();
 	/**
 	 * 
 	 */
@@ -19,6 +21,9 @@ public class WxMsgTextModel extends Model<WxMsgTextModel> {
 	public static WxMsgTextModel getInstance() {
 		return instance;
 	}*/
+	public WxMsgTextModel getMsgById(String contentId){
+		return findFirst("select * from "+ClConfig.WX_MESSAGE_TEXT_TABLE +" where id="+contentId);
+	}
 
 	public String getContent() {
 		return getStr(content);

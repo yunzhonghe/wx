@@ -1,6 +1,6 @@
 package com.dragon.adapter;
 
-public class TODO {
+public class Tips {
 	/**
 	 * menu菜单管理：
 	 * 		系统创建

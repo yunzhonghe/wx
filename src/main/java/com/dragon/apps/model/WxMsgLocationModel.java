@@ -4,6 +4,7 @@ import com.jfinal.plugin.activerecord.Model;
 
 public class WxMsgLocationModel extends Model<WxMsgLocationModel> {
 
+	public static WxMsgLocationModel dao = new WxMsgLocationModel();
 	/**
 	 * 
 	 */

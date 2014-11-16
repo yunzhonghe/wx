@@ -27,22 +27,22 @@ public class AutoReplyRule {
 		if(message!=null){
 			if(message instanceof TextReqMsg){
 				TextReqMsg msg = (TextReqMsg)message;
-				//FIXME 关键字、自默认回复
+				//FIXME 关键字、默认回复
 			}else if(message instanceof ImageReqMsg){
 				ImageReqMsg msg = (ImageReqMsg)message;
-				//FIXME 自默认回复
+				//FIXME 默认回复
 			}else if(message instanceof VoiceReqMsg){
 				VoiceReqMsg msg = (VoiceReqMsg)message;
-				//FIXME 自默认回复
+				//FIXME 默认回复
 			}else if(message instanceof VideoReqMsg){
 				VideoReqMsg msg = (VideoReqMsg)message;
-				//FIXME 自默认回复
+				//FIXME 默认回复
 			}else if(message instanceof LocationReqMsg){
 				LocationReqMsg msg = (LocationReqMsg)message;
-				//FIXME 自默认回复
+				//FIXME 默认回复
 			}else if(message instanceof LinkReqMsg){
 				LinkReqMsg msg = (LinkReqMsg)message;
-				//FIXME 自默认回复
+				//FIXME 默认回复
 			}
 		}
 		return result;
