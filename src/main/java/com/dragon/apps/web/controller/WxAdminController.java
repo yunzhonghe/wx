@@ -34,6 +34,9 @@ public class WxAdminController extends Controller {
 
     public void add() {
         WxAdmin wxAdmin = getModel(WxAdmin.class);
+        long wxAccountId = wxAdmin.getWxAccountId();
+        WxAccount wxAccount = WxAccount.dao.findById(wxAccountId);
+        wxAdmin.setWxAccountName(wxAccount.getName());
         wxAdmin.save();
         redirect("/wx-admin/list");
     }
@@ -48,6 +51,9 @@ public class WxAdminController extends Controller {
 
     public void update() {
         WxAdmin wxAdmin = getModel(WxAdmin.class);
+        long wxAccountId = wxAdmin.getWxAccountId();
+        WxAccount wxAccount = WxAccount.dao.findById(wxAccountId);
+        wxAdmin.setWxAccountName(wxAccount.getName());
         wxAdmin.update();
         redirect("/wx-admin/list");
     }

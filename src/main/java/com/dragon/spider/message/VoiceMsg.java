@@ -20,6 +20,8 @@ public class VoiceMsg extends BaseMsg {
 	public VoiceMsg(String mediaId) {
 		this.mediaId = mediaId;
 	}
+	public VoiceMsg() {
+	}
 
 	@Override
 	public String toXml() {

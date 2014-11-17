@@ -4,6 +4,7 @@ import com.jfinal.plugin.activerecord.Model;
 
 public class WxMsgVideoModel extends Model<WxMsgVideoModel> {
 
+	public static WxMsgVideoModel dao = new WxMsgVideoModel();
 	/**
 	 * 
 	 */

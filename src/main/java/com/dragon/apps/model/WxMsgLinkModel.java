@@ -4,6 +4,7 @@ import com.jfinal.plugin.activerecord.Model;
 
 public class WxMsgLinkModel extends Model<WxMsgLinkModel> {
 
+	public static WxMsgLinkModel dao = new WxMsgLinkModel();
 	/**
 	 * 
 	 */

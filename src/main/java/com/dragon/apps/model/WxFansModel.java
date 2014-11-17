@@ -1,10 +1,10 @@
 package com.dragon.apps.model;
 
-import java.sql.Timestamp;
-import java.util.List;
+//import java.sql.Timestamp;
+//import java.util.List;
 
-import com.dragon.apps.exception.ErrorCode;
-import com.dragon.apps.exception.ServiceException;
+//import com.dragon.apps.exception.ErrorCode;
+//import com.dragon.apps.exception.ServiceException;
 import com.dragon.apps.web.config.ClConfig;
 import com.jfinal.plugin.activerecord.Model;
 
@@ -18,10 +18,11 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxFansModel extends Model<WxFansModel> {
 
 	private static final long serialVersionUID = 1L;
-	//private static final WxFansModel dao = new WxFansModel();
+	public static final WxFansModel dao = new WxFansModel();
 
 	private String id = "id";
 	private String openId = "open_id";
+	private String wxAccountId = "wx_account_id";//关联微信号的主键
 	private String name = "name";
 	private String markName = "mark_name";
 	private String location = "location";
@@ -29,20 +30,35 @@ public class WxFansModel extends Model<WxFansModel> {
 	private String subscribe = "subscribe";
 	private String createTime = "create_time";
 	private String sourceFrom = "source_from";
+//	private String relateId = "relate_id";//关联微信号的主键
 	
-	/*private WxFansModel() {
-
-	}
-	*/
 	public WxFansModel getByOpenId(String openId){
 		return findFirst("select * from " +ClConfig.WX_FANS_TABLE + " where open_id = '" + openId+"'");
 	}
-
+	public WxFansInfo getWxFansInfo(){
+		if(info==null){
+			if(getOpenId()!=null){
+				info = WxFansInfo.dao.findByOpenId(getOpenId());
+			}
+		}
+		return info;
+	}
+	private WxFansInfo info = null;
+	public WxFansInfo getInfo() {
+		if(info==null){
+			info = getWxFansInfo();
+		}
+		return info;
+	}
+	public void setInfo(WxFansInfo info) {
+		this.info = info;
+	}
 	/*public static WxFansModel getInstance() {
 		return dao;
 	}*/
 	
 
+	
 	public long getId() {
 		return getLong(id);		
 	}
@@ -113,6 +129,12 @@ public class WxFansModel extends Model<WxFansModel> {
 
 	public WxFansModel setSourceFrom(String sourceFrom) {
 		return set(this.sourceFrom,sourceFrom);
+	}
+	public Long getWxAccountId() {
+		return getLong(wxAccountId);
+	}
+	public WxFansModel setWxAccountId(Long wxAccountId) {
+		return set(this.wxAccountId,wxAccountId);
 	}
 	
 	

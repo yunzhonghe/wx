@@ -56,7 +56,7 @@ public class WxAdmin extends Model<WxAdmin> {
         return getLong(POST_ID);
     }
 
-    public long getWxAccountId() {
+    public Long getWxAccountId() {
         return getLong(WX_ACCOUNT_ID);
     }
 

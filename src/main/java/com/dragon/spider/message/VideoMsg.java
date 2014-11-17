@@ -32,6 +32,8 @@ public class VideoMsg extends BaseMsg {
 		this.description = description;
 	}
 
+	public VideoMsg() {
+	}
 	public VideoMsg(String mediaId) {
 		this.mediaId = mediaId;
 	}
