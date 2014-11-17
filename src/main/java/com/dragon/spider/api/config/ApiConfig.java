@@ -6,28 +6,28 @@ package com.dragon.spider.api.config;
  */
 public final class ApiConfig {
 
-    private String name;
+    private String appid;
 
-    private String password;
+    private String secret;
 
     private String access_token;
 
     public volatile boolean refreshing = false;
 
-    public String getName() {
-        return name;
+    public String getAppid() {
+        return appid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAppid(String appid) {
+        this.appid = appid;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSecret() {
+        return secret;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 
     public String getAccess_token() {
@@ -39,24 +39,24 @@ public final class ApiConfig {
     }
 
     public static class Builder {
-        private String name;
+        private String appid;
 
-        private String password;
+        private String secret;
 
-        public Builder setAppid(String name) {
-            this.name = name;
+        public Builder setAppid(String appid) {
+            this.appid = appid;
             return this;
         }
 
-        public Builder setSecret(String password) {
-            this.password = password;
+        public Builder setSecret(String secret) {
+            this.secret = secret;
             return this;
         }
 
         public ApiConfig build() {
             ApiConfig config = new ApiConfig();
-            config.name = this.name;
-            config.password = this.password;
+            config.appid = this.appid;
+            config.secret = this.secret;
             return config;
         }
     }
