@@ -32,18 +32,25 @@
 							<div class="row form-group">
 								<div class="col-md-12">
 									<label class="control-list" style="width: 14%;">标签:</label>
-									<#--
 										<div class="checkbox-list" style="display: inline-block;width: 85%;">
 											<label class="checkbox-inline">
-											<input type="checkbox" name="optionsRadios2" value="option1" />
-											Option1
+												<#if (con??) && (con.tagid??)>
+													<input type="radio" name="wxFansListCon.tagid" value="" />不限
+												<#else>
+													<input type="radio" name="wxFansListCon.tagid" value="" checked="checked"/>不限
+												</#if>
 											</label>
-											<label class="checkbox-inline">
-											<input type="checkbox" name="optionsRadios2" value="option2" checked />
-											Option2
-											</label>  
+											<#list taglist as tag>
+												<label class="checkbox-inline">
+													<#if (con??) && (con.tagid??) && (con.tagid==tag.id)>
+														<input type="radio" checked="checked" name="wxFansListCon.tagid" value="${tag.id}" />
+													<#else>
+														<input type="radio" name="wxFansListCon.tagid" value="${tag.id}" />
+													</#if>
+													${tag.name}
+												</label>
+											</#list>
 										</div>
-									-->
 								</div>
 							</div>
 							<button class="btn  btn-block margin-top-20" onclick="javascript:document.forms[0].submit();">
@@ -95,7 +102,7 @@
 													${record.province?default('')}
 												</td>
 												<td>
-													...
+													<a class="btn default btn-xs blue-stripe" href="${base}/wxfans/fanstag/${record.open_id}">修改标签</a>
 												</td>
 											</tr>
 										</#list>

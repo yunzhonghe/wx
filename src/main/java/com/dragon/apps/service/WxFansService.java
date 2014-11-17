@@ -32,17 +32,22 @@ public class WxFansService implements Serializable{
 	public PageSet getFansList(WxFansListCon con ,PageSet pageSet){
 		Long accountId = BaseController.gerCurAccountId();
 		if(accountId!=null){
-			String select = "select wf.mark_name,wfi.nickname,wfi.sex,wfi.city,wfi.country,wfi.province,wfi.headimgurl";
-			String center = " from wx_fans wf left join wx_fans_info wfi on wfi.openid=wf.open_id"
-					+" where wf.subscribe='"+ConstantWx.subscribe+"' and wf.wx_account_id="+accountId;
+			String select = "select wf.open_id,wf.mark_name,wfi.nickname,wfi.sex,wfi.city,wfi.country,wfi.province,wfi.headimgurl";
+			String center1 = " from wx_fans wf left join wx_fans_info wfi on wfi.openid=wf.open_id";
+			String center2 = " where wf.subscribe='"+ConstantWx.subscribe+"' and wf.wx_account_id="+accountId;
 			if(con!=null){
 				if(StrUtils.isNotEmpty(con.getMarkName())){
-					center += " and wf.mark_name like '"+con.getMarkName()+"%'";
+					center2 += " and wf.mark_name like '"+con.getMarkName()+"%'";
 				}
 				if(StrUtils.isNotEmpty(con.getNickName())){
-					center += " and wfi.nickname like '"+con.getNickName()+"%'";
+					center2 += " and wfi.nickname like '"+con.getNickName()+"%'";
+				}
+				if(StrUtils.isNotEmpty(con.getTagid())){
+					center1 += " left join wx_fans_tag wft on wft.openid=wf.open_id";
+					center2 += " and wft.tagid='"+con.getTagid()+"'";
 				}
 			}
+			String center = center1+center2;
 			String orderby = " order by wfi.subscribe_time desc";
 			int count = Db.queryLong("select count(1) "+center).intValue();
 			if (count > 0) {
@@ -225,6 +230,7 @@ public class WxFansService implements Serializable{
 			wmm.setTo(openid);
 			wmm.setCreateTime(System.currentTimeMillis());
 			wmm.save();
+			wmm.setWxMsgTextModel(wmtm);
 			if(!MessageService.getInstance().sendMessage(openid, wmm)){
 				return "发送失败";
 			}

@@ -35,9 +35,10 @@ public class FansService {
 				setOpenidsToList(res.getData().getOpenid(), result);
 				String next = res.getNext_openid();
 				if(StrUtils.isNotEmpty(next)){//还有后续
+					res = service.getUsers(next);
+				}else{
 					break;
 				}
-				res = service.getUsers(next);
 			}
 		}
 		return result;

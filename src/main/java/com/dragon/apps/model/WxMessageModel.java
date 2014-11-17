@@ -47,6 +47,49 @@ public class WxMessageModel extends Model<WxMessageModel> {
 		}
 	}
 
+	private WxMsgImageModel wxMsgImageModel = null;
+	private WxMsgLinkModel wxMsgLinkModel = null;
+	private WxMsgLocationModel wxMsgLocationModel = null;
+	private WxMsgTextModel wxMsgTextModel = null;
+	private WxMsgVideoModel wxMsgVideoModel = null;
+	private WxMsgVoiceModel wxMsgVoiceModel = null;
+	public WxMsgImageModel getWxMsgImageModel() {
+		return wxMsgImageModel;
+	}
+	public void setWxMsgImageModel(WxMsgImageModel wxMsgImageModel) {
+		this.wxMsgImageModel = wxMsgImageModel;
+	}
+	public WxMsgLinkModel getWxMsgLinkModel() {
+		return wxMsgLinkModel;
+	}
+	public void setWxMsgLinkModel(WxMsgLinkModel wxMsgLinkModel) {
+		this.wxMsgLinkModel = wxMsgLinkModel;
+	}
+	public WxMsgLocationModel getWxMsgLocationModel() {
+		return wxMsgLocationModel;
+	}
+	public void setWxMsgLocationModel(WxMsgLocationModel wxMsgLocationModel) {
+		this.wxMsgLocationModel = wxMsgLocationModel;
+	}
+	public WxMsgTextModel getWxMsgTextModel() {
+		return wxMsgTextModel;
+	}
+	public void setWxMsgTextModel(WxMsgTextModel wxMsgTextModel) {
+		this.wxMsgTextModel = wxMsgTextModel;
+	}
+	public WxMsgVideoModel getWxMsgVideoModel() {
+		return wxMsgVideoModel;
+	}
+	public void setWxMsgVideoModel(WxMsgVideoModel wxMsgVideoModel) {
+		this.wxMsgVideoModel = wxMsgVideoModel;
+	}
+	public WxMsgVoiceModel getWxMsgVoiceModel() {
+		return wxMsgVoiceModel;
+	}
+	public void setWxMsgVoiceModel(WxMsgVoiceModel wxMsgVoiceModel) {
+		this.wxMsgVoiceModel = wxMsgVoiceModel;
+	}
+
 	public long getId() {
 		return getLong(id);		
 	}

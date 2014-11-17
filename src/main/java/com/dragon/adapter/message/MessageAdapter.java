@@ -16,7 +16,10 @@ public class MessageAdapter {
 			switch(messageModel.getType()){
 			case ReqType.TEXTID:
 				TextMsg tm = new TextMsg();
-				WxMsgTextModel wtm = WxMsgTextModel.dao.getMsgById(messageModel.getContentId());
+				WxMsgTextModel wtm = messageModel.getWxMsgTextModel();
+				if(wtm==null){
+					wtm = WxMsgTextModel.dao.getMsgById(messageModel.getContentId());
+				}
 				if(wtm!=null){
 					tm.setContent(wtm.getContent());
 				}

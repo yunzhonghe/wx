@@ -20,8 +20,16 @@ public class WxFansController extends BaseController {
 		WxFansListCon con = getModel(WxFansListCon.class);
 		PageSet pageSet = getPageSet();
 		setAttr("pageSet", getService().getFansList(con, pageSet));
+		setAttr("taglist",getService().getWxTagList());
 		setAttr("con", con);
 		render("fans_list.html");
+	}
+	public void fanstag(){//维护粉丝标签
+		String openid = getPara();
+		//FIXME
+	}
+	public void fanstagdo(){//执行修改粉丝标签,成功后返回粉丝列表
+		//FIXME
 	}
 	public void tag(){//标签管理
 		String identify = getPara();//list,add,adddo,modify

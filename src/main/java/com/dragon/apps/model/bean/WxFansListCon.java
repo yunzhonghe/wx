@@ -6,6 +6,7 @@ public class WxFansListCon implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String nickName;
 	private String markName;
+	private String tagid;
 	public WxFansListCon(String nickName,String markName){
 		this.nickName = nickName;
 		this.markName = markName;
@@ -22,5 +23,11 @@ public class WxFansListCon implements Serializable{
 	}
 	public void setMarkName(String markName) {
 		this.markName = markName;
+	}
+	public String getTagid() {
+		return tagid;
+	}
+	public void setTagid(String tagid) {
+		this.tagid = tagid;
 	}
 }
