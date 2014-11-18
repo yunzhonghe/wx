@@ -32,7 +32,9 @@ public class FansService {
 				if(res==null){//拉取失败
 					break;
 				}
-				setOpenidsToList(res.getData().getOpenid(), result);
+				if(res.getData()!=null){
+					setOpenidsToList(res.getData().getOpenid(), result);
+				}
 				String next = res.getNext_openid();
 				if(StrUtils.isNotEmpty(next)){//还有后续
 					res = service.getUsers(next);

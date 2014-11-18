@@ -24,7 +24,7 @@
 								<div class="col-md-6">
 									<label class="control-label" style="width: 28%;">备注名称</label>
 									<div style="display: inline-block;width: 70%;">
-										<input class="form-control" type="text" name="wxFansListCon.nickName"
+										<input class="form-control" type="text" name="wxFansListCon.markName"
 											value="<#if con??>${con.markName?default('')}</#if>"/>
 									</div>
 								</div>
@@ -34,7 +34,7 @@
 									<label class="control-list" style="width: 14%;">标签:</label>
 										<div class="checkbox-list" style="display: inline-block;width: 85%;">
 											<label class="checkbox-inline">
-												<#if (con??) && (con.tagid??)>
+												<#if (con??) && (con.tagid??) && (con.tagid!='')>
 													<input type="radio" name="wxFansListCon.tagid" value="" />不限
 												<#else>
 													<input type="radio" name="wxFansListCon.tagid" value="" checked="checked"/>不限
@@ -42,7 +42,7 @@
 											</label>
 											<#list taglist as tag>
 												<label class="checkbox-inline">
-													<#if (con??) && (con.tagid??) && (con.tagid==tag.id)>
+													<#if (con??) && (con.ltagid??) && (con.ltagid==tag.id)>
 														<input type="radio" checked="checked" name="wxFansListCon.tagid" value="${tag.id}" />
 													<#else>
 														<input type="radio" name="wxFansListCon.tagid" value="${tag.id}" />
@@ -81,7 +81,7 @@
 										<#list pageSet.resultList as record>
 											<tr>
 												<td>
-													<img src="${record.headimgurl?default('')}"/>
+													<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>
 												</td>
 												<td>${record.nickname?default('')}</td>
 												<td>${record.mark_name?default('')}</td>

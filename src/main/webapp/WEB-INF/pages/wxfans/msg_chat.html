@@ -21,7 +21,7 @@
 							<#list pageSet.resultList as record>
 								<#if record.fromfans=='1'>
 									<div class="col-md-9" style="text-align:left;">
-										<img src="${record.headimgurl?default('')}"/>
+										<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>
 										${record.fansname?default('')}
 										${record.content?default('')}
 									</div>

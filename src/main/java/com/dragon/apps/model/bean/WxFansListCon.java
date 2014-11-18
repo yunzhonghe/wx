@@ -2,11 +2,14 @@ package com.dragon.apps.model.bean;
 
 import java.io.Serializable;
 
+import com.dragon.apps.utils.StrUtils;
+
 public class WxFansListCon implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String nickName;
 	private String markName;
 	private String tagid;
+	private long ltagid = -1;
 	public WxFansListCon(String nickName,String markName){
 		this.nickName = nickName;
 		this.markName = markName;
@@ -29,5 +32,13 @@ public class WxFansListCon implements Serializable{
 	}
 	public void setTagid(String tagid) {
 		this.tagid = tagid;
+	}
+	public long getLtagid() {
+		if(ltagid==0){
+			if(StrUtils.isNotEmpty(tagid)){
+				ltagid = Long.parseLong(tagid);
+			}
+		}
+		return ltagid;
 	}
 }

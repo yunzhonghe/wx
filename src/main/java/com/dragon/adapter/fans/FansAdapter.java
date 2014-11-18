@@ -1,5 +1,7 @@
 package com.dragon.adapter.fans;
 
+import java.sql.Date;
+
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxFansModel;
 import com.dragon.spider.api.response.GetUserInfoResponse;
@@ -22,7 +24,7 @@ public class FansAdapter {
 				info.set(WxFansInfo.province,response.getProvince());
 				info.set(WxFansInfo.language,response.getLanguage());
 				info.set(WxFansInfo.headimgurl,response.getHeadimgurl());
-				info.set(WxFansInfo.subscribe_time,response.getSubscribe_time());
+				info.set(WxFansInfo.subscribe_time,new Date(response.getSubscribe_time()));
 				info.set(WxFansInfo.unionid,response.getUnionid());
 			}
 		}

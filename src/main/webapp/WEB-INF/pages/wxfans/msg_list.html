@@ -32,7 +32,7 @@
 										<#list pageSet.resultList as record>
 											<tr style="cursor:pointer;" onclick="javascript:chatmsg('${record.opeinid}')">
 												<td>
-													<img src="${record.headimgurl?default('')}"/>
+													<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>
 												</td>
 												<td>${record.nickname?default('')}</td>
 												<td>${record.type?default('')}</td>

@@ -62,12 +62,16 @@
 			</ul>
 		</li>
 		<li <#if index gt 60 && index lt 70>class="active"</#if>>
-            <a href="${base}/wx-admin/list">
-                <i class="fa fa-folder-open"></i>
-                <span class="title">管理员维护</span>
-                <span class="arrow open"></span>
+            <a href="javascript:;">
+	            <i class="fa fa-folder-open"></i>
+	            <span class="title">管理员维护</span>
+	            <#if index gt 60 && index lt 70>
+					<span class="arrow open"></span>
+					<span class="selected"></span>
+				<#else>
+					<span class="arrow"></span>
+				</#if>
             </a>
-            <span class="selected"></span>
             <ul class="sub-menu">
                 <li <#if index = 61>class="active"</#if> >
                     <a href="${base}/wx-admin/list">管理员列表</a>
@@ -78,12 +82,16 @@
             </ul>
          </li>
         <li <#if index gt 70 && index lt 80>class="active"</#if>>
-            <a href="${base}/wx-answer-rule/list">
+           <a href="javascript:;">
                 <i class="fa fa-folder-open"></i>
                 <span class="title">应答规则维护</span>
-                <span class="arrow open"></span>
+                <#if index gt 70 && index lt 80>
+					<span class="arrow open"></span>
+					<span class="selected"></span>
+				<#else>
+					<span class="arrow"></span>
+				</#if>
             </a>
-            <span class="selected"></span>
             <ul class="sub-menu">
                 <li <#if index = 71>class="active"</#if> >
                 <a href="${base}/wx-answer-rule/list">应答规则列表</a>
@@ -94,12 +102,16 @@
             </ul>
         </li>
         <li <#if index gt 80 && index lt 90>class="active"</#if>>
-            <a href="${base}/wx-material/list">
+            <a href="javascript:;">
                 <i class="fa fa-folder-open"></i>
                 <span class="title">素材维护</span>
-                <span class="arrow open"></span>
+                <#if index gt 80 && index lt 90>
+					<span class="arrow open"></span>
+					<span class="selected"></span>
+				<#else>
+					<span class="arrow"></span>
+				</#if>
             </a>
-            <span class="selected"></span>
             <ul class="sub-menu">
                 <li <#if index = 81>class="active"</#if> >
                 <a href="${base}/wx-material/list">素材列表</a>

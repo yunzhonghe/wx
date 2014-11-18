@@ -15,20 +15,20 @@
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label class="control-label">头像：</label>
-										<img src="${fansinfo.headimgurl?default('')}"/>
+										<img src="${fansinfo.headimgurl?default('')}" style="width:40px;height:40px;"/>
 										<input type="hidden" name="openid" value="${fansinfo.open_id}">
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label class="control-label">备注：</label>
-										${fansinfo.mark_name}
+										${fansinfo.mark_name?default('')}
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label class="control-label">昵称：</label>
-										${fansinfo.nickname}
+										${fansinfo.nickname?default('')}
 									</div>
 								</div>
 								<div class="row form-group">
@@ -44,7 +44,7 @@
 															<#if fantag.id==tag.id>
 																<#assign tagchecked=1>
 															</#if>
-														</#list
+														</#list>
 														<#if tagchecked==1>
 															<input type="checkbox" checked="checked" name="fantags" value="${tag.id}" />
 														<#else>

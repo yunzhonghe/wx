@@ -36,7 +36,7 @@ public class WxFansController extends BaseController {
 		String openid = getPara("openid");
 		String[] fantags = getRequest().getParameterValues("fantags");
 		getService().updateFansTag(openid, fantags);
-		redirect("/");
+		redirect("/wxfans");
 	}
 	public void tag(){//标签管理
 		String identify = getPara();//list,add,adddo,modify
@@ -98,7 +98,7 @@ public class WxFansController extends BaseController {
 		String msg = getPara("msg");
 		String operationMsg = getService().sendMsg(openid, msg);
 		if(operationMsg==null){//发送成功
-			redirect("/msg");
+			redirect("/wxfans/msg");
 		}else{
 			setAttr(OPERATION_RESULT, operationMsg);
 			render("msg_chat.html");
