@@ -1,5 +1,7 @@
 package com.dragon.apps.model;
 
+import com.dragon.apps.utils.StrUtils;
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 /**
  * wx_account微信帐号
@@ -16,6 +18,12 @@ public class WxAccount extends Model<WxAccount>{
 			return WxAccType.dao.findById(getTypeid());
 		}
 		return null;
+	}
+	public Long getIdByOriginalId(String originalId){
+		if(StrUtils.isEmpty(originalId)){
+			return null;
+		}
+		return Db.queryLong("select id from wx_account where originalid='"+originalId+"' limit 0,1");
 	}
 //	//get sys user by escrowuser.
 //	public WxAdmin getWxAdmin(){

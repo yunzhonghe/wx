@@ -1,5 +1,8 @@
 package com.dragon.apps.service;
 
+import com.dragon.adapter.fans.FansService;
+import com.dragon.apps.model.WxAccount;
+import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxFansModel;
 import com.dragon.spider.message.BaseMsg;
 import com.dragon.spider.message.TextMsg;
@@ -28,14 +31,31 @@ public class WxFansHandleService {
 			model = new WxFansModel();	
 			model.setName(event.getFromUserName());
 			model.setCreateTime(event.getCreateTime());
+			model.setWxAccountId(WxAccount.dao.getIdByOriginalId(event.getToUserName()));
 			model.setOpenId(event.getFromUserName());
 			model.setSubscribe(ConstantWx.subscribe);
 			model.setSourceFrom(event.getTicket());
 			model.save();
-		}	
+		}
+		handleWxFansInfo(openId);
 		return new TextMsg("感谢您通过二维码进行关注!");
 	}
-
+	/**
+	 * 加载粉丝的详细信息
+	 * @param openid
+	 */
+	private void handleWxFansInfo(String openid){
+		WxFansModel wfm = FansService.getInstance().getFansInfo(openid);
+		WxFansInfo info = wfm.getInfo();
+		WxFansInfo exists = WxFansInfo.dao.findByOpenId(openid);
+		if(exists==null){
+			info.save();
+		}else{
+			if(info.get(WxFansInfo.nickname)!=null){//防止没拉取到数据，用null更新了数据库.
+				info.update();
+			}
+		}
+	}
 	/**
 	 * 处理添加关注事件，有需要时子类重写
 	 * 
@@ -49,10 +69,11 @@ public class WxFansHandleService {
 		model.setCreateTime(event.getCreateTime());
 		model.setOpenId(event.getFromUserName());
 		model.setSubscribe(ConstantWx.subscribe);
+		model.setWxAccountId(WxAccount.dao.getIdByOriginalId(event.getToUserName()));
 		model.save();
+		handleWxFansInfo(event.getFromUserName());
 		return new TextMsg("感谢您的关注!");
 	}
-
 	/**
 	 * 处理取消关注事件，有需要时子类重写
 	 * 

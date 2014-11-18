@@ -26,10 +26,17 @@ public class WxFansController extends BaseController {
 	}
 	public void fanstag(){//维护粉丝标签
 		String openid = getPara();
-		//FIXME
+		Object[] objs = getService().getFansTag(openid);
+		setAttr("fansinfo",objs[0]);
+		setAttr("fanstags",objs[1]);
+		setAttr("taglist",getService().getWxTagList());
+		render("fans_tag.html");
 	}
 	public void fanstagdo(){//执行修改粉丝标签,成功后返回粉丝列表
-		//FIXME
+		String openid = getPara("openid");
+		String[] fantags = getRequest().getParameterValues("fantags");
+		getService().updateFansTag(openid, fantags);
+		redirect("/");
 	}
 	public void tag(){//标签管理
 		String identify = getPara();//list,add,adddo,modify
@@ -73,7 +80,7 @@ public class WxFansController extends BaseController {
 		setAttr(BEAN_ENTITY, bean);
 		setAttr("nextAction", nextAction);
 		setAttr(OPERATION_RESULT, operationMsg);
-		render("fans_tag.html");
+		render("tag_list.html");
 	}
 	public void msg(){//消息管理
 		PageSet pageSet = getPageSet();

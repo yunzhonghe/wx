@@ -69,6 +69,34 @@ public class WxFansService implements Serializable{
 			}
 		}.start();
 	}
+	public Object[] getFansTag(String openid){
+		Object[] result = null;
+		if(StrUtils.isNotEmpty(openid)){
+			String sql1 = "select wf.open_id,wf.mark_name,wfi.nickname,wfi.headimgurl"
+					+ " from wx_fans wf left join wx_fans_info wfi on wfi.openid=wf.open_id"
+					+ " where wf.open_id='"+openid+"'";
+			Record info = Db.findFirst(sql1);
+			String sql2 = "select wt.id,wt.name from wx_fans_tag ft join wx_tag wt on wt.id=ft.tagid and ft.openid='"+openid+"'";
+			List<Record> fansTags = Db.find(sql2);
+			result = new Object[2];
+			result[0] = info;
+			result[1] = fansTags;
+		}
+		return result;
+	}
+	public void updateFansTag(String openid,String[] tagids){
+		if(StrUtils.isNotEmpty(openid) && tagids!=null && tagids.length>0){
+			List<String> sqlList = new ArrayList<String>();
+			sqlList.add("delete from wx_fans_tag where openid='"+openid+"'");
+			for(int i=0;i<tagids.length;i++){
+				String tagid = tagids[i];
+				if(StrUtils.isNotEmpty(tagid)){
+					sqlList.add("insert into wx_fans_tag(openid,tagid) values('"+openid+"',"+tagid+")");
+				}
+			}
+			Db.batch(sqlList, 100);
+		}
+	}
 	public List<WxTag> getWxTagList(){
 		Long accountId = BaseController.gerCurAccountId();
 		if(accountId!=null){
