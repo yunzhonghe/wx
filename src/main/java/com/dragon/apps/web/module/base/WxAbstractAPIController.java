@@ -1,4 +1,4 @@
-package com.dragon.apps.web.controller;
+package com.dragon.apps.web.module.base;
 
 import static com.dragon.spider.util.BeanUtil.isNull;
 import static com.dragon.spider.util.BeanUtil.nonNull;
@@ -88,7 +88,7 @@ public abstract class WxAbstractAPIController extends Controller {
 	 *            http请求对象
 	 * @return 处理消息的结果，已经是接口要求的xml报文了
 	 */
-	String processRequest(HttpServletRequest request) {
+	protected String processRequest(HttpServletRequest request) {
 
 		Map<String, String> reqMap = new HashMap<String, String>();
 		reqMap.put("FromUserName", "chenlong");
@@ -444,7 +444,7 @@ public abstract class WxAbstractAPIController extends Controller {
 		req.setCreateTime(Long.parseLong(reqMap.get("CreateTime")));
 	}
 
-	boolean isLegal(HttpServletRequest request) {
+	protected boolean isLegal(HttpServletRequest request) {
 		String signature = request.getParameter("signature");
 		String timestamp = request.getParameter("timestamp");
 		String nonce = request.getParameter("nonce");

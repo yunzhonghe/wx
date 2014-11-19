@@ -1,4 +1,4 @@
-package com.dragon.apps.service;
+package com.dragon.apps.web.module.wxmaterial;
 
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.model.WxMaterial;

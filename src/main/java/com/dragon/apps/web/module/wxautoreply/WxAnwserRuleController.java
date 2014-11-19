@@ -1,4 +1,4 @@
-package com.dragon.apps.web.controller;
+package com.dragon.apps.web.module.wxautoreply;
 
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAdmin;

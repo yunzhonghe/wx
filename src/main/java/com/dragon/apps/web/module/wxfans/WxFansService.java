@@ -1,4 +1,4 @@
-package com.dragon.apps.service;
+package com.dragon.apps.web.module.wxfans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,10 +12,9 @@ import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.model.WxMsgTextModel;
 import com.dragon.apps.model.WxTag;
-import com.dragon.apps.model.bean.WxFansListCon;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.StrUtils;
-import com.dragon.apps.web.controller.BaseController;
+import com.dragon.apps.web.module.base.BaseController;
 import com.dragon.spider.message.req.ReqType;
 import com.dragon.spider.service.ConstantWx;
 import com.jfinal.plugin.activerecord.Db;

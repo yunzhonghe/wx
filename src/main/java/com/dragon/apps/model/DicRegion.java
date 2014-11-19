@@ -1,5 +1,7 @@
 package com.dragon.apps.model;
 
+import com.dragon.apps.model.base.BaseModel;
+
 /**
  * wx_dic_region, use cache to query.
  * 微信地区字典表

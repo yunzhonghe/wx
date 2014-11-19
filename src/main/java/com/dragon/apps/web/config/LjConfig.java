@@ -6,8 +6,8 @@ import com.dragon.apps.model.WxAccType;
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxTag;
-import com.dragon.apps.web.controller.WxAccountController;
-import com.dragon.apps.web.controller.WxFansController;
+import com.dragon.apps.web.module.wxaccount.WxAccountController;
+import com.dragon.apps.web.module.wxfans.WxFansController;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 

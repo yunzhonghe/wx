@@ -33,7 +33,11 @@
 										<td>${(admin.name)?default('')}</td>
 										<td>${(admin.telephone)?default('')}</td>
 										<td>${(admin.email)?default('')}</td>
-										<td>${(admin.wx_account_name)?default('')}</td>
+										<td>
+											<#if admin.getWxAccount()?>
+												${admin.getWxAccount().name?default('')}
+											</#if>
+										</td>
 										<td>
 											<a class="btn default btn-xs blue-stripe" href="${base}/wx-admin/preUpdate?id=${(admin.id)?default('')}">修改</a>
 											<a class="btn default btn-xs red-stripe" href="javascript:;" data-fn="remove" id="${(admin.id)?default('')}">删除</a>

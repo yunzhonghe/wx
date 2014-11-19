@@ -1,12 +1,11 @@
-package com.dragon.apps.web.controller;
+package com.dragon.apps.web.module.wxfans;
 
 import java.util.List;
 
 import com.dragon.apps.model.WxTag;
-import com.dragon.apps.model.bean.WxFansListCon;
-import com.dragon.apps.service.WxFansService;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.OperationUtil;
+import com.dragon.apps.web.module.base.BaseController;
 
 /**
  * 微信粉丝用户

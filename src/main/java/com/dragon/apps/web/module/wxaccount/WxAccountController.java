@@ -1,8 +1,7 @@
-package com.dragon.apps.web.controller;
+package com.dragon.apps.web.module.wxaccount;
 
 import com.dragon.apps.model.WxAccType;
 import com.dragon.apps.model.WxAccount;
-import com.dragon.apps.service.WxAccountService;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.RoleUtils;
 import com.jfinal.core.Controller;

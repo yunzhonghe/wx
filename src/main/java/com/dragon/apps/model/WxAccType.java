@@ -2,6 +2,8 @@ package com.dragon.apps.model;
 
 import java.util.List;
 
+import com.dragon.apps.model.base.BaseModel;
+
 /**
  * wx_account_type, use cache to query.
  * 微信帐号类型(公众服务号、订阅号等)

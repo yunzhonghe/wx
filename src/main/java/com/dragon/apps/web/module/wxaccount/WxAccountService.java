@@ -1,4 +1,4 @@
-package com.dragon.apps.service;
+package com.dragon.apps.web.module.wxaccount;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +7,8 @@ import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.RoleUtils;
-import com.dragon.apps.web.controller.BaseController;
+import com.dragon.apps.web.module.base.BaseController;
+import com.dragon.apps.web.module.wxadmin.WxAdminService;
 import com.jfinal.plugin.activerecord.Db;
 
 public class WxAccountService implements Serializable{

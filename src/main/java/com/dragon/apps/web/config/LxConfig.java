@@ -3,9 +3,9 @@ package com.dragon.apps.web.config;
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.model.WxAnswerRule;
 import com.dragon.apps.model.WxMaterial;
-import com.dragon.apps.web.controller.WxAdminController;
-import com.dragon.apps.web.controller.WxAnwserRuleController;
-import com.dragon.apps.web.controller.WxMaterialController;
+import com.dragon.apps.web.module.wxadmin.WxAdminController;
+import com.dragon.apps.web.module.wxautoreply.WxAnwserRuleController;
+import com.dragon.apps.web.module.wxmaterial.WxMaterialController;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 

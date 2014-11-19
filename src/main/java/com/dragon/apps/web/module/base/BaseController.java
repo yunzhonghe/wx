@@ -1,4 +1,4 @@
-package com.dragon.apps.web.controller;
+package com.dragon.apps.web.module.base;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

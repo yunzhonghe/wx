@@ -1,8 +1,9 @@
-package com.dragon.apps.web.controller;
+package com.dragon.apps.web.module.wechat;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.dragon.apps.exception.ServiceException;
+import com.dragon.apps.web.module.base.WxAbstractAPIController;
 import com.jfinal.aop.ClearInterceptor;
 
 @ClearInterceptor

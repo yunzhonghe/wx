@@ -1,4 +1,4 @@
-package com.dragon.apps.model;
+package com.dragon.apps.model.base;
 
 import java.util.List;
 

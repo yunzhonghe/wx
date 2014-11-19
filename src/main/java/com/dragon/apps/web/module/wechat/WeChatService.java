@@ -1,7 +1,7 @@
-package com.dragon.apps.service;
+package com.dragon.apps.web.module.wechat;
 
-import com.dragon.apps.exception.ServiceException;
-import com.dragon.apps.model.WxMessageModel;
+//import com.dragon.apps.exception.ServiceException;
+//import com.dragon.apps.model.WxMessageModel;
 
 
 

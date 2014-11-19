@@ -1,7 +1,7 @@
 package com.dragon.apps.web.config;
 
-import com.dragon.apps.web.controller.UserController;
 import com.dragon.apps.web.interceptor.LoginInterceptor;
+import com.dragon.apps.web.module.user.UserController;
 import com.dragon.core.jFplugins.ShiroPlugin;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -24,9 +24,7 @@ public class MainConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
 		// 加载少量必要配置，随后可用getProperty(...)获取值
 		loadPropertyFile("a_little_config.txt");
-//		loadPropertyFile("a_little_config_lj.txt");
 		me.setBaseViewPath("/WEB-INF/pages");
-//		me.setFreeMarkerViewExtension(".ftl");
 		me.setDevMode(getPropertyToBoolean("devMode",true));
 	}
 	
@@ -82,5 +80,6 @@ public class MainConfig extends JFinalConfig {
 	 */
 	public static void main(String[] args) {
 		JFinal.start("src/main/webapp", 80, "/", 5);
+//		JFinal.start("src/main/webapp", 81, "/", 5);
 	}
 }

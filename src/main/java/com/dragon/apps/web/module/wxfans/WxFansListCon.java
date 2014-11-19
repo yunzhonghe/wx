@@ -1,4 +1,4 @@
-package com.dragon.apps.model.bean;
+package com.dragon.apps.web.module.wxfans;
 
 import java.io.Serializable;
 

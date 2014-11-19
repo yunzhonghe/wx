@@ -1,6 +1,6 @@
 package com.dragon.adapter;
 
-import com.dragon.apps.web.controller.BaseController;
+import com.dragon.apps.web.module.base.BaseController;
 import com.dragon.spider.api.BaseAPI;
 import com.dragon.spider.api.UserAPI;
 import com.dragon.spider.api.config.ApiConfig;

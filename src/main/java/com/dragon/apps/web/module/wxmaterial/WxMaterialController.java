@@ -1,7 +1,6 @@
-package com.dragon.apps.web.controller;
+package com.dragon.apps.web.module.wxmaterial;
 
 import com.dragon.apps.model.WxMaterial;
-import com.dragon.apps.service.WxMaterialService;
 import com.jfinal.core.Controller;
 
 import java.util.List;
