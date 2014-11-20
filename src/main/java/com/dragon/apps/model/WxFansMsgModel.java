@@ -1,7 +1,10 @@
 package com.dragon.apps.model;
 
 import com.jfinal.plugin.activerecord.Model;
-
+/**
+ * FIXME
+ *	not used.
+ */
 public class WxFansMsgModel extends Model<WxFansMsgModel> {
 
 	/**

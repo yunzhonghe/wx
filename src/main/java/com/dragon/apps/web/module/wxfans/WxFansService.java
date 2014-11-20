@@ -13,8 +13,8 @@ import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.model.WxMsgTextModel;
 import com.dragon.apps.model.WxTag;
 import com.dragon.apps.utils.PageSet;
+import com.dragon.apps.utils.RoleUtils;
 import com.dragon.apps.utils.StrUtils;
-import com.dragon.apps.web.module.base.BaseController;
 import com.dragon.spider.message.req.ReqType;
 import com.dragon.spider.service.ConstantWx;
 import com.jfinal.plugin.activerecord.Db;
@@ -29,7 +29,7 @@ public class WxFansService implements Serializable{
 	public static final String IN_PRARM_ERROR = "传入参数错误";
 	
 	public PageSet getFansList(WxFansListCon con ,PageSet pageSet){
-		Long accountId = BaseController.gerCurAccountId();
+		Long accountId = RoleUtils.gerCurAccountId();
 		if(accountId!=null){
 			String select = "select wf.open_id,wf.mark_name,wfi.nickname,wfi.sex,wfi.city,wfi.country,wfi.province,wfi.headimgurl";
 			String center1 = " from wx_fans wf left join wx_fans_info wfi on wfi.openid=wf.open_id";
@@ -97,7 +97,7 @@ public class WxFansService implements Serializable{
 		}
 	}
 	public List<WxTag> getWxTagList(){
-		Long accountId = BaseController.gerCurAccountId();
+		Long accountId = RoleUtils.gerCurAccountId();
 		if(accountId!=null){
 			return WxTag.dao.getList(accountId);
 		}
@@ -112,7 +112,7 @@ public class WxFansService implements Serializable{
 	public String saveWxTag(WxTag bean){
 		String result = null;
 		if(bean!=null){
-			bean.set(WxTag.accountId, BaseController.gerCurAccountId());
+			bean.set(WxTag.accountId, RoleUtils.gerCurAccountId());
 			if(bean.save()){
 				return "添加成功";
 			}else{
@@ -141,7 +141,7 @@ public class WxFansService implements Serializable{
 		return result;
 	}
 	public PageSet getFansMsgList(PageSet pageSet){
-		WxAccount account = BaseController.getCurAccount();
+		WxAccount account = RoleUtils.getCurAccount();
 		if(account!=null && account.getOriginalid()!=null){
 			String select = "select distinct m.from";
 			String center = " from wx_message m"
@@ -181,7 +181,7 @@ public class WxFansService implements Serializable{
 		if(StrUtils.isEmpty(openid)){
 			return null;
 		}
-		WxAccount account = BaseController.getCurAccount();
+		WxAccount account = RoleUtils.getCurAccount();
 		if(account!=null && account.getOriginalid()!=null){
 			String sql = " select m.from,m.to,m.content_id,m.type,m.FROM_UNIXTIME(m.create_time) as create_time from wx_message m "
 					+ " where m.from in ('"+openid+"','"+account.getOriginalid()+"') and m.to in ('"+openid+"','"+account.getOriginalid()+"')"
@@ -189,7 +189,7 @@ public class WxFansService implements Serializable{
 			List<Record> ls = Db.find(sql);
 			if(ls!=null && ls.size()>0){
 				WxFansModel fans = WxFansModel.dao.getByOpenId(openid);
-				WxFansInfo info = fans.getInfo();
+				WxFansInfo info = fans.getWxFansInfoWithCheckDb();
 				for(Record r : ls){
 					//只拿出了可能的text消息的content，如果m.type不是文本，则mt.content不可使用.
 					String from = r.getStr("from");
@@ -215,7 +215,7 @@ public class WxFansService implements Serializable{
 					String content = null;
 					String contentId = r.getStr("content_id");
 					if(type==ReqType.TEXTID){
-						WxMsgTextModel tm = WxMsgTextModel.dao.getMsgById(contentId);
+						WxMsgTextModel tm = WxMsgTextModel.dao.getMsgByContentId(contentId);
 						if(tm!=null){
 							content = tm.getContent();
 						}
@@ -245,7 +245,7 @@ public class WxFansService implements Serializable{
 	 * @return
 	 */
 	public String sendMsg(String openid,String msg){
-		String originalId = BaseController.getCurAccountOriginalId();
+		String originalId = RoleUtils.getCurAccountOriginalId();
 		if(originalId!=null && openid!=null){
 			WxMsgTextModel wmtm = new WxMsgTextModel();
 			wmtm.setContent(msg);

@@ -2,9 +2,8 @@ package com.dragon.apps.model;
 
 import com.jfinal.plugin.activerecord.Model;
 
-import java.util.Objects;
-
 /**
+ * FIXME will be replaced.
  * Created by Administrator on 2014/11/2.
  */
 public class WxMaterial extends Model<WxMaterial> {

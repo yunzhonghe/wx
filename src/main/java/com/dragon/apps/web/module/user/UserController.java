@@ -9,7 +9,6 @@ import com.jfinal.core.Controller;
 
 @ClearInterceptor
 public class UserController extends Controller{
-
 	
 	public void index() {
 		Subject subject = SecurityUtils.getSubject();

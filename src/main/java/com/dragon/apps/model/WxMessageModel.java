@@ -1,46 +1,34 @@
 package com.dragon.apps.model;
 
-import java.sql.Timestamp;
 import java.util.List;
-
 import com.dragon.apps.exception.ErrorCode;
 import com.dragon.apps.exception.ServiceException;
 import com.jfinal.plugin.activerecord.Model;
 
 /**
  * 实现微信用户的聊天的功能
- * 
  * @author chenlong
- * @param <WeChatModel>
- * 
  */
 public class WxMessageModel extends Model<WxMessageModel> {
+	public static final WxMessageModel dao = new WxMessageModel();
 
 	private static final long serialVersionUID = 1L;
-	//private static final WxMessageModel dao = new WxMessageModel();
 
-	private String id = "id";
-	private String messageId = "message_id";
-	private String from = "from";
-	private String to = "to";
-	private String contentId = "content_id";
-	private String type = "type";
-	private String createTime = "create_time";
-	private String rspContent = "rsp_content_id";
-	private String rspType = "rsp_type";
-	private String rspTime = "rsp_time";
+	private String id = "id";//long
+	private String messageId = "message_id";//string
+	private String from = "from";//string
+	private String to = "to";//string
+	private String contentId = "content_id";//long
+	private String type = "type";//int
+	private String createTime = "create_time";//long
+	private String rspContent = "rsp_content_id";//long
+	private String rspType = "rsp_type";//int
+	private String rspTime = "rsp_time";//long
 
-	/*private WxMessageModel() {
-
-	}
-
-	public static WxMessageModel getInstance() {
-		return dao;
-	}*/
 
 	public WxMessageModel getByToken(String token) throws ServiceException {
 		List<WxMessageModel> lists = this.find("select * from wx_account where token = " + token);
-		if (null == lists || lists.size() > 1) {
+		if (null == lists || lists.size() != 1 ) {
 			throw new ServiceException(ErrorCode.TOKENERROR);
 		} else {
 			return lists.get(0);
@@ -89,84 +77,64 @@ public class WxMessageModel extends Model<WxMessageModel> {
 	public void setWxMsgVoiceModel(WxMsgVoiceModel wxMsgVoiceModel) {
 		this.wxMsgVoiceModel = wxMsgVoiceModel;
 	}
-
-	public long getId() {
+	public Long getId() {
 		return getLong(id);		
 	}
-
-	public WxMessageModel setId(long id) {
+	public WxMessageModel setId(Long id) {
 		return set(this.id,id);
 	}
-
 	public String getMessageId() {
 		return getStr(messageId);
 	}
-
 	public WxMessageModel setMessageId(String messageId) {
 		return set(this.messageId,messageId);		
 	}
-
 	public String getFrom() {
 		return getStr(from);
 	}
-
 	public WxMessageModel setFrom(String from) {
 		return set(this.from,from);
 	}
-
 	public String getTo() {
 		return getStr(to);
 	}
-
 	public WxMessageModel setTo(String to) {
 		return set(this.to,to);
 	}
-
 	public String getContentId() {
 		return getStr(contentId);
 	}
-
-	public WxMessageModel setContentId(long contentId) {
+	public WxMessageModel setContentId(Long contentId) {
 		return set(this.contentId,contentId);
 	}
-
-	public int getType() {
+	public Integer getType() {
 		return getInt(type);
 	}
-
-	public WxMessageModel setType(int type) {
+	public WxMessageModel setType(Integer type) {
 		return set(this.type,type);
 	}
-
 	public Long getCreateTime() {
 		return getLong(createTime);
 	}
-
-	public WxMessageModel setCreateTime(long createTime) {
+	public WxMessageModel setCreateTime(Long createTime) {
 		return set(this.createTime,createTime);
 	}
-
 	public String getRspContent() {
 		return getStr(rspContent);
 	}
-
 	public WxMessageModel setRspContent(String rspContent) {
 		return set(this.rspContent,rspContent);
 	}
-
-	public int getRspType() {
+	public Integer getRspType() {
 		return getInt(rspType);
 	}
-
-	public WxMessageModel setRspType(int rspType) {
+	public WxMessageModel setRspType(Integer rspType) {
 		return set(this.rspType,rspType);
 	}
-
 	public Long getRspTime() {
 		return getLong(rspTime);
 	}
-
-	public WxMessageModel setRspTime(long rspTime) {
+	public WxMessageModel setRspTime(Long rspTime) {
 		return set(this.rspTime,rspTime);
 	}
 }

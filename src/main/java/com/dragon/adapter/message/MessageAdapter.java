@@ -18,7 +18,7 @@ public class MessageAdapter {
 				TextMsg tm = new TextMsg();
 				WxMsgTextModel wtm = messageModel.getWxMsgTextModel();
 				if(wtm==null){
-					wtm = WxMsgTextModel.dao.getMsgById(messageModel.getContentId());
+					wtm = WxMsgTextModel.dao.getMsgByContentId(messageModel.getContentId());
 				}
 				if(wtm!=null){
 					tm.setContent(wtm.getContent());

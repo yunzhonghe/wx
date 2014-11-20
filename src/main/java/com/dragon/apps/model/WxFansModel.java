@@ -10,123 +10,95 @@ import com.jfinal.plugin.activerecord.Model;
 
 /**
  * 实现微信用户的关注和非关注以及对应的分组model
- * 
  * @author chenlong
  * @param <WeChatModel>
- * 
  */
 public class WxFansModel extends Model<WxFansModel> {
 
 	private static final long serialVersionUID = 1L;
 	public static final WxFansModel dao = new WxFansModel();
 
-	private String id = "id";
-	private String openId = "open_id";
-	private String wxAccountId = "wx_account_id";//关联微信号的主键
-	private String name = "name";
-	private String markName = "mark_name";
-	private String location = "location";
-	private String signature = "signature";
-	private String subscribe = "subscribe";
-	private String createTime = "create_time";
-	private String sourceFrom = "source_from";
-//	private String relateId = "relate_id";//关联微信号的主键
+	private String id = "id";//long
+	private String openId = "open_id";//varchar
+	private String wxAccountId = "wx_account_id";//long,关联微信号的主键
+	private String name = "name";//varchar
+	private String markName = "mark_name";//varchar
+	private String location = "location";//varchar
+	private String signature = "signature";//?
+	private String subscribe = "subscribe";//int
+	private String createTime = "create_time";//long
+	private String sourceFrom = "source_from";//varchar
 	
 	public WxFansModel getByOpenId(String openId){
 		return findFirst("select * from " +ClConfig.WX_FANS_TABLE + " where open_id = '" + openId+"'");
 	}
-	public WxFansInfo getWxFansInfo(){
-		if(info==null){
+	public WxFansInfo getWxFansInfoWithCheckDb(){
+		if(wxFansInfo==null){
 			if(getOpenId()!=null){
-				info = WxFansInfo.dao.findByOpenId(getOpenId());
+				wxFansInfo = WxFansInfo.dao.findByOpenId(getOpenId());
 			}
 		}
-		return info;
+		return wxFansInfo;
 	}
-	private WxFansInfo info = null;
-	public WxFansInfo getInfo() {
-		if(info==null){
-			info = getWxFansInfo();
-		}
-		return info;
+	//关联的详细信息
+	private WxFansInfo wxFansInfo = null;
+	public WxFansInfo getWxFansInfo() {
+		return wxFansInfo;
 	}
-	public void setInfo(WxFansInfo info) {
-		this.info = info;
+	public void setWxFansInfo(WxFansInfo wxFansInfo) {
+		this.wxFansInfo = wxFansInfo;
 	}
-	/*public static WxFansModel getInstance() {
-		return dao;
-	}*/
-	
-
-	
 	public long getId() {
 		return getLong(id);		
 	}
-
 	public WxFansModel setId(long id) {
 		return set(this.id,id);
 	}
-
 	public String getOpenId() {
 		return getStr(openId);
 	}
-
 	public WxFansModel setOpenId(String openId) {
 		return set(this.openId,openId);		
 	}
-
 	public String getName() {
 		return getStr(name);
 	}
-
 	public WxFansModel setName(String name) {
 		return set(this.name,name);
 	}
-
 	public String getMarkName() {
 		return getStr(markName);
 	}
-
 	public WxFansModel setMarkName(String markName) {
 		return set(this.markName,markName);
 	}
-
 	public String getLocation() {
 		return getStr(location);
 	}
-
 	public WxFansModel setLocation(String location) {
 		return set(this.location,location);
 	}
-
 	public String getSignature() {
 		return getStr(signature);
 	}
-
 	public WxFansModel setSignature(String signature) {
 		return set(this.signature,signature);
 	}
-
 	public Long getCreateTime() {
 		return getLong(createTime);
 	}
-
 	public WxFansModel setCreateTime(long createTime) {
 		return set(this.createTime,createTime);
 	}
-
 	public int getSubscribe() {
 		return getInt(subscribe);
 	}
-
 	public WxFansModel setSubscribe(int subscribe) {
 		return set(this.subscribe,subscribe);
 	}
-	
 	public String getSourceFrom() {
 		return getStr(sourceFrom);
 	}
-
 	public WxFansModel setSourceFrom(String sourceFrom) {
 		return set(this.sourceFrom,sourceFrom);
 	}
@@ -136,6 +108,4 @@ public class WxFansModel extends Model<WxFansModel> {
 	public WxFansModel setWxAccountId(Long wxAccountId) {
 		return set(this.wxAccountId,wxAccountId);
 	}
-	
-	
 }

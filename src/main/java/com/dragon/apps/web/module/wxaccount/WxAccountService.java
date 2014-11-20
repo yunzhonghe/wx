@@ -7,7 +7,6 @@ import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.RoleUtils;
-import com.dragon.apps.web.module.base.BaseController;
 import com.dragon.apps.web.module.wxadmin.WxAdminService;
 import com.jfinal.plugin.activerecord.Db;
 
@@ -169,7 +168,7 @@ public class WxAccountService implements Serializable{
 	 * @return
 	 */
 	public WxAccount getCurrentWxAccount(){
-		WxAdmin wxAdmin = BaseController.gerCurUser();
+		WxAdmin wxAdmin = RoleUtils.gerCurUser();
 		if(wxAdmin!=null && wxAdmin.getWxAccountId() !=null){
 			WxAccount wxAccount = WxAccount.dao.findById(wxAdmin.getWxAccountId());
 			return wxAccount;

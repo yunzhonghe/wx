@@ -16,15 +16,25 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import com.dragon.apps.model.WxAdmin;
+import com.dragon.apps.utils.RoleUtils;
+import com.dragon.apps.utils.StrUtils;
 
 public class WXRealm extends AuthorizingRealm{
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+		String userName = (String) principals.fromRealm(getName()).iterator().next();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		Set<String> roles=new HashSet<String>();
-		roles.add("admin");
-		authorizationInfo.setRoles(roles);
+		if(StrUtils.isNotEmpty(userName)){
+			WxAdmin admin = WxAdmin.dao.getWxAdminByUserName(userName);
+			Set<String> roles=new HashSet<String>();
+			if(admin.getSuper().equals(WxAdmin.SUPERADMIN)){//超级管理员角色
+				roles.add(RoleUtils.role_super_admin);
+			}else{
+				roles.add(RoleUtils.role_admin);//普通管理员角色
+			}
+			authorizationInfo.setRoles(roles);
+		}
 		return authorizationInfo;
 	}
 
@@ -32,7 +42,7 @@ public class WXRealm extends AuthorizingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		String username = (String) token.getPrincipal();
 		String password = new String((char[]) token.getCredentials());
-		WxAdmin admin=WxAdmin.dao.findFirst(" select * from wx_admin where admin_id=? ",username);
+		WxAdmin admin=WxAdmin.dao.getWxAdminByUserName(username);
 		if(admin==null  || StringUtils.isEmpty(username)){
 			throw new UnknownAccountException();
 		}

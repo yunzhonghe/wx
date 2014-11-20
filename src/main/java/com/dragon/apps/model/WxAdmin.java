@@ -8,9 +8,16 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxAdmin extends Model<WxAdmin> {
     private static final long serialVersionUID = 1L;
     public static WxAdmin dao = new WxAdmin();
+    
+    public static final String SUPERADMIN = "1";//超级管理员
+    public static final String ADMIN = "0";
 
     public static String getTableName() {
         return "wx_admin";
+    }
+    
+    public WxAdmin getWxAdminByUserName(String username){//admin_id
+    	return findFirst(" select * from "+getTableName()+" where "+ADMIN_ID+"=? ",username);
     }
     public WxAccount getWxAccount(){
     	Long accountId = getWxAccountId();

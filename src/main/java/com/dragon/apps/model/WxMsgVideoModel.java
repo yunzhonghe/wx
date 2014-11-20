@@ -5,45 +5,27 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxMsgVideoModel extends Model<WxMsgVideoModel> {
 
 	public static WxMsgVideoModel dao = new WxMsgVideoModel();
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private String thunbMediaId ="thunb_media_id";
-	private String mediaId = "media_id";
-	private String id ="id";
+	private String thunbMediaId ="thunb_media_id";//string
+	private String mediaId = "media_id";//string
+	private String id ="id";//long
 
-/*	private WxMsgVideoModel() {
-	};
-
-	private static WxMsgVideoModel instance = new WxMsgVideoModel();
-
-	public static WxMsgVideoModel getInstance() {
-		return instance;
-	}
-*/
 	public String getThunbMediaId() {
 		return getStr(thunbMediaId);
 	}
-
 	public WxMsgVideoModel setThunbMediaId(String thunbMediaId) {		
 		return set(this.thunbMediaId,thunbMediaId);
 	}
-
 	public String getMediaId() {
 		return getStr(mediaId);
 	}
-
 	public WxMsgVideoModel setMediaId(String mediaId) {
 		return set(this.mediaId,mediaId);		
 	}
-
-	public long getId() {
+	public Long getId() {
 		return getLong(id);
 	}
-
-	public WxMsgVideoModel setId(long id) {
+	public WxMsgVideoModel setId(Long id) {
 		return set(this.id,id);
 	}
-
 }

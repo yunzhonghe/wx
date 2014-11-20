@@ -5,45 +5,27 @@ import com.jfinal.plugin.activerecord.Model;
 public class WxMsgVoiceModel extends Model<WxMsgVoiceModel> {
 
 	public static WxMsgVoiceModel dao = new WxMsgVoiceModel();
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private String format ="format";
-	private String mediaId = "media_id";
-	private String id ="id";
-
-	/*private WxMsgVoiceModel() {
-	};
-
-	private static WxMsgVoiceModel instance = new WxMsgVoiceModel();
-
-	public static WxMsgVoiceModel getInstance() {
-		return instance;
-	}*/
+	private String format ="format";//string
+	private String mediaId = "media_id";//string
+	private String id ="id";//long
 
 	public String getFormat() {
 		return getStr(format);
 	}
-
 	public WxMsgVoiceModel setFormat(String format) {		
 		return set(this.format,format);
 	}
-
 	public String getMediaId() {
 		return getStr(mediaId);
 	}
-
 	public WxMsgVoiceModel setMediaId(String mediaId) {
 		return set(this.mediaId,mediaId);		
 	}
-
-	public long getId() {
+	public Long getId() {
 		return getLong(id);
 	}
-
-	public WxMsgVoiceModel setId(long id) {
+	public WxMsgVoiceModel setId(Long id) {
 		return set(this.id,id);
 	}
-
 }

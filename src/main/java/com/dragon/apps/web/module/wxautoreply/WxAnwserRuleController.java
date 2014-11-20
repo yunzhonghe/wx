@@ -12,9 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2014/11/2.
- */
+
 public class WxAnwserRuleController extends Controller {
 
     public void index() {
