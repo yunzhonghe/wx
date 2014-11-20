@@ -1,6 +1,7 @@
 package com.dragon.apps.web.config;
 
 import com.dragon.apps.web.interceptor.LoginInterceptor;
+import com.dragon.apps.web.interceptor.ShiroFreeMarkerInterceptor;
 import com.dragon.apps.web.module.user.UserController;
 import com.dragon.core.jFplugins.ShiroPlugin;
 import com.jfinal.config.Constants;
@@ -65,6 +66,7 @@ public class MainConfig extends JFinalConfig {
 	 */
 	public void configInterceptor(Interceptors me) {
 		me.add(new LoginInterceptor());
+		me.add(new ShiroFreeMarkerInterceptor());
 	}
 	
 	/**
