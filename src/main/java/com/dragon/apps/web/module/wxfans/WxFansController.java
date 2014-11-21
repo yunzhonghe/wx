@@ -12,10 +12,18 @@ import com.dragon.apps.web.module.base.BaseController;
  * @author LiuJian
  */
 public class WxFansController extends BaseController {
-	public static String controlerKey = "/wxfans";
+	public static String controlerKey = "/wx_fans";
 	
 
-	public void index() {//粉丝管理
+	public void index() {//超级管理员粉丝管理
+		WxFansListCon con = getModel(WxFansListCon.class);
+		PageSet pageSet = getPageSet();
+		setAttr("pageSet", getService().getFansList(con, pageSet));
+		setAttr("taglist",getService().getWxTagList());
+		setAttr("con", con);
+		render("fans_list.html");
+	}
+	public void subindex() {//普通管理员粉丝管理
 		WxFansListCon con = getModel(WxFansListCon.class);
 		PageSet pageSet = getPageSet();
 		setAttr("pageSet", getService().getFansList(con, pageSet));
@@ -81,7 +89,12 @@ public class WxFansController extends BaseController {
 		setAttr(OPERATION_RESULT, operationMsg);
 		render("tag_list.html");
 	}
-	public void msg(){//消息管理
+	public void msg(){//超级管理消息管理
+		PageSet pageSet = getPageSet();
+		setAttr("pageSet", getService().getFansMsgList(pageSet));
+		render("msg_list.html");
+	}
+	public void submsg(){//普通管理消息管理
 		PageSet pageSet = getPageSet();
 		setAttr("pageSet", getService().getFansMsgList(pageSet));
 		render("msg_list.html");

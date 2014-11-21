@@ -1,8 +1,24 @@
 package com.dragon.apps.web.config;
 
+import com.dragon.apps.model.WxAccType;
+import com.dragon.apps.model.WxAccount;
+import com.dragon.apps.model.WxAdmin;
+import com.dragon.apps.model.WxAnswerRule;
+import com.dragon.apps.model.WxFansInfo;
+import com.dragon.apps.model.WxMaterial;
+import com.dragon.apps.model.WxTag;
 import com.dragon.apps.web.interceptor.LoginInterceptor;
 import com.dragon.apps.web.interceptor.ShiroFreeMarkerInterceptor;
+import com.dragon.apps.web.module.user.LoginController;
 import com.dragon.apps.web.module.user.UserController;
+import com.dragon.apps.web.module.wxaccount.WxAccountController;
+import com.dragon.apps.web.module.wxactivity.WxActivityController;
+import com.dragon.apps.web.module.wxadmin.WxAdminController;
+import com.dragon.apps.web.module.wxautoreply.WxAnwserRuleController;
+import com.dragon.apps.web.module.wxchannel.WxChannelController;
+import com.dragon.apps.web.module.wxfans.WxFansController;
+import com.dragon.apps.web.module.wxmaterial.WxMaterialController;
+import com.dragon.apps.web.module.wxmenu.WxMenuController;
 import com.dragon.core.jFplugins.ShiroPlugin;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -33,11 +49,20 @@ public class MainConfig extends JFinalConfig {
 	 * 配置路由
 	 */
 	public void configRoute(Routes me) {
-		me.add("/",UserController.class);
-
-		LjConfig.configRoute(me);
+		me.add("/",LoginController.class);
+		
+		//XXX
 		ClConfig.configRoute(me);
-        LxConfig.configRoute(me);
+        
+		me.add(WxAccountController.controlerKey,WxAccountController.class);//微信账户
+		me.add(WxFansController.controlerKey,WxFansController.class);//微信粉丝
+		me.add(WxAdminController.controlerKey, WxAdminController.class);//管理员
+        me.add(WxMaterialController.controlerKey,WxMaterialController.class);//素材
+        me.add(WxMenuController.controlerKey,WxMenuController.class);//菜单
+        me.add(WxAnwserRuleController.controlerKey,WxAnwserRuleController.class);//应答规则
+        me.add(WxActivityController.controlerKey,WxActivityController.class);//活动
+        me.add(WxChannelController.controlerKey,WxChannelController.class);//渠道
+        me.add(UserController.controlerKey,UserController.class);//系统功能
 	}
 	
 	/**
@@ -54,11 +79,17 @@ public class MainConfig extends JFinalConfig {
         arp.setContainerFactory(new CaseInsensitiveContainerFactory());//大小写不敏感
         plu.add(arp);
         
-        plu.add(new ShiroPlugin()); 
+        plu.add(new ShiroPlugin());
+        //XXX
         ClConfig.configActiveRecordPlugin(arp);
-        LjConfig.configActiveRecordPlugin(arp);
-        LxConfig.configActiveRecordPlugin(arp);
 		
+        arp.addMapping(WxAccount.tableName, WxAccount.ID, WxAccount.class);
+        arp.addMapping(WxAccType.tableName, WxAccType.ID, WxAccType.class);
+        arp.addMapping(WxFansInfo.tableName, WxFansInfo.id, WxFansInfo.class);
+        arp.addMapping(WxTag.tableName, WxTag.id, WxTag.class);
+        arp.addMapping(WxAdmin.getTableName(), WxAdmin.ID, WxAdmin.class);
+        arp.addMapping(WxAnswerRule.getTableName(), WxAnswerRule.ID, WxAnswerRule.class);
+        arp.addMapping(WxMaterial.getTableName(), WxMaterial.ID, WxMaterial.class);
 	}
 	
 	/**

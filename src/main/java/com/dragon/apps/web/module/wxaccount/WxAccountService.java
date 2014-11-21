@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.dragon.apps.model.WxAccount;
-import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.RoleUtils;
 import com.dragon.apps.web.module.wxadmin.WxAdminService;
@@ -26,7 +25,6 @@ public class WxAccountService implements Serializable{
 	 * get page account by query condition and pageSet.
 	 */
 	public PageSet getAccountList(PageSet pageSet){
-		//FIXME may have list-query condition.
 		int count = Db.queryLong("select count(1) from "+WxAccount.tableName).intValue();
 		pageSet.setTotalSize(count);
 		if (count > 0) {
@@ -120,10 +118,9 @@ public class WxAccountService implements Serializable{
 			if(exists!=null){
 				exists.setPassword(wxAccount.getPassword());
 				exists.setToken(wxAccount.getToken());
-				if(wxAccount.getTypeid()!=0){
+				if(wxAccount.getTypeid()!=null){
 					exists.setTypeid(wxAccount.getTypeid());
 				}
-				//FIXME may need to update other columns.
 				if(exists.update()){
 					result = "修改成功";
 				}else{
@@ -141,7 +138,6 @@ public class WxAccountService implements Serializable{
 			WxAccount wxAccount = WxAccount.dao.findById(Long.parseLong(sid));
 			if(wxAccount!=null){
 				if(wxAccount.delete()){
-					//FIXME
 					result = "删除成功";
 				}else{
 					result = "删除失败";
@@ -152,28 +148,12 @@ public class WxAccountService implements Serializable{
 		}
 		return result;
 	}
-//	/**
-//	 * 当管理员与微信帐号关联绑定时，调用该方法更新微信帐号的托管账户id；
-//	 * 在修改关联微信时，该方法可能需要调用两次，一次解除之前的微信帐号托管，一次更新之后的微信帐号托管。
-//	 * @param accountId
-//	 * @param escrowuserId(管理员)的id，可以为null(进行解除).
-//	 * @return
-//	 */
-//	public boolean updateAccountEscrowuser(Long accountId,Long escrowuserId){
-//		String sql = "update "+WxAccount.tableName+" set "+WxAccount.ESCROWUSER+"="+escrowuserId+" where "+WxAccount.ID+"="+accountId;
-//		return Db.update(sql)>0;
-//	}
 	/**
 	 * 获取当前账户对应的微信帐号
 	 * @return
 	 */
 	public WxAccount getCurrentWxAccount(){
-		WxAdmin wxAdmin = RoleUtils.gerCurUser();
-		if(wxAdmin!=null && wxAdmin.getWxAccountId() !=null){
-			WxAccount wxAccount = WxAccount.dao.findById(wxAdmin.getWxAccountId());
-			return wxAccount;
-		}
-		return null;
+		return RoleUtils.getCurAccount();
 	}
 	
 	private List<WxAccount> setWxAdminForWxAccountList(List<WxAccount> ls){

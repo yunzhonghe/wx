@@ -1,0 +1,73 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+    <@nav index="60"/>
+    	<div class="page-content">
+        <@title name="关键字修改" menus='{"应答规则":"${base}/wx_answer_rule","关键字回复":"${base}/wx_answer_rule","关键字修改":"javascript:;"}'/>
+            <#if _opresult??>
+            	${_opresult}
+            <#else>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="booking-search">
+							<form action="${base}/wx_answer_rule/keywordmodifydo" role="form" method="post" onsubmit="return checkSub();">
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">关键字(多个关键字用 | 隔开)：</label>
+										<input class="form-control" type="text" id="keyword" name="wxAnswerRule.keyword"
+											value="${wxAnswerRule.keyword?default('')}" placeholder="请输入关键字,如  Dota | 刀塔"/>
+										<input type="hidden" name="wxAnswerRule.id" value="${wxAnswerRule.id}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">回复类型：</label>
+										<select class="form-control" name="wxAnswerRule.answer_type">
+											<#list answerTypes as atype>
+												<option value="${atype.id}" <#if wxAnswerRule.answer_type==atype.id>selected</#if>>${atype.value?default('')}</option>
+											</#list>
+										</select>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">回复内容：</label>
+										<input class="form-control" type="text" id="answer" name="wxAnswerRule.answer" placeholder="请输入回复内容"
+											value="${wxAnswerRule.answer?default('')}"  style="height: 100px;"/>
+									</div>
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="btn blue">保存</button>
+									<button type="reset" class="btn default">重置</button>
+									<input type="button" class="btn default" onclick="javascript:window.history.go(-1);" value="返回"/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</#if>
+		</div>
+	</div>
+	<@footer/>
+	<script>
+	jQuery(document).ready(function() {    
+	   App.init();
+	   //add your javascript here
+	});
+	function checkSub(){
+		var errmsg = '';
+		if(document.getElementById("keyword").value==''){
+			errmsg += "请输入关键字\n";
+		}
+		if(document.getElementById("answer").value==''){
+			errmsg += "请输入回复内容\n";
+		}
+		if(errmsg!=''){
+			alert(errmsg);
+			return false;
+		}
+		return true;
+	}
+</script>
+</@layout>

@@ -1,0 +1,65 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<link rel="stylesheet" type="text/css" href="${base}/resources/plugins/select2/select2_metro.css" />
+	<link rel="stylesheet" type="text/css" href="${base}/resources/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+	<link rel="stylesheet" type="text/css" href="${base}/resources/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css">
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <@nav index="41"/>
+    <div class="page-content">
+        <@title name="添加素材" menus='{"素材维护":"${base}/wx_material","添加素材":"javascript:;"}'/>
+    	<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN VALIDATION STATES-->
+					<div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption"><i class="fa fa-reorder"></i>添加素材</div>
+						</div>
+						<div class="portlet-body form">
+							<!-- BEGIN FORM-->
+							<form class="form-horizontal" id="form_sample_3" action="${base}/wx_material/add" enctype="multipart/form-data" method="post">
+								<div class="form-body">
+									<div class="form-group">
+										<label class="control-label col-md-3">素材描述<span class="required">*</span></label>
+										<div class="col-md-4">
+											<input type="text" class="form-control" data-required="1" name="describe">
+										</div>
+									</div>
+                                    <div class="form-group" id="answer_text">
+                                        <label class="control-label col-md-3">素材内容 <span class="required">*</span></label>
+                                        <div class="col-md-4">
+                                            <input type="file" class="form-control" name="file">
+                                        </div>
+                                    </div>
+								</div>
+								<div class="form-actions fluid">
+									<div class="col-md-offset-3 col-md-9">
+										<button class="btn green" type="submit">提交</button>
+										<button class="btn default" type="button" onclick="javascript:window.location.href='${base}/wx_material/list';">取消</button>
+									</div>
+								</div>
+							</form>
+							<!-- END FORM-->
+						</div>
+						<!-- END VALIDATION STATES-->
+					</div>
+				</div>
+			</div>
+    </div>
+</div>
+<@footer/>
+<script type="text/javascript" src="${base}/resources/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="${base}/resources/plugins/jquery-validation/dist/additional-methods.min.js"></script>
+<script type="text/javascript" src="${base}/resources/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="${base}/resources/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
+<script type="text/javascript" src="${base}/resources/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+<script type="text/javascript" src="${base}/resources/plugins/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+<script type="text/javascript" src="${base}/resources/plugins/bootstrap-markdown/lib/markdown.js"></script>
+
+<script>
+    jQuery(document).ready(function() {
+        App.init();
+
+    });
+</script>
+</@layout>

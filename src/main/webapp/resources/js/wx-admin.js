@@ -8,7 +8,7 @@ var WxAdmin = function () {
     			}
     			var $this=$(this);
     			var $tr=$this.closest("tr");
-    			var url=window.base+"/wx-admin/delete";
+    			var url=window.base+"/wx_admin/delete";
     			var param={}
     				param.id=$this.attr("id");
     			var callback=function(data){

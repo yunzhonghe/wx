@@ -1,14 +1,12 @@
 package com.dragon.apps.web.module.wxmaterial;
 
 import com.dragon.apps.model.WxMaterial;
-import com.jfinal.core.Controller;
+import com.dragon.apps.web.module.base.BaseController;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2014/11/2.
- */
-public class WxMaterialController extends Controller {
+public class WxMaterialController extends BaseController {
+	public static String controlerKey = "/wx_material";
 
     public void index() {
         forwardAction("/wx-material/list");
@@ -19,12 +17,10 @@ public class WxMaterialController extends Controller {
         setAttr("materialList",list);
         render("list.html");
     }
-
-    public void preAdd() {
+    public void add() {
         render("add.html");
     }
-
-    public void add() {
+    public void adddo() {
         WxMaterialService wxMaterialService = new WxMaterialService();
         WxMaterial wxMaterial = wxMaterialService.uploadMaterialFile(this.getRequest());
         if(wxMaterial != null) {
@@ -37,4 +33,12 @@ public class WxMaterialController extends Controller {
         boolean isDelete = WxMaterial.dao.deleteById(getParaToLong("id"));
         this.redirect("/wx-material/list");
     }
+    public void subindex() {
+//        forwardAction("/wx-material/list");
+    }
+    public void subadd() {
+//        forwardAction("/wx-material/list");
+    }
+    
+    
 }

@@ -125,7 +125,7 @@ public class WxFansService implements Serializable{
 	}
 	public String modifyWxTag(WxTag bean){
 		String result = null;
-		if(bean!=null && bean.get("BoxTypeID")!=null){
+		if(bean!=null && bean.get(WxTag.id)!=null){
 			WxTag exists = WxTag.dao.findById(bean.get(WxTag.id));
 			if(exists!=null){
 				exists.set(WxTag.name, bean.get(WxTag.name));
@@ -163,7 +163,7 @@ public class WxFansService implements Serializable{
 						Record rec = Db.findFirst(subSql);
 						if(rec!=null){
 							Integer type = rec.getInt("type");
-							rec.set("type", getMessageTypeName(type));
+							rec.set("type", ReqType.getTypeNameByTypeId(type));
 							if(type==null || type!=ReqType.TEXTID){
 								rec.set("content", null);
 							}
@@ -219,17 +219,9 @@ public class WxFansService implements Serializable{
 						if(tm!=null){
 							content = tm.getContent();
 						}
-					}else if(type==ReqType.IMAGEID){
+					}else{
 						//FIXME
-						content = "图片";
-					}else if(type==ReqType.LINKID){
-						content = "链接";
-					}else if(type==ReqType.LOCATIONID){
-						content = "位置";
-					}else if(type==ReqType.VOICEID){
-						content = "音频";
-					}else if(type==ReqType.VIDEOID){
-						content = "视频";
+						content = ReqType.getTypeNameByTypeId(type);
 					}
 					r.set("content", content);
 				}
@@ -263,27 +255,6 @@ public class WxFansService implements Serializable{
 			}
 		}
 		return null;
-	}
-	private String getMessageTypeName(Integer type){
-		if(type==null){
-			type = -1;
-		}
-		if(type==ReqType.TEXTID){
-			return "文本";
-		}else if(type==ReqType.IMAGEID){
-			return "图片";
-		}else if(type==ReqType.LINKID){
-			return "链接";
-		}else if(type==ReqType.LOCATIONID){
-			return "位置";
-		}else if(type==ReqType.VOICEID){
-			return "音频";
-		}else if(type==ReqType.VIDEOID){
-			return "视频";
-		}else if(type==ReqType.EVENTID){
-			return "事件";
-		}
-		return "未知";
 	}
 	
 	

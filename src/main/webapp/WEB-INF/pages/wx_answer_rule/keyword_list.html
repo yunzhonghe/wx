@@ -1,0 +1,71 @@
+<#include "../base/layout.html"/>
+<@layout>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <@nav index="60"/>
+    <div class="page-content">
+        <@title name="关键字回复" menus='{"应答规则":"${base}/wx_answer_rule","关键字回复":"javascript:;"}'/>
+        <#if _opresult??>
+         	${_opresult}
+        <#else>
+        <!-- BEGIN PAGE CONTENT-->
+			<div class="row" style="border-bottom: 1px #cccccc solid;">
+				<div class="col-md-9"><Strong>关键词匹配-回复设置</Strong></div>
+				<div class="col-md-3" style="text-align: right;">
+					<a class="btn default btn-xs blue-stripe" href="${base}/wx_answer_rule/keywordadd">添加规则</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<#if (list??) && (list?size > 0)>
+						<#list list as ls>
+							<div class="portlet box blue">
+								<div class="portlet-title">
+									<div class="caption">&nbsp;规则id:${ls.id}</div>
+									<div class="tools">
+										<a href="#" class="collapse" title="展开/收起"></a>
+										<a href="${base}/wx_answer_rule/keywordmodify/${ls.id}" class="config" title="修改"></a>
+										<img src="${base}/resources/img/portlet-remove-icon-white.png" onclick="javascript:deleteObj('${base}/wx_answer_rule/keywordremovedo/${ls.id}')" title="删除" 
+											style="width: 11px;display: inline-block;height: 16px;margin:-4px 3px 10px 5px;background: transparent;cursor: pointer;"/>
+									</div>
+								</div>
+								<div class="portlet-body" style="display: block;">
+									<div class="row">
+										<div class="col-md-2">
+											<strong><label class="control-label">关键字：</label></strong>
+										</div>
+										<div class="col-md-10">
+											<label style="text-shadow: gray;">${ls.keyword}</label>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-md-12">
+											<strong><label class="control-label">回复：</label></strong>&nbsp;${ls.answerTypeName}
+											<label class="form-control">${ls.answer}</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</#list>
+					<#else>
+						暂无数据
+					</#if>
+				</div>
+			</div>
+		</#if>
+			<!-- END PAGE CONTENT -->
+    </div>
+</div>
+<@footer/>
+<script>
+    jQuery(document).ready(function() {
+        App.init();
+        WxAdmin.init();
+    });
+    function deleteObj(path){
+		if(confirm("确定删除吗？")){
+			window.location.href=path;
+		}
+	}
+</script>
+</@layout>

@@ -6,21 +6,20 @@ import java.util.Map;
 
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAdmin;
+import com.dragon.apps.web.module.base.BaseController;
 import com.google.gson.Gson;
-import com.jfinal.core.Controller;
 
-/**
- * Created by Administrator on 2014/11/2.
- */
-public class WxAdminController extends Controller {
-
+public class WxAdminController extends BaseController {
+	public static String controlerKey = "/wx_admin";
     public void index() {
-        forwardAction("/wx-admin/list");
+        forwardAction("/wx_admin/list");
     }
     
     public void list() {
         List<WxAdmin> list = WxAdmin.dao.find("select * from wx_admin");
         setAttr("adminList",list);
+//        String sql = "select a.id, a.name from wx_account a left join wx_admin d on d.wx_account_id=a.id where d.wx_account_id is null";
+//        List<WxAccount> accountList = WxAccount.dao.find(sql);
         List<WxAccount> accountList = WxAccount.dao.find("select id, name from wx_account");
         setAttr("accountList", new Gson().toJson(accountList));
         render("list.html");
@@ -35,7 +34,7 @@ public class WxAdminController extends Controller {
     public void add() {
         WxAdmin wxAdmin = getModel(WxAdmin.class);
         wxAdmin.save();
-        redirect("/wx-admin/list");
+        redirect("/wx_admin/list");
     }
 
     public void preUpdate() {
@@ -49,13 +48,12 @@ public class WxAdminController extends Controller {
     public void update() {
         WxAdmin wxAdmin = getModel(WxAdmin.class);
         wxAdmin.update();
-        redirect("/wx-admin/list");
+        redirect("/wx_admin/list");
     }
 
     public void delete() {
     	Map<String,Object> map=new HashMap<String,Object>();
         map.put("isOK",false);
-        System.out.println(getParaToLong("id"));
     	WxAdmin wxAdmin = WxAdmin.dao.findById(getParaToLong("id"));
         wxAdmin.delete();
         map.put("isOK",true);

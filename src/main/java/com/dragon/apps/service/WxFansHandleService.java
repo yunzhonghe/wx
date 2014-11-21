@@ -4,6 +4,7 @@ import com.dragon.adapter.fans.FansService;
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxFansModel;
+import com.dragon.apps.utils.ModelUtils;
 import com.dragon.spider.message.BaseMsg;
 import com.dragon.spider.message.TextMsg;
 import com.dragon.spider.message.req.BaseEvent;
@@ -46,12 +47,13 @@ public class WxFansHandleService {
 	 */
 	private void handleWxFansInfo(String openid){
 		WxFansModel wfm = FansService.getInstance().getFansInfo(openid);
-		WxFansInfo info = wfm.getInfo();
+		WxFansInfo info = wfm.getWxFansInfo();
 		WxFansInfo exists = WxFansInfo.dao.findByOpenId(openid);
 		if(exists==null){
 			info.save();
 		}else{
 			if(info.get(WxFansInfo.nickname)!=null){//防止没拉取到数据，用null更新了数据库.
+				ModelUtils.setModelProperty(exists, info, WxFansInfo.id);
 				info.update();
 			}
 		}

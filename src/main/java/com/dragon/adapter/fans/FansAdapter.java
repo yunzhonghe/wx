@@ -15,7 +15,7 @@ public class FansAdapter {
 				model.setSubscribe(response.getSubscribe());
 				model.setOpenId(response.getOpenid());
 				WxFansInfo info = new WxFansInfo();
-				model.setInfo(info);
+				model.setWxFansInfo(info);
 				info.set(WxFansInfo.openId,response.getOpenid());
 				info.set(WxFansInfo.nickname,response.getNickname());
 				info.set(WxFansInfo.sex,response.getSex());

@@ -7,11 +7,11 @@ import com.jfinal.core.Controller;
 
 public class ShiroFreeMarkerInterceptor implements Interceptor{
 
-	@Override
 	public void intercept(ActionInvocation invok) {
 		Controller c = invok.getController();
 		c.setAttr("shiro", new ShiroTags());
 		
+		invok.invoke();
 	}
 
 }

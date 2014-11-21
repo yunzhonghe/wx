@@ -17,17 +17,15 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.utils.RoleUtils;
-import com.dragon.apps.utils.StrUtils;
 
 public class WXRealm extends AuthorizingRealm{
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String userName = (String) principals.fromRealm(getName()).iterator().next();
+		WxAdmin admin = (WxAdmin)principals.fromRealm(getName()).iterator().next();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		if(StrUtils.isNotEmpty(userName)){
-			WxAdmin admin = WxAdmin.dao.getWxAdminByUserName(userName);
-			Set<String> roles=new HashSet<String>();
+		Set<String> roles=new HashSet<String>();
+		if(admin!=null){
 			if(admin.getSuper().equals(WxAdmin.SUPERADMIN)){//超级管理员角色
 				roles.add(RoleUtils.role_super_admin);
 			}else{
