@@ -35,6 +35,7 @@ public class RoleUtils {
 	}
 	/**
 	 * 获取当前关联的微信id
+	 * @return
 	 */
 	public static Long gerCurAccountId(){
 		WxAdmin admin = gerCurUser();

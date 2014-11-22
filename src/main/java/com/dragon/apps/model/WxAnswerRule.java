@@ -4,14 +4,28 @@ import com.jfinal.plugin.activerecord.Model;
 
 public class WxAnswerRule extends Model<WxAnswerRule> {
 	public static final String RULE_TYPE_KEYWORD = "1";//关键字回复规则，可以有多条
-	public static final String RULE_TYPE_SUBSCIBE = "2";//关注回复规则
-	public static final String RULE_TYPE_DEFAULT = "3";//默认回复规则
+	public static final String RULE_TYPE_SUBSCRIBE = "2";//关注回复规则
+	public static final String RULE_TYPE_DEFAULTA = "3";//默认回复规则
     private static final long serialVersionUID = 1L;
     public static WxAnswerRule dao = new WxAnswerRule();
 
     public static String getTableName() {
         return "wx_answer_rule";
     }
+    public WxAnswerRule getDefaultaWxAnswerRule(Long accountId){
+    	return getDefaultaOrSubscribeWxAnswerRule(accountId, RULE_TYPE_DEFAULTA);
+    }
+    public WxAnswerRule getSubscribeWxAnswerRule(Long accountId){
+    	return getDefaultaOrSubscribeWxAnswerRule(accountId, RULE_TYPE_SUBSCRIBE);
+    }
+    private WxAnswerRule getDefaultaOrSubscribeWxAnswerRule(Long accountId, String ruleType){
+    	if(accountId!=null){
+    		String sql = "select * from "+getTableName()+" where "+"ACCOUNT_ID="+accountId+" and "+RULE_TYPE+"="+ruleType;
+    		return findFirst(sql);
+    	}
+    	return null;
+    }
+    
 
     public static final String ID = "id";//long
     public static final String RULE_TYPE = "rule_type";//规则类型,char(1)

@@ -1,6 +1,5 @@
 package com.dragon.apps.web.module.wxautoreply;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +7,11 @@ import com.dragon.apps.model.WxAnswerRule;
 import com.dragon.apps.utils.ModelUtils;
 import com.dragon.apps.utils.RoleUtils;
 import com.dragon.apps.utils.StrUtils;
+import com.dragon.apps.web.module.base.BaseService;
 import com.dragon.apps.web.module.base.IdValueBean;
 import com.dragon.spider.message.req.ReqType;
 
-public class WxAnwserRuleService implements Serializable {
-	public static final String IN_PRARM_ERROR = "传入参数错误";
+public class WxAnwserRuleService extends BaseService{
     private static final long serialVersionUID = 1L;
     
     public List<WxAnswerRule> getKerWordRuleList(){
@@ -47,18 +46,59 @@ public class WxAnwserRuleService implements Serializable {
 		}
 		return result;
 	}
-    public String modifyWxAnswerRule(WxAnswerRule bean){
+    /**
+     * 维护应答规则
+     * @param bean	前端填充后的规则对象
+     * @param ruleType 规则的类型，参照WxAnswerRule.RULE_TYPE_*
+     * @return
+     */
+    public String modifyWxAnswerRule(WxAnswerRule bean,String ruleType){
 		String result = null;
-		if(bean!=null && bean.get(WxAnswerRule.ID)!=null){
-			WxAnswerRule exists = WxAnswerRule.dao.findById(bean.get(WxAnswerRule.ID));
-			if(exists!=null){
-				ModelUtils.setModelProperty(bean, exists, WxAnswerRule.KEYWORD);
-				ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER_TYPE);
-				ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER);
-				if(exists.update()){
-					result = "修改成功";
-				}else{
-					result = "修改失败";
+		if(bean!=null){
+			Long ruleId = bean.get(WxAnswerRule.ID);
+			if(ruleId==null){//自动回复和关注回复的初始特殊处理(比如第一次调用时，数据库没有自动回复数据，则新增)
+				if(ruleType!=null && (ruleType.equals(WxAnswerRule.RULE_TYPE_DEFAULTA) || ruleType.equals(WxAnswerRule.RULE_TYPE_SUBSCRIBE))){
+					Long accountId = RoleUtils.gerCurAccountId();
+					WxAnswerRule exists = null;
+					if(ruleType.equals(WxAnswerRule.RULE_TYPE_DEFAULTA)){
+						exists = WxAnswerRule.dao.getDefaultaWxAnswerRule(accountId);
+					}else{
+						exists = WxAnswerRule.dao.getSubscribeWxAnswerRule(accountId);
+					}
+					if(exists!=null){
+						ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER_TYPE);
+						ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER);
+						if(exists.update()){
+							result = "修改成功";
+						}else{
+							result = "修改失败";
+						}
+					}else{
+						bean.set(WxAnswerRule.RULE_TYPE, ruleType);
+						bean.set(WxAnswerRule.ACCOUNT_ID, accountId);
+						if(bean.save()){
+							return "添加成功";
+						}else{
+							return "添加失败";
+						}
+					}
+				}
+			}else{//关键字修改，ruleid不能为null
+				WxAnswerRule exists = WxAnswerRule.dao.findById(ruleId);
+				if(exists!=null){
+					if(ruleType!=null && (ruleType.equals(WxAnswerRule.RULE_TYPE_DEFAULTA) || ruleType.equals(WxAnswerRule.RULE_TYPE_SUBSCRIBE))){
+						ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER_TYPE);
+						ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER);
+					}else{//keyword
+						ModelUtils.setModelProperty(bean, exists, WxAnswerRule.KEYWORD);
+						ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER_TYPE);
+						ModelUtils.setModelProperty(bean, exists, WxAnswerRule.ANSWER);
+					}
+					if(exists.update()){
+						result = "修改成功";
+					}else{
+						result = "修改失败";
+					}
 				}
 			}
 		}else{
@@ -66,11 +106,24 @@ public class WxAnwserRuleService implements Serializable {
 		}
 		return result;
 	}
-    public WxAnswerRule getRuleById(String id){
+    public String deleteWxAnswerRule(String sid){
+		return deleteBean(sid, WxAnswerRule.dao);
+	}
+    public WxAnswerRule getRuleById(String id,String ruleType){
     	if(StrUtils.isEmpty(id)){
+    		if(ruleType!=null){
+    			if(ruleType.equals(WxAnswerRule.RULE_TYPE_DEFAULTA)){//默认回复和关注回复修改页面载入特殊处理.
+    				WxAnswerRule war = WxAnswerRule.dao.getDefaultaWxAnswerRule(RoleUtils.gerCurAccountId());
+    				return war;
+    			}else if(ruleType.equals(WxAnswerRule.RULE_TYPE_SUBSCRIBE)){
+    				WxAnswerRule war = WxAnswerRule.dao.getSubscribeWxAnswerRule(RoleUtils.gerCurAccountId());
+    				return war;
+    			}
+    		}
     		return null;
+    	}else{
+    		return WxAnswerRule.dao.findById(id);
     	}
-    	return WxAnswerRule.dao.findById(id);
     }
 	private List<WxAnswerRule> getKerWordRuleList(String ruleType, Long accontId){
 		String sql = "select * from "+WxAnswerRule.getTableName()+" where "+WxAnswerRule.RULE_TYPE+"="+ruleType;

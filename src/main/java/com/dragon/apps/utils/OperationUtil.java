@@ -12,13 +12,16 @@ public enum OperationUtil {
 	// ,DISABLE("disable","禁用")
 	;
 	public static OperationUtil getOperationUtilByIdentify(String identify) {
-		if (identify != null)
+		return getOperationUtilByIdentify(identify, LIST);
+	}
+	public static OperationUtil getOperationUtilByIdentify(String identify,OperationUtil defaultOperationUtil) {
+		if (StrUtils.isNotEmpty(identify))
 			for (OperationUtil op : OperationUtil.values()) {
 				if (op.equals(identify)) {
 					return op;
 				}
 			}
-		return LIST;
+		return defaultOperationUtil;
 	}
 
 	OperationUtil(String identify, String name) {

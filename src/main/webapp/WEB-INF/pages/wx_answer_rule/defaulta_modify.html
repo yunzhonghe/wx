@@ -1,0 +1,84 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+    <@nav index="62"/>
+    	<div class="page-content">
+        <@title name="默认回复" menus='{"应答规则":"${base}/wx_answer_rule","默认回复":"javascript:;"}'/>
+            <#if _opresult??>
+            	${_opresult}
+            <#else>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="booking-search">
+							<form action="${base}/wx_answer_rule/defaulta/${nextAction}" role="form" method="post" onsubmit="return checkSub();">
+								<div class="row form-group">
+									<div class="col-md-12">
+										<strong><label class="control-label">设置默认回复</label></strong>
+										<#if (_bean??) && (_bean.id??)>
+											<input type="hidden" name="wxAnswerRule.id" value="${_bean.id}">
+										</#if>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">回复类型：</label>
+										<select class="form-control" name="wxAnswerRule.answer_type">
+											<#if (_bean??) && (_bean.answer_type??)>
+												<#list answerTypes as atype>
+													<option value="${atype.id}" <#if _bean.answer_type==atype.id>selected</#if>>${atype.value?default('')}</option>
+												</#list>
+											<#else>
+												<#list answerTypes as atype>
+													<option value="${atype.id}">${atype.value?default('')}</option>
+												</#list>
+											</#if>
+										</select>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">回复内容：</label>
+										<#if (_bean??) && (_bean.answer??)>
+											<input class="form-control" type="text" id="answer" name="wxAnswerRule.answer" placeholder="请输入回复内容"
+												value="${_bean.answer?default('')}"  style="height: 100px;"/>
+										<#else>
+											<input class="form-control" type="text" id="answer" name="wxAnswerRule.answer" placeholder="请输入回复内容"
+												style="height: 100px;"/>
+										</#if>
+									</div>
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="btn blue">保存</button>
+									<button type="reset" class="btn default">重置</button>
+									<input type="button" class="btn default" onclick="javascript:window.history.go(-1);" value="返回"/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</#if>
+		</div>
+	</div>
+	<@footer/>
+	<script>
+	jQuery(document).ready(function() {    
+	   App.init();
+	   //add your javascript here
+	});
+	function checkSub(){
+// 		var errmsg = '';
+// 		if(document.getElementById("keyword").value==''){
+// 			errmsg += "请输入关键字\n";
+// 		}
+// 		if(document.getElementById("answer").value==''){
+// 			errmsg += "请输入回复内容\n";
+// 		}
+// 		if(errmsg!=''){
+// 			alert(errmsg);
+// 			return false;
+// 		}
+		return true;
+	}
+</script>
+</@layout>
