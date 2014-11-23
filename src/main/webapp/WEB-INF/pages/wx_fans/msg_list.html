@@ -29,8 +29,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<#if (pageSet??) && (pageSet.resultList??) && (pageSet.resultList?size > 0)>
-										<#list pageSet.resultList as record>
+									<#if (page??) && (page.resultList??) && (page.resultList?size > 0)>
+										<#list page.resultList as record>
 											<tr style="cursor:pointer;" ondblclick="javascript:chatmsg('${record.opeinid}')">
 												<td>
 													<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>

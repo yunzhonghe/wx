@@ -8,7 +8,7 @@
         <#if _opresult??>
          	${_opresult}
         <#else>
-		<form action="${base}/wx_fans" role="form" method="post">
+		<form action="${base}/wx_fans/subindex" role="form" method="post">
         <!-- BEGIN PAGE CONTENT-->
 			<div class="row">
 				<div class="col-md-12">
@@ -76,8 +76,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<#if (pageSet??) && (pageSet.resultList??) && (pageSet.resultList?size > 0)>
-										<#list pageSet.resultList as record>
+									<#if (page??) && (page.resultList??) && (page.resultList?size > 0)>
+										<#list page.resultList as record>
 											<tr>
 												<td>
 													<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>

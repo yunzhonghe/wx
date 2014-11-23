@@ -12,19 +12,27 @@
         <!-- BEGIN PAGE CONTENT-->
 			<div class="row">
 				<div class="col-md-12">
-					<div class="booking-search">
+					<div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption">查询</div>
+						</div>
+						<div class="portlet-body" >
 						<div class="row form-group">
 							<div class="col-md-12">
 								<label class="control-label" style="width: 14%;">归属微信</label>
 								<div style="display: inline-block;width: 85%;">
-									<select class="form-control" name="wxHismsgListCon.accountId">
-										<option value="">--所有--</option>
-										<#if (accountList??) && (accountList?size gt 0)>
+									<#if (accountList??) && (accountList?size > 0)>
+										<select class="form-control" name="wxFansListCon.accountId">
+											<option value="">--所有--</option>
 											<#list accountList as account>
 												<option value="${account.id}" <#if (con.accountId)?? && con.laccountId==account.id>selected</#if>>${account.name?default('')}(${account.account?default('')})</option>
 											</#list>
-										<#/if>
-									</select>
+										</select>
+									<#else>
+										<select class="form-control" name="wxFansListCon.accountId">
+											<option value="">--所有--</option>
+										</select>
+									</#if>
 								</div>
 							</div>
 						</div>
@@ -33,7 +41,7 @@
 								<label class="control-label" style="width: 28%;">时间限定</label>
 								<div style="display: inline-block;width: 70%;">
 									最近
-									<select name="wxHismsgListCon.accountId">
+									<select name="wxHismsgListCon.timeLimit">
 										<#list timeLimits as timeLimit>
 											<option value="${timeLimit}" <#if (con.timeLimit)?? && con.timeLimit==timeLimit>selected</#if>>${timeLimit}</option>
 										</#list>
@@ -49,9 +57,10 @@
 								</div>
 							</div>
 						</div>
-						<button class="btn  btn-block margin-top-20" onclick="javascript:document.forms[0].submit();">
+						<button class="btn green " onclick="javascript:document.forms[0].submit();" style="margin-left: 42%;margin-right: 42%;width: 16%;">
 							<b>SEARCH</b> <i class="m-icon-swapright m-icon-white"></i>
 						</button>
+					</div>
 					</div>
 					
 					<!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -72,9 +81,9 @@
 									</tr>
 								</thead>
 								<tbody>
-									<#if (pageSet??) && (pageSet.resultList??) && (pageSet.resultList?size > 0)>
-										<#list pageSet.resultList as record>
-											<tr style="cursor:pointer;" onclick="javascript:chatmsg('${record.opeinid}')">
+									<#if (page??) && (page.resultList??) && (page.resultList?size > 0)>
+										<#list page.resultList as record>
+											<tr>
 												<td>${record.message_id?default('')}</td>
 												<td>
 													<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>

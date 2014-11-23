@@ -48,6 +48,7 @@ public class WxFansService implements Serializable{
 		String center = center1+center2;
 		String orderby = " order by wfi.subscribe_time desc";
 		int count = Db.queryLong("select count(1) "+center).intValue();
+		pageSet.setTotalSize(count);
 		if (count > 0) {
 			int startSize = (pageSet.getCurrPage() - 1) * pageSet.getPageSize();
 			String sql = select + center + orderby + " limit " + startSize + "," + pageSet.getPageSize();;
@@ -83,6 +84,7 @@ public class WxFansService implements Serializable{
 			String center = center1+center2;
 			String orderby = " order by wfi.subscribe_time desc";
 			int count = Db.queryLong("select count(1) "+center).intValue();
+			pageSet.setTotalSize(count);
 			if (count > 0) {
 				int startSize = (pageSet.getCurrPage() - 1) * pageSet.getPageSize();
 				String sql = select + center + orderby + " limit " + startSize + "," + pageSet.getPageSize();;
@@ -140,7 +142,7 @@ public class WxFansService implements Serializable{
 			timeLimit = WxHismsgListCon.TIMELIMIT_DEFAULT;
 		}
 		if(timeLimit!=null){
-			queryCon.append(" and timestampdiff(day,now(),FROM_UNIXTIME(m.create_time))<"+timeLimit);
+			queryCon.append(" and timestampdiff(day,FROM_UNIXTIME(m.create_time),now())<"+timeLimit);
 		}
 		if(queryCon.length()>0){
 			center2 = " where " + queryCon.substring(4);
@@ -148,6 +150,7 @@ public class WxFansService implements Serializable{
 		String center = center1+center2;
 		
 		int count = Db.queryLong("select count(1) "+center).intValue();
+		pageSet.setTotalSize(count);
 		if (count > 0) {
 			int startSize = (pageSet.getCurrPage() - 1) * pageSet.getPageSize();
 			String sql = select + center + orderby + " limit " + startSize + "," + pageSet.getPageSize();;
@@ -200,12 +203,13 @@ public class WxFansService implements Serializable{
 				timeLimit = WxHismsgListCon.TIMELIMIT_DEFAULT;
 			}
 			if(timeLimit!=null){
-				queryCon.append(" and timestampdiff(day,now(),FROM_UNIXTIME(m.create_time))<"+timeLimit);
+				queryCon.append(" and timestampdiff(day,FROM_UNIXTIME(m.create_time),now())<"+timeLimit);
 			}
 			center2 = center2 + queryCon.toString();
 			String center = center1+center2;
 			
 			int count = Db.queryLong("select count(1) "+center).intValue();
+			pageSet.setTotalSize(count);
 			if (count > 0) {
 				int startSize = (pageSet.getCurrPage() - 1) * pageSet.getPageSize();
 				String sql = select + center + orderby + " limit " + startSize + "," + pageSet.getPageSize();;
@@ -340,9 +344,10 @@ public class WxFansService implements Serializable{
 		if(account!=null && account.getOriginalid()!=null){
 			String select = "select distinct m.from";
 			String center = " from wx_message m"
-					+" where timestampdiff(day,now(),FROM_UNIXTIME(m.create_time))<2 and m.to='"+account.getOriginalid()+"'";
+					+" where timestampdiff(day,FROM_UNIXTIME(m.create_time),now())<2 and m.to='"+account.getOriginalid()+"'";
 			String orderby = " order by m.create_time desc";
 			int count = Db.queryLong("select count(distinct m.from) "+center).intValue();
+			pageSet.setTotalSize(count);
 			if (count > 0) {
 				int startSize = (pageSet.getCurrPage() - 1) * pageSet.getPageSize();
 				String sql = select + center + orderby + " limit " + startSize + "," + pageSet.getPageSize();;

@@ -20,7 +20,7 @@ public class WxAccountController extends BaseController {
 	public void list() {// 帐号列表
 		PageSet pageSet = getPageSet();
 		
-		setAttr("pageSet", getService().getAccountList(pageSet));
+		setAttr(PAGESET, getService().getAccountList(pageSet));
 		render("list.html");
 	}
 	public void add() {// 添加帐号

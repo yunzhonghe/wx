@@ -20,8 +20,8 @@
 								</tr>
 							</thead>
 							<tbody>
-							<#if (pageSet.resultList??) && (pageSet.resultList?size > 0)>
-								<#list pageSet.resultList as account>
+							<#if (page.resultList??) && (page.resultList?size > 0)>
+								<#list page.resultList as account>
 									<tr>
 										<td>${account.account}</td>
 										<td>${account.name?default('')}</td>

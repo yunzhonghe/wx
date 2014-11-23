@@ -6,6 +6,7 @@ import com.jfinal.core.Controller;
 public class BaseController extends Controller{
 	protected String OPERATION_RESULT = "_opresult";//by ljsnake
 	protected String BEAN_ENTITY = "_bean";//by ljsnake
+	protected String PAGESET = "page";//by ljsnake
 	
 	protected PageSet getPageSet() {//by ljsnake
 		PageSet pageSet = null;

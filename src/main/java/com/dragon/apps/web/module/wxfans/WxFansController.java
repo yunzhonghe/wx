@@ -23,7 +23,7 @@ public class WxFansController extends BaseController {
 		}
 		WxFansListCon con = getModel(WxFansListCon.class);//昵称、归属微信等信息
 		PageSet pageSet = getPageSet();
-		setAttr("pageSet", getService().getFansList(con, pageSet));
+		setAttr(PAGESET, getService().getFansList(con, pageSet));
 		setAttr("accountList", getService().geAccountList());
 		setAttr("con", con);
 		render("fans_list.html");
@@ -31,7 +31,7 @@ public class WxFansController extends BaseController {
 	public void hismsg(){//超级管理员-历史消息
 		WxHismsgListCon con = getModel(WxHismsgListCon.class);
 		PageSet pageSet = getPageSet();
-		setAttr("pageSet", getService().getHismsgList(con, pageSet));
+		setAttr(PAGESET, getService().getHismsgList(con, pageSet));
 		setAttr("accountList", getService().geAccountList());
 		setAttr("timeLimits", WxHismsgListCon.timeLimits);
 		setAttr("con", con);
@@ -41,7 +41,7 @@ public class WxFansController extends BaseController {
 	public void subindex() {//普通管理员粉丝管理
 		WxFansListCon con = getModel(WxFansListCon.class);//昵称、备注、标签等信息
 		PageSet pageSet = getPageSet();
-		setAttr("pageSet", getService().getFansSubList(con, pageSet));
+		setAttr(PAGESET, getService().getFansSubList(con, pageSet));
 		setAttr("taglist",getService().getWxTagList());
 		setAttr("con", con);
 		render("fans_sub_list.html");
@@ -117,7 +117,7 @@ public class WxFansController extends BaseController {
 	}
 	public void submsg(){//消息管理，最近会话管理
 		PageSet pageSet = getPageSet();
-		setAttr("pageSet", getService().getFansMsgList(pageSet));
+		setAttr(PAGESET, getService().getFansMsgList(pageSet));
 		render("msg_list.html");
 	}
 	public void msgchat(){//消息聊天
@@ -140,7 +140,7 @@ public class WxFansController extends BaseController {
 	public void subhismsg(){//子管理员-历史消息
 		WxHismsgListCon con = getModel(WxHismsgListCon.class);
 		PageSet pageSet = getPageSet();
-		setAttr("pageSet", getService().getHismsgSubList(con, pageSet));
+		setAttr(PAGESET, getService().getHismsgSubList(con, pageSet));
 		setAttr("timeLimits", WxHismsgListCon.timeLimits);
 		setAttr("con", con);
 		render("hismsg_sub_list.html");

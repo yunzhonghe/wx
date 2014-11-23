@@ -57,8 +57,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<#if (pageSet??) && (pageSet.resultList??) && (pageSet.resultList?size > 0)>
-										<#list pageSet.resultList as record>
+									<#if (page??) && (page.resultList??) && (page.resultList?size > 0)>
+										<#list page.resultList as record>
 											<tr style="cursor:pointer;" onclick="javascript:chatmsg('${record.opeinid}')">
 												<td>${record.message_id?default('')}</td>
 												<td>
