@@ -60,7 +60,7 @@
 					<a href="${base}/wx_fans">粉丝列表</a>
 				</li>
 				<li <#if index = '21'>class="active"</#if> >
-					<a href="${base}/wx_fans/msg">消息列表</a>
+					<a href="${base}/wx_fans/hismsg">历史消息查询</a>
 				</li>
 			</@shiro.hasRole>
 			<@shiro.lacksRole name=superrole>
@@ -71,7 +71,10 @@
 					<a href="${base}/wx_fans/tag">标签管理</a>
 				</li>
 				<li <#if index = '24'>class="active"</#if>>
-					<a href="${base}/wx_fans/submsg">消息管理</a>
+					<a href="${base}/wx_fans/submsg">最近会话管理</a>
+				</li>
+				<li <#if index = '25'>class="active"</#if> >
+					<a href="${base}/wx_fans/subhismsg">历史消息查询</a>
 				</li>
 			</@shiro.lacksRole>
 			</ul>

@@ -5,6 +5,7 @@ import java.util.List;
 import com.dragon.apps.model.WxTag;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.OperationUtil;
+import com.dragon.apps.utils.RoleUtils;
 import com.dragon.apps.web.module.base.BaseController;
 
 /**
@@ -14,22 +15,36 @@ import com.dragon.apps.web.module.base.BaseController;
 public class WxFansController extends BaseController {
 	public static String controlerKey = "/wx_fans";
 	
-
+	//超级管理员操作
 	public void index() {//超级管理员粉丝管理
-		WxFansListCon con = getModel(WxFansListCon.class);
+		if(!RoleUtils.isCurrentSuperAdmin()){//不是超级管理员
+			forwardAction(controlerKey+"/subindex");
+			return;
+		}
+		WxFansListCon con = getModel(WxFansListCon.class);//昵称、归属微信等信息
 		PageSet pageSet = getPageSet();
 		setAttr("pageSet", getService().getFansList(con, pageSet));
-		setAttr("taglist",getService().getWxTagList());
+		setAttr("accountList", getService().geAccountList());
 		setAttr("con", con);
 		render("fans_list.html");
 	}
-	public void subindex() {//普通管理员粉丝管理
-		WxFansListCon con = getModel(WxFansListCon.class);
+	public void hismsg(){//超级管理员-历史消息
+		WxHismsgListCon con = getModel(WxHismsgListCon.class);
 		PageSet pageSet = getPageSet();
-		setAttr("pageSet", getService().getFansList(con, pageSet));
+		setAttr("pageSet", getService().getHismsgList(con, pageSet));
+		setAttr("accountList", getService().geAccountList());
+		setAttr("timeLimits", WxHismsgListCon.timeLimits);
+		setAttr("con", con);
+		render("hismsg_list.html");
+	}
+	//普通管理员操作
+	public void subindex() {//普通管理员粉丝管理
+		WxFansListCon con = getModel(WxFansListCon.class);//昵称、备注、标签等信息
+		PageSet pageSet = getPageSet();
+		setAttr("pageSet", getService().getFansSubList(con, pageSet));
 		setAttr("taglist",getService().getWxTagList());
 		setAttr("con", con);
-		render("fans_list.html");
+		render("fans_sub_list.html");
 	}
 	public void fanstag(){//维护粉丝标签
 		String openid = getPara();
@@ -43,6 +58,17 @@ public class WxFansController extends BaseController {
 		String openid = getPara("openid");
 		String[] fantags = getRequest().getParameterValues("fantags");
 		getService().updateFansTag(openid, fantags);
+		redirect("/wxfans");
+	}
+	public void fansmark(){//维护粉丝备注
+		String openid = getPara();
+		setAttr("fansinfo",getService().getFansBasicInfo(openid));
+		render("fans_mark.html");
+	}
+	public void fansmarkdo(){//执行修改粉丝备注,成功后返回粉丝列表
+		String openid = getPara("openid");
+		String fansmark = getPara("fansmark");
+		getService().updateFansMark(openid, fansmark);
 		redirect("/wxfans");
 	}
 	public void tag(){//标签管理
@@ -89,12 +115,7 @@ public class WxFansController extends BaseController {
 		setAttr(OPERATION_RESULT, operationMsg);
 		render("tag_list.html");
 	}
-	public void msg(){//超级管理消息管理
-		PageSet pageSet = getPageSet();
-		setAttr("pageSet", getService().getFansMsgList(pageSet));
-		render("msg_list.html");
-	}
-	public void submsg(){//普通管理消息管理
+	public void submsg(){//消息管理，最近会话管理
 		PageSet pageSet = getPageSet();
 		setAttr("pageSet", getService().getFansMsgList(pageSet));
 		render("msg_list.html");
@@ -115,6 +136,14 @@ public class WxFansController extends BaseController {
 			setAttr(OPERATION_RESULT, operationMsg);
 			render("msg_chat.html");
 		}
+	}
+	public void subhismsg(){//子管理员-历史消息
+		WxHismsgListCon con = getModel(WxHismsgListCon.class);
+		PageSet pageSet = getPageSet();
+		setAttr("pageSet", getService().getHismsgSubList(con, pageSet));
+		setAttr("timeLimits", WxHismsgListCon.timeLimits);
+		setAttr("con", con);
+		render("hismsg_sub_list.html");
 	}
 	
 	private WxFansService getService(){

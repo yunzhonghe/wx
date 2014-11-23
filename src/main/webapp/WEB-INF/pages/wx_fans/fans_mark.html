@@ -1,0 +1,68 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+	    <@nav index="22"/>
+		<div class="page-content">
+            <@title name="粉丝备注维护" menus='{"粉丝管理":"${base}/wx_fans","粉丝列表":"${base}/wx_fans","粉丝备注维护":"javascript:;"}'/>
+			 <#if _opresult??>
+            	${_opresult}
+            <#else>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="booking-search">
+							<form action="${base}/wx_fans/fansmarkdo" role="form" method="post" onsubmit="return checkSub();">
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">头像：</label>
+										<img src="${fansinfo.headimgurl?default('')}" style="width:40px;height:40px;"/>
+										<input type="hidden" name="openid" value="${fansinfo.open_id}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">备注：</label>
+										<input class="form-control" type="text" name="fansmark"
+											value="${fansinfo.mark_name?default('')}"/>
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">昵称：</label>
+										${fansinfo.nickname?default('')}
+									</div>
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="btn blue">保存</button>
+									<button type="reset" class="btn default">重置</button>
+									<input type="button" class="btn default" onclick="javascript:window.history.go(-1);" value="返回"/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</#if>
+		</div>
+	</div>
+	<@footer/>
+	<script>
+	jQuery(document).ready(function() {    
+	   App.init();
+	   //add your javascript here
+	});
+	function checkSub(){
+		var errmsg = '';
+// 		if(document.getElementById("password").value==''){
+// 			errmsg += "请输入密码\n";
+// 		}
+// 		if(document.getElementById("token").value==''){
+// 			errmsg += "请输入Token\n";
+// 		}
+		if(errmsg!=''){
+			alert(errmsg);
+			return false;
+		}
+		return true;
+	}
+</script>
+</@layout>

@@ -19,26 +19,28 @@
 					<div class="portlet-body">
 						<#if (list??) && (list?size > 0)>
 							<#list list as record>
-								<#if record.fromfans=='1'>
-									<div class="col-md-9" style="text-align:left;">
-										<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>
-										${record.fansname?default('')}
-										${record.content?default('')}
+								<div class="row form-group">
+									<div class="row">
+										<div class="col-md-10" style="text-align:left;">
+											<img src="${record.headimgurl?default('')}" style="width:40px;height:40px;"/>
+												${record.fansname?default('')}(${record.create_time?default('')})-&gt;
+												${record.content?default('')}
+										</div>
+										<div class="col-md-2"></div>
 									</div>
-									<div class="col-md-3">
-										&nbsp;
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-10" style="text-align:right: ;">
+											${record.rsp_content?default('')}&lt;-
+											回复(${record.rsp_time?default('')})
+										</div>
 									</div>
-								<#else>
-									<div class="col-md-3">
-										&nbsp;
-									</div>
-									<div class="col-md-3" style="text-align:right;">
-										${record.content?default('')}
-									</div>
-								</#if>
+								</div>
 							</#list>
 						<#else>
-							<div class="col-md-12">暂无消息记录</div>
+							<div class="row form-group">
+								<div class="col-md-12">暂无消息记录</div>
+							</div>
 						</#if>
 					</div>
 				</div>
@@ -51,7 +53,7 @@
 					<div class="booking-search">
 						<div class="row form-group">
 							<div class="col-md-12">
-								<label class="control-label">发送(回复)消息：</label>
+								<label class="control-label">发送消息：</label>
 								<input class="form-control" type="text" id="msg" name="msg" placeholder="请输入消息内容">
 								<input type="hidden" name="openid" value="${openid?default('')}">
 							</div>
@@ -73,7 +75,6 @@
 <script>
     jQuery(document).ready(function() {
         App.init();
-        WxAdmin.init();
     });
     function checkSub(){
 		var errmsg = '';

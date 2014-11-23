@@ -1,5 +1,7 @@
 package com.dragon.apps.model;
 
+import java.util.List;
+
 import com.dragon.apps.utils.StrUtils;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
@@ -24,6 +26,15 @@ public class WxAccount extends Model<WxAccount>{
 		}
 		return Db.queryLong("select "+ID+" from "+tableName+" where "+ORIGINALID+"='"+originalId+"' limit 0,1");
 	}
+	public List<WxAccount> getAllAccountList(){
+		return find("select * from " + tableName);
+	}
+//	public WxAccount getWxAccountByOriginalId(String originalId){
+//		if(StrUtils.isEmpty(originalId)){
+//			return null;
+//		}
+//		return findFirst("select * from "+tableName+" where "+ORIGINALID+"='"+originalId+"'");
+//	}
 	
 	public static final String ID = "id";//bigint,pk
 	public static final String ACCOUNT = "account";

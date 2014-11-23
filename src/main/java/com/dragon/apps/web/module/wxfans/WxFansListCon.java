@@ -9,10 +9,15 @@ public class WxFansListCon implements Serializable{
 	private String nickName;
 	private String markName;
 	private String tagid;
+	private String accountId;
 	private long ltagid = -1;
+	private long laccountId = -1;
 	public WxFansListCon(String nickName,String markName){
 		this.nickName = nickName;
 		this.markName = markName;
+	}
+	public WxFansListCon(String nickName){
+		this.nickName = nickName;
 	}
 	public WxFansListCon(){}
 	public String getNickName() {
@@ -40,5 +45,19 @@ public class WxFansListCon implements Serializable{
 			}
 		}
 		return ltagid;
+	}
+	public String getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
+	}
+	public long getLaccountId() {
+		if(laccountId==0){
+			if(StrUtils.isNotEmpty(accountId)){
+				laccountId = Long.parseLong(accountId);
+			}
+		}
+		return laccountId;
 	}
 }
