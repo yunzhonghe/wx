@@ -40,6 +40,7 @@
 												<input type="radio" name="wxFansListCon.tagid" value="" checked="checked"/>不限
 											</#if>
 										</label>
+										<#if taglist?has_content>
 										<#list taglist as tag>
 											<label class="checkbox-inline">
 												<#if (con??) && (con.ltagid??) && (con.ltagid==tag.id)>
@@ -50,6 +51,7 @@
 												${tag.name}
 											</label>
 										</#list>
+										</#if>
 									</div>
 							</div>
 						</div>

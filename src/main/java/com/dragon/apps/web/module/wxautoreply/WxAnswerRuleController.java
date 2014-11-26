@@ -5,7 +5,7 @@ import com.dragon.apps.model.WxAnswerRule;
 import com.dragon.apps.utils.OperationUtil;
 import com.dragon.apps.web.module.base.BaseController;
 
-public class WxAnwserRuleController extends BaseController {
+public class WxAnswerRuleController extends BaseController {
 	public static String controlerKey = "/wx_answer_rule";
 
     public void index() {
@@ -78,7 +78,7 @@ public class WxAnwserRuleController extends BaseController {
 		}
     }
     
-    private WxAnwserRuleService getService(){
-    	return WxAnwserRuleService.getInstance();
+    private WxAnswerRuleService getService(){
+    	return WxAnswerRuleService.getInstance();
     }
 }

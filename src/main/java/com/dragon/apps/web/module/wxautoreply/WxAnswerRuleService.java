@@ -11,7 +11,7 @@ import com.dragon.apps.web.module.base.BaseService;
 import com.dragon.apps.web.module.base.IdValueBean;
 import com.dragon.spider.message.req.ReqType;
 
-public class WxAnwserRuleService extends BaseService{
+public class WxAnswerRuleService extends BaseService{
     private static final long serialVersionUID = 1L;
     
     public List<WxAnswerRule> getKerWordRuleList(){
@@ -19,7 +19,7 @@ public class WxAnwserRuleService extends BaseService{
     	if(!RoleUtils.isCurrentSuperAdmin()){
     		accontId = RoleUtils.gerCurAccountId();
     	}
-    	return setAnswerTypeNameToList(getKerWordRuleList(WxAnswerRule.RULE_TYPE_KEYWORD, accontId));
+    	return setAnswerTypeNameToList(getKerWordRuleList(accontId));
     }
     public List<IdValueBean> getAnswerTypeList(){
     	List<IdValueBean> ls = new ArrayList<IdValueBean>();
@@ -109,14 +109,34 @@ public class WxAnwserRuleService extends BaseService{
     public String deleteWxAnswerRule(String sid){
 		return deleteBean(sid, WxAnswerRule.dao);
 	}
+    /**
+     * 获取当前人员的对应id的回复规则设置
+     * @param id 规则id,当规则类别为默认规则或关注规则，该id可为null(因为这两种规则只有一个)
+     * @param ruleType 规则类别
+     * @return
+     */
     public WxAnswerRule getRuleById(String id,String ruleType){
+    	if(StrUtils.isEmpty(id)){
+    		return getRuleById(id, ruleType, RoleUtils.gerCurAccountId());
+    	}else{
+    		return getRuleById(id, ruleType, null);
+    	}
+    }
+    /**
+     * 获取对应人员id的对应规则id的回复规则设置
+     * @param id 规则id,当规则类别为默认规则或关注规则，该id可为null(因为这两种规则只有一个)
+     * @param ruleType规则类别
+     * @param curAccountId 微信账号id
+     * @return
+     */
+    public WxAnswerRule getRuleById(String id,String ruleType, Long curAccountId){
     	if(StrUtils.isEmpty(id)){
     		if(ruleType!=null){
     			if(ruleType.equals(WxAnswerRule.RULE_TYPE_DEFAULTA)){//默认回复和关注回复修改页面载入特殊处理.
-    				WxAnswerRule war = WxAnswerRule.dao.getDefaultaWxAnswerRule(RoleUtils.gerCurAccountId());
+    				WxAnswerRule war = WxAnswerRule.dao.getDefaultaWxAnswerRule(curAccountId);
     				return war;
     			}else if(ruleType.equals(WxAnswerRule.RULE_TYPE_SUBSCRIBE)){
-    				WxAnswerRule war = WxAnswerRule.dao.getSubscribeWxAnswerRule(RoleUtils.gerCurAccountId());
+    				WxAnswerRule war = WxAnswerRule.dao.getSubscribeWxAnswerRule(curAccountId);
     				return war;
     			}
     		}
@@ -124,6 +144,14 @@ public class WxAnwserRuleService extends BaseService{
     	}else{
     		return WxAnswerRule.dao.findById(id);
     	}
+    }
+    /**
+     * 获取对应帐号的关键字回复规则列表
+     * @param accontId 帐号信息，如果为null则表示超级管理员的规则，不为null则为子管理员的规则.
+     * @return
+     */
+    public List<WxAnswerRule> getKerWordRuleList(Long accontId){
+		return getKerWordRuleList(WxAnswerRule.RULE_TYPE_KEYWORD, accontId);
     }
 	private List<WxAnswerRule> getKerWordRuleList(String ruleType, Long accontId){
 		String sql = "select * from "+WxAnswerRule.getTableName()+" where "+WxAnswerRule.RULE_TYPE+"="+ruleType;
@@ -146,15 +174,15 @@ public class WxAnwserRuleService extends BaseService{
 		war.put("answerTypeName", ReqType.getTypeNameByTypeId(war.getInt(WxAnswerRule.ANSWER_TYPE)));
 	}
     
-    public static WxAnwserRuleService getInstance(){
+    public static WxAnswerRuleService getInstance(){
 		if(instance==null){
-			synchronized (WxAnwserRuleService.class) {
+			synchronized (WxAnswerRuleService.class) {
 				if(instance==null)
-					instance = new WxAnwserRuleService();
+					instance = new WxAnswerRuleService();
 			}
 		}
 		return instance;
 	}
-	private static WxAnwserRuleService instance = null;
-	private WxAnwserRuleService(){}
+	private static WxAnswerRuleService instance = null;
+	private WxAnswerRuleService(){}
 }

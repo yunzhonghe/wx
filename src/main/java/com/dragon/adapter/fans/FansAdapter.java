@@ -24,7 +24,7 @@ public class FansAdapter {
 				info.set(WxFansInfo.province,response.getProvince());
 				info.set(WxFansInfo.language,response.getLanguage());
 				info.set(WxFansInfo.headimgurl,response.getHeadimgurl());
-				info.set(WxFansInfo.subscribe_time,new Date(response.getSubscribe_time()));
+				info.set(WxFansInfo.subscribe_time,new Date(response.getSubscribe_time()*1000));
 				info.set(WxFansInfo.unionid,response.getUnionid());
 			}
 		}

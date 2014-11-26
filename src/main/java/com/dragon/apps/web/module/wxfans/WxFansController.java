@@ -58,7 +58,7 @@ public class WxFansController extends BaseController {
 		String openid = getPara("openid");
 		String[] fantags = getRequest().getParameterValues("fantags");
 		getService().updateFansTag(openid, fantags);
-		redirect("/wxfans");
+		redirect(controlerKey+"/subindex");
 	}
 	public void fansmark(){//维护粉丝备注
 		String openid = getPara();
@@ -69,7 +69,7 @@ public class WxFansController extends BaseController {
 		String openid = getPara("openid");
 		String fansmark = getPara("fansmark");
 		getService().updateFansMark(openid, fansmark);
-		redirect("/wxfans");
+		redirect(controlerKey+"/subindex");
 	}
 	public void tag(){//标签管理
 		String identify = getPara();//list,add,adddo,modify

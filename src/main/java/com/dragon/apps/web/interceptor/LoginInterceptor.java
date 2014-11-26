@@ -17,6 +17,7 @@ public class LoginInterceptor implements Interceptor{
 			ai.invoke();
 		}else{
 			controller.redirect("/");
+//			ai.invoke();
 		}
 	}
 

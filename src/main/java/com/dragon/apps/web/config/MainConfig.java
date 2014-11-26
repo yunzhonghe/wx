@@ -14,7 +14,7 @@ import com.dragon.apps.web.module.user.UserController;
 import com.dragon.apps.web.module.wxaccount.WxAccountController;
 import com.dragon.apps.web.module.wxactivity.WxActivityController;
 import com.dragon.apps.web.module.wxadmin.WxAdminController;
-import com.dragon.apps.web.module.wxautoreply.WxAnwserRuleController;
+import com.dragon.apps.web.module.wxautoreply.WxAnswerRuleController;
 import com.dragon.apps.web.module.wxchannel.WxChannelController;
 import com.dragon.apps.web.module.wxfans.WxFansController;
 import com.dragon.apps.web.module.wxmaterial.WxMaterialController;
@@ -59,7 +59,7 @@ public class MainConfig extends JFinalConfig {
 		me.add(WxAdminController.controlerKey, WxAdminController.class);//管理员
         me.add(WxMaterialController.controlerKey,WxMaterialController.class);//素材
         me.add(WxMenuController.controlerKey,WxMenuController.class);//菜单
-        me.add(WxAnwserRuleController.controlerKey,WxAnwserRuleController.class);//应答规则
+        me.add(WxAnswerRuleController.controlerKey,WxAnswerRuleController.class);//应答规则
         me.add(WxActivityController.controlerKey,WxActivityController.class);//活动
         me.add(WxChannelController.controlerKey,WxChannelController.class);//渠道
         me.add(UserController.controlerKey,UserController.class);//系统功能
