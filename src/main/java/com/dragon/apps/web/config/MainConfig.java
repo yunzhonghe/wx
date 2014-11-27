@@ -2,10 +2,12 @@ package com.dragon.apps.web.config;
 
 import com.dragon.apps.model.WxAccType;
 import com.dragon.apps.model.WxAccount;
+import com.dragon.apps.model.WxAccountMessage;
 import com.dragon.apps.model.WxAdmin;
 import com.dragon.apps.model.WxAnswerRule;
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxMaterial;
+import com.dragon.apps.model.WxMenuModel;
 import com.dragon.apps.model.WxTag;
 import com.dragon.apps.web.interceptor.LoginInterceptor;
 import com.dragon.apps.web.interceptor.ShiroFreeMarkerInterceptor;
@@ -90,6 +92,8 @@ public class MainConfig extends JFinalConfig {
         arp.addMapping(WxAdmin.getTableName(), WxAdmin.ID, WxAdmin.class);
         arp.addMapping(WxAnswerRule.getTableName(), WxAnswerRule.ID, WxAnswerRule.class);
         arp.addMapping(WxMaterial.getTableName(), WxMaterial.ID, WxMaterial.class);
+        arp.addMapping(WxAccountMessage.tableName, WxAccountMessage.id, WxAccountMessage.class);
+        arp.addMapping(WxMenuModel.tableName, WxMenuModel.id, WxMenuModel.class);
 	}
 	
 	/**

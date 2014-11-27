@@ -7,6 +7,7 @@ import java.util.List;
 import com.dragon.adapter.fans.FansService;
 import com.dragon.adapter.message.MessageService;
 import com.dragon.apps.model.WxAccount;
+import com.dragon.apps.model.WxAccountMessage;
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.model.WxMessageModel;
@@ -451,6 +452,7 @@ public class WxFansService implements Serializable{
 	public String sendMsg(String openid,String msg){
 		String originalId = RoleUtils.getCurAccountOriginalId();
 		if(originalId!=null && openid!=null){
+			long create_time = System.currentTimeMillis()/1000;
 			WxMsgTextModel wmtm = new WxMsgTextModel();
 			wmtm.setContent(msg);
 //			wmtm.save();
@@ -459,17 +461,24 @@ public class WxFansService implements Serializable{
 //			wmm.setContentId(wmtm.getId());
 			wmm.setType(ReqType.TEXTID);
 			wmm.setTo(openid);
-			wmm.setCreateTime(System.currentTimeMillis());
+			wmm.setCreateTime(create_time);
 //			wmm.save();
 			wmm.setWxMsgTextModel(wmtm);
-			//FIXME 消息保存到其它表单中
 			if(!MessageService.getInstance().sendMessage(openid, wmm)){
 				return "发送失败";
+			}else{
+				//消息保存到其它表单中
+				WxAccountMessage msgBean = new WxAccountMessage();
+				msgBean.setFrom(originalId)
+					.setTo(openid)
+					.setType(ReqType.TEXTID)
+					.setCreateTime(create_time)
+					.setContent(msg)
+					.save();
 			}
 		}
 		return null;
 	}
-	
 	
 	public static WxFansService getInstance(){
 		if(instance==null){

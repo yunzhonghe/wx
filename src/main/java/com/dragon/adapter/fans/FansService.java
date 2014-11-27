@@ -3,6 +3,8 @@ package com.dragon.adapter.fans;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import com.dragon.adapter.NeedFix;
 import com.dragon.apps.model.WxFansInfo;
@@ -15,6 +17,9 @@ import com.dragon.spider.api.response.GetGroupsResponse;
 import com.dragon.spider.api.response.GetUsersResponse;
 
 public class FansService {
+	//做粉丝初始化标记，防止同时间同微信的多次初始化.
+	static ConcurrentMap<Long,Boolean> initFansMap = new ConcurrentHashMap<Long,Boolean>();
+	
 	private UserHandleService service = null;
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=获取关注者列表
@@ -137,12 +142,29 @@ public class FansService {
 	 * 初始化粉丝信息
 	 */
 	public void initAllFansData(){
-		List<String> openids = getAllFans();
-		if(openids!=null && openids.size()>0){
-			Long account_id = NeedFix.getApiAccountId(service);
-			for(String openid : openids){
-				WxFansModel wxFansModel = getFansInfo(openid);
-				updateWxFansModelToDb(wxFansModel,account_id);
+		Long account_id = NeedFix.getApiAccountId(service);
+		Boolean initIng = initFansMap.get(account_id);
+		if(initIng==null || !initIng){
+			initFansMap.put(account_id, true);
+		}else{//正在初始化
+			return;
+		}
+		try{
+			List<String> openids = getAllFans();
+			if(openids!=null && openids.size()>0){
+				for(String openid : openids){
+					WxFansModel wxFansModel = getFansInfo(openid);
+					try{
+						updateWxFansModelToDb(wxFansModel,account_id);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}finally{
+			initIng = initFansMap.get(account_id);
+			if(initIng!=null && initIng){
+				initFansMap.put(account_id, false);
 			}
 		}
 	}
@@ -156,7 +178,7 @@ public class FansService {
 					wxFansModel.save();
 				}else{
 					existsModel.setSubscribe(wxFansModel.getSubscribe());
-					//XXX may be has other info?.
+					//may be has other info?.
 					existsModel.update();
 				}
 				WxFansInfo info = wxFansModel.getWxFansInfo();
