@@ -1,4 +1,4 @@
-package com.dragon.adapter;
+package com.dragon.adapter.service;
 
 import java.util.List;
 
@@ -130,7 +130,7 @@ public class AutoReplyRule {
 		if(rules!=null && rules.size()>0){
 			for(WxAnswerRule war : rules){
 				String keywords = war.getStr(WxAnswerRule.KEYWORD);
-				if(StrUtils.isEmpty(keywords)){
+				if(StrUtils.isNotEmpty(keywords)){
 					keywords = keywords.trim();
 					int index = keywords.indexOf('|');
 					if(index>-1){
@@ -172,6 +172,9 @@ public class AutoReplyRule {
 					TextMsg txt = new TextMsg();
 					txt.setContent(answerRule.getStr(WxAnswerRule.ANSWER));
 					txt.setMsgType(ReqType.TEXT);
+					System.out.println("getMsgByAnswerRule:------------------------");
+					System.out.println("answerRule:"+answerRule.toString());
+					System.out.println("txt:"+txt.toString());
 					return txt;
 				}
 			}

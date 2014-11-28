@@ -14,7 +14,7 @@ public class WxMenuModel extends Model<WxMenuModel> {
 	
 	//http://mp.weixin.qq.com/wiki/index.php?title=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95%E5%88%9B%E5%BB%BA%E6%8E%A5%E5%8F%A3
 //	public static final class MenuType{
-	//refers to com.dragon.spider.api.entity.MenuType
+	////refers to com.dragon.spider.api.entity.MenuType
 //		public static final String click = "click";//点击推事件
 //		public static final String view = "view";//跳转URL
 //		public static final String scancode_push = "scancode_push";//扫码推事件

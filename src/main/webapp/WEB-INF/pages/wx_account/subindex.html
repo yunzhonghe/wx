@@ -50,12 +50,10 @@
 					<tr style="border-bottom: 1px #cccccc solid;">
 						<td><label class="control-label">认证情况：</label></td>
 						<td>
-							<#if wxAccount.authstatus??>
-								<#if wxAccount.authstatus=='1'>
-									已认证
-								<#else>
-									未认证
-								</#if>
+							<#if (wxAccount.authstatus??) && wxAccount.authstatus!='0' >
+								已认证
+							<#else>
+								未认证
 							</#if>
 						</td>
 					</tr>

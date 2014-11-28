@@ -26,7 +26,11 @@ public class WxAnswerRule extends Model<WxAnswerRule> {
     	}
     	return null;
     }
-    
+    @Override
+    public String toString() {
+    	return "WxAnswerRule[id="+get(ID)+",rule_type="+get(RULE_TYPE)+",keyword="+get(KEYWORD)
+    			+",answer_type="+get(ANSWER_TYPE)+",answer="+get(ANSWER)+",account_id="+get(ACCOUNT_ID)+"]";
+    }
 
     public static final String ID = "id";//long
     public static final String RULE_TYPE = "rule_type";//规则类型,char(1)

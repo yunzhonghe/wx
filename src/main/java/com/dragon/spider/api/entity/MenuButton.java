@@ -2,7 +2,6 @@ package com.dragon.spider.api.entity;
 
 import com.dragon.spider.util.JSONUtil;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +10,10 @@ import java.util.List;
  */
 public class MenuButton implements Model {
 
-    private MenuType type;
+	private static final long serialVersionUID = 1L;
+
+//	private MenuType type;
+	private String type;
 
     private String name;
 
@@ -21,11 +23,11 @@ public class MenuButton implements Model {
 
     private List<MenuButton> sub_button;
 
-    public MenuType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(MenuType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -1,0 +1,70 @@
+<#include "../base/layout.html"/>
+<@layout>
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+	    <@nav index="90"/>
+		<div class="page-content">
+            <@title name="个人资料" menus='{"系统设置":"${base}/user","个人资料":"javascript:;"}'/>
+			 <#if _opresult??>
+            	${_opresult}
+            <#else>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="booking-search">
+							<form action="${base}/user/modifydo" role="form" method="post" onsubmit="return checkSub();">
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">登录id：</label>
+										<input class="form-control" type="text" readonly="readonly" value="${admin.admin_id}">
+										<input type="hidden" name="wxAdmin.id" value="${admin.id}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">名称：</label>
+										<input class="form-control" type="text" id="name" name="wxAdmin.name" value="${admin.name?default('')}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">电话：</label>
+										<input class="form-control" type="text" id="telephone" name="wxAdmin.telephone"	value="${admin.telephone?default('')}">
+									</div>
+								</div>
+								<div class="row form-group">
+									<div class="col-md-12">
+										<label class="control-label">邮箱：</label>
+										<input class="form-control" type="text" id="email" name="wxAdmin.email" value="${admin.email?default('')}">
+									</div>
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="btn blue">保存</button>
+									&nbsp;
+									<button type="reset" class="btn default">重置</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</#if>
+		</div>
+	</div>
+	<@footer/>
+	<script>
+	jQuery(document).ready(function() {    
+	   App.init();
+	   //add your javascript here
+	});
+	function checkSub(){
+		var errmsg = '';
+		if(document.getElementById("name").value==''){
+			errmsg += "名称不能为空\n";
+		}
+		if(errmsg!=''){
+			alert(errmsg);
+			return false;
+		}
+		return true;
+	}
+</script>
+</@layout>

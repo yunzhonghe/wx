@@ -114,25 +114,24 @@ public abstract class WxAbstractAPIController extends Controller {
 				String eventKey = reqMap.get("EventKey");
 				QrCodeEvent event = new QrCodeEvent(eventKey, ticket);
 				buildBasicEvent(reqMap, event);
-				WxFansHandleService service = new WxFansHandleService();
-				msg = service.handleQrCodeEvent(event);
+//				WxFansHandleService service = new WxFansHandleService();
+//				msg = service.handleQrCodeEvent(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
-			}
-			if (eventType.equals(EventType.SUBSCRIBE)) {
+			}else if (eventType.equals(EventType.SUBSCRIBE)) {
 				BaseEvent event = new BaseEvent();
 				buildBasicEvent(reqMap, event);
-				WxFansHandleService service = new WxFansHandleService();
-				msg = service.handleSubscribe(event);
+//				WxFansHandleService service = new WxFansHandleService();
+//				msg = service.handleSubscribe(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
 			} else if (eventType.equals(EventType.UNSUBSCRIBE)) {
 				BaseEvent event = new BaseEvent();
 				buildBasicEvent(reqMap, event);
-				WxFansHandleService service = new WxFansHandleService();
-				msg = service.handleUnsubscribe(event);
+//				WxFansHandleService service = new WxFansHandleService();
+//				msg = service.handleUnsubscribe(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
@@ -140,7 +139,7 @@ public abstract class WxAbstractAPIController extends Controller {
 				String eventKey = reqMap.get("EventKey");
 				MenuEvent event = new MenuEvent(eventKey);
 				buildBasicEvent(reqMap, event);
-				msg = handleMenuClickEvent(event);
+//				msg = handleMenuClickEvent(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
@@ -148,7 +147,7 @@ public abstract class WxAbstractAPIController extends Controller {
 				String eventKey = reqMap.get("EventKey");
 				MenuEvent event = new MenuEvent(eventKey);
 				buildBasicEvent(reqMap, event);
-				msg = handleMenuViewEvent(event);
+//				msg = handleMenuViewEvent(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
@@ -158,7 +157,7 @@ public abstract class WxAbstractAPIController extends Controller {
 				double precision = Double.parseDouble(reqMap.get("Precision"));
 				LocationEvent event = new LocationEvent(latitude, longitude, precision);
 				buildBasicEvent(reqMap, event);
-				msg = handleLocationEvent(event);
+//				msg = handleLocationEvent(event);
 				if (isNull(msg)) {
 					msg = processEventHandle(event);
 				}
@@ -167,10 +166,10 @@ public abstract class WxAbstractAPIController extends Controller {
 			if (msgType.equals(ReqType.TEXT)) {
 				String content = reqMap.get("Content");
 				TextReqMsg textReqMsg = new TextReqMsg(content);
-				MessageHandleService service = new MessageHandleService();
+//				MessageHandleService service = new MessageHandleService();
 				buildBasicReqMsg(reqMap, textReqMsg);
-				service.handleTextMsg(textReqMsg);
-				msg = handleTextMsg(textReqMsg);
+//				service.handleTextMsg(textReqMsg);
+//				msg = handleTextMsg(textReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(textReqMsg);
 				}
@@ -179,9 +178,9 @@ public abstract class WxAbstractAPIController extends Controller {
 				String mediaId = reqMap.get("MediaId");
 				ImageReqMsg imageReqMsg = new ImageReqMsg(picUrl, mediaId);
 				buildBasicReqMsg(reqMap, imageReqMsg);
-				MessageHandleService service = new MessageHandleService();
-				service.handleImageMsg(imageReqMsg);
-				msg = handleImageMsg(imageReqMsg);
+//				MessageHandleService service = new MessageHandleService();
+//				service.handleImageMsg(imageReqMsg);
+//				msg = handleImageMsg(imageReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(imageReqMsg);
 				}
@@ -192,10 +191,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				VoiceReqMsg voiceReqMsg = new VoiceReqMsg(mediaId, format, recognition);
 				buildBasicReqMsg(reqMap, voiceReqMsg);
 
-				MessageHandleService service = new MessageHandleService();
-				service.handleVoiceMsg(voiceReqMsg);
+//				MessageHandleService service = new MessageHandleService();
+//				service.handleVoiceMsg(voiceReqMsg);
 
-				msg = handleVoiceMsg(voiceReqMsg);
+//				msg = handleVoiceMsg(voiceReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(voiceReqMsg);
 				}
@@ -205,10 +204,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				VideoReqMsg videoReqMsg = new VideoReqMsg(mediaId, thumbMediaId);
 				buildBasicReqMsg(reqMap, videoReqMsg);
 
-				MessageHandleService service = new MessageHandleService();
-				service.handleVideoMsg(videoReqMsg);
+//				MessageHandleService service = new MessageHandleService();
+//				service.handleVideoMsg(videoReqMsg);
 
-				msg = handleVideoMsg(videoReqMsg);
+//				msg = handleVideoMsg(videoReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(videoReqMsg);
 				}
@@ -220,10 +219,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				LocationReqMsg locationReqMsg = new LocationReqMsg(locationX, locationY, scale, label);
 				buildBasicReqMsg(reqMap, locationReqMsg);
 
-				MessageHandleService service = new MessageHandleService();
-				service.handleLocationMsg(locationReqMsg);
+//				MessageHandleService service = new MessageHandleService();
+//				service.handleLocationMsg(locationReqMsg);
 
-				msg = handleLocationMsg(locationReqMsg);
+//				msg = handleLocationMsg(locationReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(locationReqMsg);
 				}
@@ -234,10 +233,10 @@ public abstract class WxAbstractAPIController extends Controller {
 				LinkReqMsg linkReqMsg = new LinkReqMsg(title, description, url);
 				buildBasicReqMsg(reqMap, linkReqMsg);
 
-				MessageHandleService service = new MessageHandleService();
-				service.handleLinkMsg(linkReqMsg);
+//				MessageHandleService service = new MessageHandleService();
+//				service.handleLinkMsg(linkReqMsg);
 
-				msg = handleLinkMsg(linkReqMsg);
+//				msg = handleLinkMsg(linkReqMsg);
 				if (isNull(msg)) {
 					msg = processMessageHandle(linkReqMsg);
 				}

@@ -1,7 +1,8 @@
 package com.dragon.adapter.message;
 
-import com.dragon.adapter.AutoReplyRule;
 import com.dragon.adapter.NeedFix;
+import com.dragon.adapter.service.AutoReplyRule;
+import com.dragon.adapter.service.WxHandleCache;
 import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.service.MessageHandleService;
 import com.dragon.apps.service.MessageRspHandleService;
@@ -16,7 +17,6 @@ import com.dragon.spider.message.req.VideoReqMsg;
 import com.dragon.spider.message.req.VoiceReqMsg;
 
 /**
- *  FIXME
  *  需要在WxAbstractAPIController中去掉WxFansHandleService的定义，并添加当前类的引用
  */
 public class MessageService implements MessageHandle{
@@ -30,9 +30,10 @@ public class MessageService implements MessageHandle{
 	 * @return BaseMsg 已经封装好toXml
 	 */
 	public BaseMsg handle(BaseReqMsg message) {
-		if(message==null){
+		if(WxHandleCache.getInstance().hasMessageBeenHandled(message)){
 			return null;
 		}
+		//消息处理
 		if(message instanceof TextReqMsg){
 			TextReqMsg msg = (TextReqMsg)message;
 			hanleService.handleTextMsg(msg);
@@ -61,8 +62,8 @@ public class MessageService implements MessageHandle{
 	 * @param message
 	 * @return
 	 */
+	public boolean sendMessage(String toUserOpenid,WxMessageModel message){
 		boolean result = true;
-		public boolean sendMessage(String toUserOpenid,WxMessageModel message){
 		//FIXME 1, does service.sendCustomMessage should return error?
 		service.sendCustomMessage(toUserOpenid, MessageAdapter.getMsgByModel(message));
 		return result;

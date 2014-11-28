@@ -1,6 +1,7 @@
 package com.dragon.adapter.event;
 
-import com.dragon.adapter.AutoReplyRule;
+import com.dragon.adapter.service.AutoReplyRule;
+import com.dragon.adapter.service.WxHandleCache;
 import com.dragon.apps.service.WxFansHandleService;
 import com.dragon.spider.handle.EventHandle;
 import com.dragon.spider.message.BaseMsg;
@@ -10,19 +11,22 @@ import com.dragon.spider.message.req.LocationEvent;
 import com.dragon.spider.message.req.MenuEvent;
 import com.dragon.spider.message.req.QrCodeEvent;
 /**
- *  FIXME
  *  需要在WxAbstractAPIController中去掉MessageHandleService的定义，并添加当前类的引用
  *  另外，WxAbstractAPIController中
  *  从 if (isNotBlank(ticket)) 到 if (eventType.equals(EventType.SUBSCRIBE)) 是否需要加上else.
  */
 public class EventService implements EventHandle{
-	private WxFansHandleService hanleService = null;////接受事件、自动回复
+	private WxFansHandleService hanleService = null;////接受事件、数据库更新
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=接收事件推送
 	 * 收到事件触发:
 	 * 1, 检查自动回复
 	 */
 	public BaseMsg handle(BaseEvent event) {
+		if(WxHandleCache.getInstance().hasEventBeenHandled(event)){
+			return null;
+		}
+		//事件处理
 		if(event instanceof LocationEvent){
 //			LocationEvent evt = (LocationEvent)event;
 		}else if(event instanceof MenuEvent){//菜单事件
@@ -44,7 +48,7 @@ public class EventService implements EventHandle{
 			if(evtType.equals(EventType.SUBSCRIBE)){//用户未关注时，进行关注后的事件推送
 				hanleService.handleQrCodeEvent(evt);
 			}else if(evtType.equals(EventType.SCAN)){//用户已关注时的事件推送
-				//FIXME
+				//XXX ignore?
 			}
 		}else{
 			String evtType = event.getEvent();

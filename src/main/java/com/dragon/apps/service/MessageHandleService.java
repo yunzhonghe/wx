@@ -39,18 +39,18 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	public boolean handleTextMsg(TextReqMsg msg) {		
+	public boolean handleTextMsg(TextReqMsg msg) {
 		WxMessageModel model =new WxMessageModel();
-		model = handerBase(msg,model);	
+		model = handerBase(msg,model);
 		WxMsgTextModel text =new WxMsgTextModel();
 		text.setContent(msg.getContent());
 		boolean isSave = text.save();
 		if(isSave){
 			model.setContentId(text.getId());
 			model.setType(ReqType.TEXTID);
-			return model.save();	
+			return model.save();
 		}
-		return false;	
+		return false;
 	}
 
 	private WxMessageModel handerBase(BaseReqMsg msg, WxMessageModel model) {

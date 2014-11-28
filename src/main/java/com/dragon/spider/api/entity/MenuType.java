@@ -1,62 +1,58 @@
 package com.dragon.spider.api.entity;
 
 /**
- * 微信菜单类型枚举
- * @author peiyu
+ * 微信菜单类型
  */
-public enum MenuType {
+public class MenuType {
     /**
      * 点击推事件
      */
-    CLICK("click"),
+//    CLICK("click"),
+    public static final String CLICK = "click";
 
     /**
      * 跳转URL
      */
-    VIEW("view"),
+//    VIEW("view"),
+    public static final String VIEW = "view";
 
     /*-------------------------以下仅支持微信iPhone5.4.1以上版本，和Android5.4以上版本的微信用户------------------------*/
 
     /**
      * 扫码推事件
      */
-    SCANCODE_PUSH("scancode_push"),
+//    SCANCODE_PUSH("scancode_push"),
+    public static final String SCANCODE_PUSH = "scancode_push";
 
     /**
      * 扫码推事件且弹出“消息接收中”提示框
      */
-    SCANCODE_WAITMSG("scancode_waitmsg"),
+//    SCANCODE_WAITMSG("scancode_waitmsg"),
+    public static final String SCANCODE_WAITMSG = "scancode_waitmsg";
 
     /**
      * 弹出系统拍照发图
      */
-    PIC_SYSPHOTO("pic_sysphoto"),
+//    PIC_SYSPHOTO("pic_sysphoto"),
+    public static final String PIC_SYSPHOTO = "pic_sysphoto";
 
     /**
      * 弹出拍照或者相册发图
      */
-    PIC_PHOTO_OR_ALBUM("pic_photo_or_album"),
+//    PIC_PHOTO_OR_ALBUM("pic_photo_or_album"),
+    public static final String PIC_PHOTO_OR_ALBUM = "pic_photo_or_album";
 
     /**
      * 弹出微信相册发图器
      */
-    PIC_WEIXIN("pic_weixin"),
+//    PIC_WEIXIN("pic_weixin"),
+    public static final String PIC_WEIXIN = "pic_weixin";
 
     /**
      * 弹出地理位置选择器
      */
-    LOCATION_SELECT("location_select");
-
-    String value;
-
-    private MenuType(String value) {
-        this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return this.value;
-    }
+//    LOCATION_SELECT("location_select");
+    public static final String LOCATION_SELECT = "location_select";
 
 }
 

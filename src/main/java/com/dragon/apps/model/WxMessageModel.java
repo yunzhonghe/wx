@@ -3,6 +3,7 @@ package com.dragon.apps.model;
 import java.util.List;
 import com.dragon.apps.exception.ErrorCode;
 import com.dragon.apps.exception.ServiceException;
+import com.dragon.apps.web.config.ClConfig;
 import com.jfinal.plugin.activerecord.Model;
 
 /**
