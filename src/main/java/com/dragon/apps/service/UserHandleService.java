@@ -74,6 +74,7 @@ public class UserHandleService extends BaseAPI {
 
     /**
      * 获取所有分组信息
+     * FIXME: bug here , should response list rather than single bean.
      * @return 所有分组信息列表对象
      */
     public GetGroupsResponse getGroups() {

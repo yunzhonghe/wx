@@ -24,10 +24,12 @@ public class WxFansModel extends Model<WxFansModel> {
 	private String name = "name";//varchar
 	private String markName = "mark_name";//varchar
 	private String location = "location";//varchar
-	private String signature = "signature";//?
+	private String signature = "signature";//签名varchar
 	private String subscribe = "subscribe";//int
 	private String createTime = "create_time";//long
 	private String sourceFrom = "source_from";//varchar
+	private String groupId ="group_id";
+	private String gender ="gender";
 	
 	public WxFansModel getByOpenId(String openId){
 		return findFirst("select * from " +ClConfig.WX_FANS_TABLE + " where open_id = '" + openId+"'");
@@ -107,5 +109,21 @@ public class WxFansModel extends Model<WxFansModel> {
 	}
 	public WxFansModel setWxAccountId(Long wxAccountId) {
 		return set(this.wxAccountId,wxAccountId);
+	}
+	
+	
+	public int getGroupId() {
+		return getInt(groupId);
+	}
+	public WxFansModel setGroupId(int groupId) {
+		return set(this.groupId,groupId);
+	}
+	
+	
+	public int getGender() {
+		return getInt(gender);
+	}
+	public WxFansModel setGender(int gender) {
+		return set(this.gender,gender);
 	}
 }

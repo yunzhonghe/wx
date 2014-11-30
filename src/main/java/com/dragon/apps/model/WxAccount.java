@@ -5,42 +5,48 @@ import java.util.List;
 import com.dragon.apps.utils.StrUtils;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
+
 /**
  * wx_account微信帐号
+ * 
  * @author LiuJian
  */
-public class WxAccount extends Model<WxAccount>{
+public class WxAccount extends Model<WxAccount> {
 	private static final long serialVersionUID = 1L;
 	public static WxAccount dao = new WxAccount();
 	public static final String tableName = "wx_account";
-	
-	public WxAccType getWxAccType(){
-		if(getTypeid()!=null){
+
+	public WxAccType getWxAccType() {
+		if (getTypeid() != null) {
 			return WxAccType.dao.getWxAccTypeByCache(getTypeid());
 		}
 		return null;
 	}
-	public Long getIdByOriginalId(String originalId){
-		if(StrUtils.isEmpty(originalId)){
+
+	public Long getIdByOriginalId(String originalId) {
+		if (StrUtils.isEmpty(originalId)) {
 			return null;
 		}
-		return Db.queryLong("select "+ID+" from "+tableName+" where "+ORIGINALID+"='"+originalId+"' limit 0,1");
+		return Db.queryLong("select " + ID + " from " + tableName + " where " + ORIGINALID + "='" + originalId + "' limit 0,1");
 	}
-	public List<WxAccount> getAllAccountList(){
+
+	public List<WxAccount> getAllAccountList() {
 		return find("select * from " + tableName);
 	}
-//	public WxAccount getWxAccountByOriginalId(String originalId){
-//		if(StrUtils.isEmpty(originalId)){
-//			return null;
-//		}
-//		return findFirst("select * from "+tableName+" where "+ORIGINALID+"='"+originalId+"'");
-//	}
-	
-	public static final String ID = "id";//bigint,pk
+
+	// public WxAccount getWxAccountByOriginalId(String originalId){
+	// if(StrUtils.isEmpty(originalId)){
+	// return null;
+	// }
+	// return
+	// findFirst("select * from "+tableName+" where "+ORIGINALID+"='"+originalId+"'");
+	// }
+
+	public static final String ID = "id";// bigint,pk
 	public static final String ACCOUNT = "account";
 	public static final String NAME = "name";
 	private static final String PASSWORD = "password";
-	private static final String TYPEID = "typeid";//int
+	private static final String TYPEID = "typeid";// int
 	private static final String ORIGINALID = "originalid";
 	private static final String ISDEVMODE = "isdevmode";
 	private static final String URL = "url";
@@ -52,101 +58,141 @@ public class WxAccount extends Model<WxAccount>{
 	private static final String REGION = "region";
 	private static final String FUNCTIONS = "functions";
 	private static final String QRCODE = "qrcode";
-	
+	private static final String WXNUMBER = "wx_number";
+
 	public Long getId() {
 		return getLong(ID);
 	}
+
 	public WxAccount setId(Long id) {
-		return set(ID,id);
+		return set(ID, id);
 	}
+
 	public String getAccount() {
 		return getStr(ACCOUNT);
 	}
+
 	public WxAccount setAccount(String account) {
-		return set(ACCOUNT,account);
+		return set(ACCOUNT, account);
 	}
+
 	public String getName() {
 		return getStr(NAME);
 	}
+
 	public WxAccount setName(String name) {
-		return set(NAME,name);
+		return set(NAME, name);
 	}
+
 	public String getPassword() {
 		return getStr(PASSWORD);
 	}
+
 	public WxAccount setPassword(String password) {
-		return set(PASSWORD,password);
+		return set(PASSWORD, password);
 	}
+
 	public Integer getTypeid() {
 		return getInt(TYPEID);
 	}
+
 	public WxAccount setTypeid(int typeid) {
-		return set(TYPEID,typeid);
+		return set(TYPEID, typeid);
 	}
+
 	public String getOriginalid() {
 		return getStr(ORIGINALID);
 	}
+
 	public WxAccount setOriginalid(String originalid) {
-		return set(ORIGINALID,originalid);
+		return set(ORIGINALID, originalid);
 	}
+
 	public String getIsdevmode() {
 		return getStr(ISDEVMODE);
 	}
+
 	public WxAccount setIsdevmode(String isdevmode) {
-		return set(ISDEVMODE,isdevmode);
+		return set(ISDEVMODE, isdevmode);
 	}
+
 	public String getUrl() {
 		return getStr(URL);
 	}
+
 	public WxAccount setUrl(String url) {
-		return set(URL,url);
+		return set(URL, url);
 	}
+
 	public String getToken() {
 		return getStr(TOKEN);
 	}
+
 	public WxAccount setToken(String token) {
-		return set(TOKEN,token);
+		return set(TOKEN, token);
 	}
+
 	public String getStatus() {
 		return getStr(STATUS);
 	}
+
 	public WxAccount setStatus(String status) {
-		return set(STATUS,status);
+		return set(STATUS, status);
 	}
+
 	public String getAvatar() {
 		return getStr(AVATAR);
 	}
+
 	public WxAccount setAvatar(String avatar) {
-		return set(AVATAR,avatar);
+		return set(AVATAR, avatar);
 	}
+
 	public String getSecretset() {
 		return getStr(SECRETSET);
 	}
+
 	public WxAccount setSecretset(String secretset) {
-		return set(SECRETSET,secretset);
+		return set(SECRETSET, secretset);
 	}
+
 	public String getAuthstatus() {
 		return getStr(AUTHSTATUS);
 	}
+
 	public WxAccount setAuthstatus(String authstatus) {
-		return set(AUTHSTATUS,authstatus);
+		return set(AUTHSTATUS, authstatus);
 	}
+
 	public String getRegion() {
 		return getStr(REGION);
 	}
+
 	public WxAccount setRegion(String region) {
-		return set(REGION,region);
+		return set(REGION, region);
 	}
+
 	public String getFunctions() {
 		return getStr(FUNCTIONS);
 	}
+
 	public WxAccount setFunctions(String functions) {
-		return set(FUNCTIONS,functions);
+		return set(FUNCTIONS, functions);
 	}
+
 	public String getQrcode() {
 		return getStr(QRCODE);
 	}
+
 	public WxAccount setQrcode(String qrcode) {
-		return set(QRCODE,qrcode);
+		return set(QRCODE, qrcode);
+	}
+
+	public String getWxNumber() {
+		return getStr(WXNUMBER);
+	}
+
+	public WxAccount setWxNumber(String wxNumber) {
+		return set(WXNUMBER, wxNumber);
 	}
 }

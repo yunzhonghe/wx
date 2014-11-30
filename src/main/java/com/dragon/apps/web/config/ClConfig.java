@@ -8,6 +8,7 @@ import com.dragon.apps.model.WxMsgLocationModel;
 import com.dragon.apps.model.WxMsgTextModel;
 import com.dragon.apps.model.WxMsgVideoModel;
 import com.dragon.apps.model.WxMsgVoiceModel;
+import com.dragon.apps.web.module.wechat.TestController;
 import com.dragon.apps.web.module.wechat.WeChatController;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -28,6 +29,7 @@ public class ClConfig {
 	public static void configRoute(Routes me){
 		//FIXME
 		me.add(WECHAT,WeChatController.class);
+		me.add("/test",TestController.class);
 	}
 	public static void configActiveRecordPlugin(ActiveRecordPlugin arp){
 		//FIXME

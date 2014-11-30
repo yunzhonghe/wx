@@ -32,6 +32,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -68,7 +69,10 @@ public abstract class HttpClientBaseAPI {
         this.config = config;
     }
 
-    public static HttpClient client = new DefaultHttpClient();	
+    String cookie;
+   private  HttpClient client = new DefaultHttpClient();
+    
+    private static String Cookie;    
     
     /**
      * 
@@ -124,10 +128,11 @@ public abstract class HttpClientBaseAPI {
 	 * @return Token
 	 * */
 	private String getToken(String response){
-		System.out.println(response);
+		System.out.println("check Token.."+response);
 		String [] bs=response.split("&token=")[1].split("','");	
 		String token=bs[0].split(",")[0];
 		token=token.substring(0, token.length()-2);
+		System.out.println("get token.."+ token);
 		return token;
 	}
 	
@@ -148,32 +153,20 @@ public abstract class HttpClientBaseAPI {
 		nvp.add(new BasicNameValuePair("username", name));
 		post.setEntity(new UrlEncodedFormEntity(nvp));
 		resultCont=EntityUtils.toString(client.execute(post).getEntity());	
-		String token = getToken(resultCont);
-		/*
 		
-			
-		post = new HttpPost("https://mp.weixin.qq.com/cgi-bin/contactmanage?t=user/index&pagesize=10&pageidx=0&type=0&token="+token+"&lang=zh_CN");
-		post.addHeader("Referer", "https://mp.weixin.qq.com/cgi-bin/contactmanage?t=user/index&pagesize=10&pageidx=0&type=0&groupid=0&token="+token+"&lang=zh_CN");
-		nvp = new ArrayList<NameValuePair>();
-		nvp.add(new BasicNameValuePair("f", "json"));
-		nvp.add(new BasicNameValuePair("pwd", MD5Encode(pwd)));
-		nvp.add(new BasicNameValuePair("username", name));
-		post.setEntity(new UrlEncodedFormEntity(nvp));
-		resultCont=EntityUtils.toString(client.execute(post).getEntity());	
-		System.out.println("list"+ resultCont);		
 		
-		post = new HttpPost("https://mp.weixin.qq.com/cgi-bin/getcontactinfo?t=ajax-getcontactinfo&lang=zh_CN&fakeid="+token);
-		post.addHeader("Referer", "https://mp.weixin.qq.com/cgi-bin/contactmanage?t=user/index&pagesize=10&pageidx=0&type=0&groupid=0&token="+token+"&lang=zh_CN");
-		nvp = new ArrayList<NameValuePair>();
-		nvp.add(new BasicNameValuePair("f", "json"));
-		nvp.add(new BasicNameValuePair("pwd", MD5Encode(pwd)));
-		nvp.add(new BasicNameValuePair("username", name));
-		post.setEntity(new UrlEncodedFormEntity(nvp));
-		resultCont=EntityUtils.toString(client.execute(post).getEntity());	*/
-		
-		System.out.println(resultCont);		
+		 StringBuffer cookie = new StringBuffer();
+		 List<org.apache.http.cookie.Cookie> cookies =((AbstractHttpClient) client).getCookieStore().getCookies();
+        
+         
+		String token = getToken(resultCont);		
+		//System.out.println(resultCont);		
 		return token;
 	}
+	
+	/*public static HttpClient getClient(){
+		return client;
+	}*/
 	
 	/**
 	 * 简单post调用
@@ -185,12 +178,10 @@ public abstract class HttpClientBaseAPI {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public static String simplePostInvoke(RequestModel request) throws URISyntaxException, ClientProtocolException, IOException {
-		/*HttpClient client = buildHttpClient(false, request.getHost());*/
+	protected String simplePostInvoke(RequestModel request) throws URISyntaxException, ClientProtocolException, IOException {	
 		HttpPost postMethod = buildHttpPost(request.getUrl(), request.getParas());
 		if (null != request.getHeaders()) {
 			Iterator<String> headIt = request.getHeaders().keySet().iterator();
-
 			while (headIt.hasNext()) {
 				String key = headIt.next();
 				String value = request.getHeaders().get(key);
@@ -198,9 +189,7 @@ public abstract class HttpClientBaseAPI {
 			}
 		}
 
-		HttpResponse response = client.execute(postMethod);
-		//System.out.print(client.);
-		/*assertStatus(response);*/
+		HttpResponse response = client.execute(postMethod);		
 		HttpEntity entity = response.getEntity();
 		if (entity != null) {
 			String returnStr = EntityUtils.toString(entity, request.getCharset());
@@ -220,7 +209,7 @@ public abstract class HttpClientBaseAPI {
 	 * @throws IOException
 	 * @throws URISyntaxException
 	 */
-	public static String simpleGetInvoke(RequestModel request) throws ClientProtocolException, IOException, URISyntaxException {
+	protected String simpleGetInvoke(RequestModel request) throws ClientProtocolException, IOException, URISyntaxException {
 		//HttpClient client = buildHttpClient(false, request.getHost());
 		HttpGet get = buildHttpGet(request.getUrl(), request.getParas());
 		HttpResponse response = client.execute(get);	

@@ -1,5 +1,8 @@
 package com.dragon.spider.api.config;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 /**
  * API配置类，项目中请保证其为单例
  * @author peiyu
@@ -12,6 +15,8 @@ public final class HttpClientApiConfig {
 
     private String token;
 
+    private HttpClient client;
+    
     public volatile boolean refreshing = false;
 
     public String getName() {
@@ -38,7 +43,15 @@ public final class HttpClientApiConfig {
         this.token = token;
     }
 
-    public static class Builder {
+    public HttpClient getClient() {
+		return client;
+	}
+
+	public void setClient(HttpClient client) {
+		this.client = client;
+	}
+
+	public static class Builder {
         private String name;
 
         private String password;
@@ -60,4 +73,11 @@ public final class HttpClientApiConfig {
             return config;
         }
     }
+
+	@Override
+	public String toString() {
+		return "HttpClientApiConfig [name=" + name + ", password=" + password + ", token=" + token + ", client=" + client + ", refreshing="
+				+ refreshing + "]";
+	}
+	
 }
