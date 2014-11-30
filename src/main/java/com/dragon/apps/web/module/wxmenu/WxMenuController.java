@@ -8,6 +8,7 @@ public class WxMenuController extends BaseController {
 	public void index() {
 		WxMenu wxMenu = getService().getWxMenu();
 		setAttr("menu", wxMenu);
+		setAttr("rspTypes", getService().getKeyRspTypeList());
 		render("menu_modify.html");
 	}
 

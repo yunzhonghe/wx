@@ -120,10 +120,10 @@ public class WxMessageModel extends Model<WxMessageModel> {
 	public WxMessageModel setCreateTime(Long createTime) {
 		return set(this.createTime,createTime);
 	}
-	public String getRspContent() {
-		return getStr(rspContent);
+	public Long getRspContent() {
+		return getLong(rspContent);
 	}
-	public WxMessageModel setRspContent(String rspContent) {
+	public WxMessageModel setRspContent(Long rspContent) {
 		return set(this.rspContent,rspContent);
 	}
 	public Integer getRspType() {

@@ -9,6 +9,8 @@ import java.util.concurrent.ConcurrentMap;
 import com.dragon.adapter.menu.MenuService;
 import com.dragon.apps.model.WxMenuModel;
 import com.dragon.apps.utils.RoleUtils;
+import com.dragon.apps.web.module.base.IdValueBean;
+import com.dragon.spider.message.req.ReqType;
 
 public class WxMenuService implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -19,21 +21,52 @@ public class WxMenuService implements Serializable {
     private static int maxTryTimes = 2;
     
     public WxMenu getWxMenu(){
-    	Long accountId = RoleUtils.gerCurAccountId();
-    	WxMenu wxMenu = getWxMenu(accountId);
-    	if(wxMenu==null){
-    		wxMenu = MenuService.getInstance().getMenu();
-    		if(wxMenu!=null && wxMenu.getWxMenuModels()!=null && wxMenu.getWxMenuModels().size()>0){
-    			boolean saveResult = saveMenuToDb(wxMenu);
-    			if(wxMenu.getWxMenuModels().get(0).getLong(WxMenuModel.accountId)!=accountId){
-    				//后台数据不是当前人员的
-    				wxMenu = null;
-    			}
-    			if(!saveResult && wxMenu!=null){//碰上别的线程在保存，需要等待获取菜单的id
-    				wxMenu = tryGetWxMenu(accountId);
-    			}
-    		}
-    	}
+    	//FIXME test:
+    	List<WxMenuModel> oneMenu = new ArrayList<WxMenuModel>();
+    	WxMenuModel model = new WxMenuModel();
+    	model.put("id", 1);
+    	model.put("parentid", null);
+    	model.put("name", "一级菜单一");
+    	WxMenuModel sub = new WxMenuModel();
+    	sub.put("id", 11);
+    	sub.put("parentid", 1);
+    	sub.put("type", "view");
+    	sub.put("name", "二级菜单一");
+    	sub.put("url", "www.baidu.com");
+    	List<WxMenuModel> twoMenu = new ArrayList<WxMenuModel>();
+    	twoMenu.add(sub);
+    	model.setSubMenuModels(twoMenu);
+    	oneMenu.add(model);
+    	
+    	
+    	model = new WxMenuModel();
+    	model.put("id", 2);
+    	model.put("parentid", null);
+    	model.put("type", "click");
+    	model.put("name", "一级菜单二");
+    	model.put("key", "a");
+    	model.put("key_rsp_type", 1);
+    	model.put("key_rsp_content", "我很好那么你呢？");
+    	oneMenu.add(model);
+    	
+    	WxMenu wxMenu = new WxMenu();
+    	wxMenu.setWxMenuModels(oneMenu);
+    	
+//    	Long accountId = RoleUtils.gerCurAccountId();
+//    	WxMenu wxMenu = getWxMenu(accountId);
+//    	if(wxMenu==null){
+//    		wxMenu = MenuService.getInstance().getMenu();
+//    		if(wxMenu!=null && wxMenu.getWxMenuModels()!=null && wxMenu.getWxMenuModels().size()>0){
+//    			boolean saveResult = saveMenuToDb(wxMenu);
+//    			if(wxMenu.getWxMenuModels().get(0).getLong(WxMenuModel.accountId)!=accountId){
+//    				//后台数据不是当前人员的
+//    				wxMenu = null;
+//    			}
+//    			if(!saveResult && wxMenu!=null){//碰上别的线程在保存，需要等待获取菜单的id
+//    				wxMenu = tryGetWxMenu(accountId);
+//    			}
+//    		}
+//    	}
     	return wxMenu;
     }
     /**
@@ -66,6 +99,12 @@ public class WxMenuService implements Serializable {
     		}
     	}
     	return wxMenu;
+    }
+    public List<IdValueBean> getKeyRspTypeList(){
+    	List<IdValueBean> ls = new ArrayList<IdValueBean>();
+    	ls.add(new IdValueBean(ReqType.TEXTID, ReqType.TEXT_NAME));
+    	//FIXME add others, 如素材
+    	return ls;
     }
     private WxMenu tryGetWxMenu(Long accountId){
     	int i=0;

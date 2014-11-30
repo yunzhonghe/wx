@@ -31,7 +31,7 @@ public class ReqType {
 	public static final int EVENTID = 7;
 
 	
-	public static final String getTypeNameByTypeId(Integer typeId){
+	public static String getTypeNameByTypeId(Integer typeId){
 		if(typeId!=null)
 			switch(typeId){
 			case TEXTID:
@@ -50,5 +50,25 @@ public class ReqType {
 				return EVENT_NAME;
 			}
 		return "未知";
+	}
+	public static Integer getTypeIdByTypeName(String typeName){
+		if(typeName!=null){
+			if(typeName.equals(TEXT_NAME)){
+				return TEXTID;
+			}else if(typeName.equals(IMAGE_NAME)){
+				return IMAGEID;
+			}else if(typeName.equals(LINK_NAME)){
+				return LINKID;
+			}else if(typeName.equals(LOCATION_NAME)){
+				return LOCATIONID;
+			}else if(typeName.equals(VOICE_NAME)){
+				return VOICEID;
+			}else if(typeName.equals(VIDEO_NAME)){
+				return VIDEOID;
+			}else if(typeName.equals(EVENT_NAME)){
+				return EVENTID;
+			}
+		}
+		return null;
 	}
 }

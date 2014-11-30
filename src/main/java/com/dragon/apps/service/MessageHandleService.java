@@ -39,7 +39,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	public boolean handleTextMsg(TextReqMsg msg) {
+	public boolean handleTextMsg(TextReqMsg msg,BaseMsg reply) {
 		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);
 		WxMsgTextModel text =new WxMsgTextModel();
@@ -48,6 +48,7 @@ public class MessageHandleService {
 		if(isSave){
 			model.setContentId(text.getId());
 			model.setType(ReqType.TEXTID);
+			handleAutoReplyMsg(model,reply);
 			return model.save();
 		}
 		return false;
@@ -68,7 +69,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	public boolean handleImageMsg(ImageReqMsg msg) {
+	public boolean handleImageMsg(ImageReqMsg msg,BaseMsg reply) {
 		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
 		WxMsgImageModel image = new WxMsgImageModel();
@@ -78,6 +79,7 @@ public class MessageHandleService {
 		if(isSave){
 			model.setContentId(image.getId());
 			model.setType(ReqType.IMAGEID);
+			handleAutoReplyMsg(model,reply);
 			return model.save();	
 		}
 		return false;	
@@ -90,7 +92,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	public boolean handleVoiceMsg(VoiceReqMsg msg) {
+	public boolean handleVoiceMsg(VoiceReqMsg msg,BaseMsg reply) {
 		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
 		WxMsgVoiceModel voice = new WxMsgVoiceModel();
@@ -100,6 +102,7 @@ public class MessageHandleService {
 		if(isSave){
 			model.setContentId(voice.getId());
 			model.setType(ReqType.VOICEID);
+			handleAutoReplyMsg(model,reply);
 			return model.save();	
 		}
 		return false;	
@@ -112,7 +115,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	public boolean handleVideoMsg(VideoReqMsg msg) {
+	public boolean handleVideoMsg(VideoReqMsg msg,BaseMsg reply) {
 		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
 		WxMsgVideoModel vedio =new WxMsgVideoModel();
@@ -122,6 +125,7 @@ public class MessageHandleService {
 		if(isSave){
 			model.setContentId(vedio.getId());
 			model.setType(ReqType.VIDEOID);
+			handleAutoReplyMsg(model,reply);
 			return model.save();	
 		}
 		return false;	
@@ -134,7 +138,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	public boolean handleLocationMsg(LocationReqMsg msg) {
+	public boolean handleLocationMsg(LocationReqMsg msg,BaseMsg reply) {
 		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
 		WxMsgLocationModel location =new WxMsgLocationModel();
@@ -146,6 +150,7 @@ public class MessageHandleService {
 		if(isSave){
 			model.setContentId(location.getId());
 			model.setType(ReqType.LOCATIONID);
+			handleAutoReplyMsg(model,reply);
 			return model.save();	
 		}
 		return false;	
@@ -158,7 +163,7 @@ public class MessageHandleService {
 	 *            请求消息对象
 	 * @return 响应消息对象
 	 */
-	public boolean handleLinkMsg(LinkReqMsg msg) {
+	public boolean handleLinkMsg(LinkReqMsg msg,BaseMsg reply) {
 		WxMessageModel model =new WxMessageModel();
 		model = handerBase(msg,model);	
 		WxMsgLinkModel link =new WxMsgLinkModel();
@@ -169,11 +174,38 @@ public class MessageHandleService {
 		if(isSave){
 			model.setContentId(link.getId());
 			model.setType(ReqType.LINKID);
+			handleAutoReplyMsg(model,reply);
 			return model.save();	
 		}
 		return false;	
 	}
-
+	/**
+	 * 保存自动应答的内容对象
+	 * @param reply
+	 * @return
+	 */
+	private void handleAutoReplyMsg(WxMessageModel model,BaseMsg reply){
+		if(reply!=null){
+			Long rspContentId = null;
+			Integer rspType = null;
+			if(reply instanceof TextMsg){
+				rspType = ReqType.TEXTID;
+				TextMsg txt = (TextMsg)reply;
+				WxMsgTextModel textModel =new WxMsgTextModel();
+				textModel.setContent(txt.getContent());
+				if(textModel.save()){
+					rspContentId = textModel.getId();
+				}
+			}else{
+				//FIXME 其它类型的自动回复的扩展
+			}
+			if(rspContentId!=null){
+				model.setRspContent(rspContentId);
+				model.setRspType(rspType);
+				model.setRspTime(reply.getCreateTime());
+			}
+		}
+	}
 	/**
 	 * 处理扫描二维码事件，有需要时子类重写
 	 * 

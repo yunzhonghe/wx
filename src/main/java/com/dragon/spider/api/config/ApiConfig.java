@@ -5,6 +5,7 @@ package com.dragon.spider.api.config;
  * @author peiyu
  */
 public final class ApiConfig {
+	//FIXME extends info with originalId,wx_type
 
     private String appid;
 

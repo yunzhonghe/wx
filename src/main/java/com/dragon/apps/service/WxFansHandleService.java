@@ -5,6 +5,7 @@ import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.utils.ModelUtils;
+import com.dragon.spider.api.config.ApiConfig;
 import com.dragon.spider.message.BaseMsg;
 import com.dragon.spider.message.TextMsg;
 import com.dragon.spider.message.req.BaseEvent;
@@ -45,8 +46,11 @@ public class WxFansHandleService {
 	 * 加载粉丝的详细信息
 	 * @param openid
 	 */
+//	private void handleWxFansInfo(String openid,ApiConfig config){//FIXME //set api config info to get.
 	private void handleWxFansInfo(String openid){
+		System.out.println("handleWxFansInfo-openid:"+openid);
 		WxFansModel wfm = FansService.getInstance().getFansInfo(openid);
+		System.out.println("handleWxFansInfo-wfm:"+wfm.toJson());
 		WxFansInfo info = wfm.getWxFansInfo();
 		WxFansInfo exists = WxFansInfo.dao.findByOpenId(openid);
 		if(exists==null){

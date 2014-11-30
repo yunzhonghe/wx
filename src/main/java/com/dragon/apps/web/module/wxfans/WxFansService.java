@@ -13,6 +13,7 @@ import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.model.WxMsgTextModel;
 import com.dragon.apps.model.WxTag;
+import com.dragon.apps.utils.DateUtils;
 import com.dragon.apps.utils.PageSet;
 import com.dragon.apps.utils.RoleUtils;
 import com.dragon.apps.utils.StrUtils;
@@ -340,6 +341,7 @@ public class WxFansService implements Serializable{
 		}
 		return result;
 	}
+	//获取近聊列表
 	public PageSet getFansMsgList(PageSet pageSet){
 		WxAccount account = RoleUtils.getCurAccount();
 		if(account!=null && account.getOriginalid()!=null){
@@ -381,6 +383,7 @@ public class WxFansService implements Serializable{
 		}
 		return pageSet;
 	}
+	//获取跟某个粉丝的近期聊天信息
 	public List<Record> getFansMsgs(String openid){
 		if(StrUtils.isEmpty(openid)){
 			return null;
@@ -452,7 +455,7 @@ public class WxFansService implements Serializable{
 	public String sendMsg(String openid,String msg){
 		String originalId = RoleUtils.getCurAccountOriginalId();
 		if(originalId!=null && openid!=null){
-			long create_time = System.currentTimeMillis()/1000;
+			long create_time = DateUtils.getCurrentTimeSeconds();
 			WxMsgTextModel wmtm = new WxMsgTextModel();
 			wmtm.setContent(msg);
 //			wmtm.save();

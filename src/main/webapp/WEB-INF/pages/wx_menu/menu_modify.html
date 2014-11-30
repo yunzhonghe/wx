@@ -1,5 +1,6 @@
 <#include "../base/layout.html"/>
 <@layout>
+	<link href="${base}/resources/plugins/ztree/css/zTreeStyle.css" rel="stylesheet" type="text/css"/>
 	<!-- BEGIN CONTAINER -->
 	<div class="page-container">
     <@nav index="50"/>
@@ -8,77 +9,357 @@
             <#if _opresult??>
             	${_opresult}
             <#else>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="booking-search">
-							<form action="${base}/wx_menu/modifydo" role="form" method="post" onsubmit="return checkSub();">
-								<div class="row form-group">
-									<div class="col-md-12">
-										<strong><label class="control-label">设置菜单</label></strong>
-										<#if (_bean??) && (_bean.id??)>
-											<input type="hidden" name="wxAnswerRule.id" value="${_bean.id}">
-										</#if>
+				注：设定菜单后，点击最下方的保存菜单，才生效。(一级菜单不超过3个，每个一级菜单下的二级菜单不超过5个；一级菜单最多4个汉字，二级菜单最多7个汉字)
+				<form action="${base}/wx_menu/modifydo" class="form-horizontal" role="form" method="post" onsubmit="return checkSub();" style="border: 1px #aaaacc solid;">
+					<div class="row">
+						<div class="col-md-3">
+							<div>
+								<ul id="treeMenu" class="ztree"></ul>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="portlet box blue" id="div_setmenu">
+								<div class="portlet-title">
+									<div class="caption">设置菜单</div>
+								</div>
+								<div class="portlet-body" >
+									<div class="form-group">
+											<label class="control-label col-md-3">当前选中</label>
+											<div class="col-md-9">
+												<input class="form-control" type="text" id="selectedMenu" readonly="readonly"/>
+												<input type="hidden" id="selectedid" />
+											</div>
 									</div>
-								</div>
-								<div class="row form-group">
-									<div class="col-md-12">
-										<label class="control-label">回复类型：</label>
-										<select class="form-control" name="wxAnswerRule.answer_type">
-											<#if (_bean??) && (_bean.answer_type??)>
-												<#list answerTypes as atype>
-													<option value="${atype.id}" <#if _bean.answer_type==atype.id>selected</#if>>${atype.value?default('')}</option>
-												</#list>
-											<#else>
-												<#list answerTypes as atype>
-													<option value="${atype.id}">${atype.value?default('')}</option>
-												</#list>
-											</#if>
-										</select>
+									<div class="row form-group">
+											<label class="control-label col-md-3">响应动作</label>
+											<div class="col-md-9">
+												<select class="form-control" id="rspType" onchange="changeRspType();">
+													<option value="">-请选择-</option>
+													<option value="click">发送消息</option>
+													<option value="view">跳转网页</option>
+												</select>
+											</div>
 									</div>
-								</div>
-								<div class="row form-group">
-									<div class="col-md-12">
-										<label class="control-label">回复内容：</label>
-										<#if (_bean??) && (_bean.answer??)>
-											<input class="form-control" type="text" id="answer" name="wxAnswerRule.answer" placeholder="请输入回复内容"
-												value="${_bean.answer?default('')}"  style="height: 100px;"/>
-										<#else>
-											<input class="form-control" type="text" id="answer" name="wxAnswerRule.answer" placeholder="请输入回复内容"
-												style="height: 100px;"/>
-										</#if>
+									<div class="row form-group" id="div_keyRspType">
+											<label class="control-label col-md-3">消息类型</label>
+											<div class="col-md-9">
+												<select class="form-control" id="keyRspType">
+													<#list rspTypes as atype>
+														<option value="${atype.id}">${atype.value?default('')}</option>
+													</#list>
+												</select>
+											</div>
 									</div>
+									<div class="row form-group" id="div_keyRspContent">
+											<label class="control-label col-md-3">消息内容</label>
+											<div class="col-md-9">
+												<textarea class="form-control" id="keyRspContent" rows="4" cols="" maxlength="512"></textarea>
+											</div>
+									</div>
+									<div class="row form-group"  id="div_url">
+											<label class="control-label col-md-3">网页地址</label>
+											<div class="col-md-9">
+												<input class="form-control" type="text" id="url" maxlength="1024"/>
+											</div>
+									</div>
+									<button class="btn green" id="btn_setcm" onclick="setCurrentMenu();" style="margin-left: 42%;margin-right: 42%;width: 16%;">
+										<b>设定当前</b>
+									</button>
 								</div>
-								<div class="form-actions">
-									<button type="submit" class="btn blue">保存</button>
-									<button type="reset" class="btn default">重置</button>
-									<input type="button" class="btn default" onclick="javascript:window.history.go(-1);" value="返回"/>
-								</div>
-							</form>
+							</div>
 						</div>
 					</div>
-				</div>
+					<div class="form-actions" style="margin: 0;">
+						<button type="submit" class="btn blue">保存菜单<i class="m-icon-swapright m-icon-white"></i></button>
+					</div>
+				</form>
 			</#if>
 		</div>
 	</div>
 	<@footer/>
+	
+	<!-- END THEME STYLES -->
+	
+	<script src="${base}/resources/plugins/ztree/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
 	<script>
-	jQuery(document).ready(function() {    
-	   App.init();
-	   //add your javascript here
-	});
-	function checkSub(){
-// 		var errmsg = '';
-// 		if(document.getElementById("keyword").value==''){
-// 			errmsg += "请输入关键字\n";
-// 		}
-// 		if(document.getElementById("answer").value==''){
-// 			errmsg += "请输入回复内容\n";
-// 		}
-// 		if(errmsg!=''){
-// 			alert(errmsg);
-// 			return false;
-// 		}
-		return true;
-	}
+		function checkSub(){
+// 			var errmsg = '';
+// 			if(document.getElementById("keyword").value==''){
+// 				errmsg += "请输入关键字\n";
+// 			}
+// 			if(document.getElementById("answer").value==''){
+// 				errmsg += "请输入回复内容\n";
+// 			}
+// 			if(errmsg!=''){
+// 				alert(errmsg);
+// 				return false;
+// 			}
+			return true;
+		}
+	
+		var _menus = [];
+		<#if (menu??) && (menu.wxMenuModels??)>
+			<#list	menu.wxMenuModels as menuModel>
+				_menus[${menuModel_index}] = ${menuModel.toJson()?default('')};
+				_menus[${menuModel_index}].subMenuModels = [];
+				<#if menuModel.subMenuModels??>
+					<#list	menuModel.subMenuModels as subModel>
+						_menus[${menuModel_index}].subMenuModels[${subModel_index}] = ${subModel.toJson()?default('')};
+					</#list>
+				</#if>
+			</#list>
+		</#if>
+		;
+		//配置Ztree
+		var setting = {
+			view: {
+				addHoverDom: addHoverDom,
+				removeHoverDom: removeHoverDom,
+				selectedMulti: false
+			},
+			edit: {
+				enable: true,
+				showRemoveBtn: showRemoveBtn,
+				showRenameBtn: showRenameBtn
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeRemove: beforeRemove,
+				beforeRename: beforeRename,
+				onClick: onClick,
+				onRemove: onRemove,
+				onRename: onRename
+			}
+		};
+		var _mrId = "_mr";
+		var zNodes =[
+			{ id:_mrId, pId:0, name:"菜单", open:true}
+		];
+		var zNodes_size = 1;
+		if(_menus.length>0){
+			for(var i=0;i<_menus.length;i++){
+				var _menuModel = _menus[i];
+				zNodes[zNodes_size++] = {id:_menuModel["ID"],pId:_mrId,name:_menuModel["NAME"], open:true};
+				if(_menuModel.subMenuModels && _menuModel.subMenuModels.length>0){
+					for(var j=0;j<_menuModel.subMenuModels.length;j++){
+						var _subMode = _menuModel.subMenuModels[j];
+						zNodes[zNodes_size++] = {id:_subMode["ID"],pId:_menuModel["ID"],name:_subMode["NAME"]};
+					}
+				}
+			}
+		}
+		function beforeRemove(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeMenu");
+			zTree.selectNode(treeNode);
+			return confirm("确认删除 [" + treeNode.name + "] 吗？");
+		}
+		function onRemove(e, treeId, treeNode) {
+			disableSetMenu();
+			removeMenuObj(treeNode.level,treeNode.id,treeNode.pId);
+		}
+		function beforeRename(treeId, treeNode, newName, isCancel) {
+			if (newName.length == 0) {
+				alert("菜单名称不能为空.");
+				var zTree = $.fn.zTree.getZTreeObj("treeMenu");
+				setTimeout(function(){zTree.editName(treeNode)}, 10);
+				return false;
+			}
+			return true;
+		}
+		function onRename(e, treeId, treeNode, isCancel) {
+			var menuObj = getMenuObj(treeNode.level,treeNode.id,treeNode.pId);
+			if(menuObj){
+				menuObj["NAME"] = treeNode.name;
+				$("#selectedMenu").val(menuObj["NAME"]);
+			}
+		}
+		function showRemoveBtn(treeId, treeNode) {
+			return treeNode.level != 0;
+		}
+		function showRenameBtn(treeId, treeNode) {
+			return treeNode.level != 0;
+		}
+
+		var newCount = 1;
+		function addHoverDom(treeId, treeNode) {
+			if(treeNode.level >= 2){//二级菜单不展示添加按钮
+				return;
+			}else if(treeNode.level==1){//一级菜单子菜单不超过5个
+				if(treeNode.children && treeNode.children.length>=5){
+					return;
+				}
+			}else{//一级菜单不超过3个
+				if(treeNode.children && treeNode.children.length>=3){
+					return;
+				}
+			}
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+				+ "' title='添加菜单' onfocus='this.blur();'></span>";
+			sObj.after(addStr);
+			var btn = $("#addBtn_"+treeNode.tId);
+			if (btn) btn.bind("click", function(){
+				if(treeNode.level==0){
+					if(treeNode.children && treeNode.children.length >= 3){
+						return false;
+					}
+				}else if(treeNode.level==1){
+					if(treeNode.children && treeNode.children.length >= 5){
+						return false;
+					}
+				}else{
+					return false;
+				}
+				var zTree = $.fn.zTree.getZTreeObj("treeMenu");
+				var _newid = ("new" + newCount);
+				var _newname = "子菜单" + (newCount++);
+				zTree.addNodes(treeNode, {id:_newid, pId:treeNode.id, name:_newname});
+				if(treeNode.level==1){
+					_menus[_menus.length] = {"NAME":_newname,"ID":_newid,"PARENTID":treeNode.id,"TYPE":""};
+				}else{
+					var menuObj = getMenuObj(treeNode.level,treeNode.id,treeNode.pId);
+					if(menuObj){
+						menuObj.subMenuModels[menuObj.subMenuModels.length] = {"NAME":_newname,"ID":_newid,"PARENTID":treeNode.id,"TYPE":""};
+					}
+				}
+				return false;
+			});
+		};
+		function removeHoverDom(treeId, treeNode) {
+			$("#addBtn_"+treeNode.tId).unbind().remove();
+		};
+		function onClick(event, treeId, treeNode, clickFlag) {
+			var menuObj = getMenuObj(treeNode.level,treeNode.id,treeNode.pId);
+			if(menuObj){
+				if(treeNode.level==1 && treeNode.children && treeNode.children.length >0){//有子菜单
+					disableSetMenu();
+				}else{
+					enableSetMenu();
+					$("#selectedid").val(menuObj["ID"]);
+					$("#selectedMenu").val(menuObj["NAME"]);
+					$("#rspType").val(menuObj["TYPE"]);
+					changeRspType();
+					if(menuObj["KEY_RSP_TYPE"]){
+						$("#keyRspType").val(menuObj["KEY_RSP_TYPE"]);
+					}
+					if(menuObj["KEY_RSP_CONTENT"]){
+						$("#keyRspContent").val(menuObj["KEY_RSP_CONTENT"]);
+					}
+					if(menuObj["URL"]){
+						$("#url").val(menuObj["URL"]);
+					}
+				}
+			}else{
+				disableSetMenu();
+			}
+		}
+		function setCurrentMenu(){
+			//TODO
+			// and fixme createNode
+		}
+		function getMenuObj(level,id,pid){
+			if(level==2){
+				for(var i=0;i<_menus.length;i++){
+					if(_menus[i]["ID"]==pid){
+						for(var j=0;j<_menus[i].subMenuModels.length;j++){
+							if(_menus[i].subMenuModels[j]["ID"] == id){
+								return _menus[i].subMenuModels[j];
+							}
+						}
+						break;
+					}
+				}
+			}else if(level==1){
+				for(var i=0;i<_menus.length;i++){
+					if(_menus[i]["ID"]==id){
+						return _menus[i];
+					}
+				}
+			}
+			return null;
+		}
+		function removeMenuObj(level,id,pid){
+			if(level==2){
+				for(var i=0;i<_menus.length;i++){
+					if(_menus[i])
+						if(_menus[i]["ID"]==pid){
+							for(var j=0;j<_menus[i].subMenuModels.length;j++){
+								if(_menus[i].subMenuModels[j])
+									if(_menus[i].subMenuModels[j]["ID"] == id){
+										_menus[i].subMenuModels[j] = null;
+										break;
+									}
+							}
+							break;
+						}
+				}
+			}else if(level==1){
+				for(var i=0;i<_menus.length;i++){
+					if(_menus[i])
+						if(_menus[i]["ID"]==id){
+							_menus[i] = null;
+							break;
+						}
+				}
+			}
+		}
+	
+		function disableSetMenu(){
+			$("#selectedid").val("");
+			$("#selectedMenu").val("");
+			$("#selectedMenu").attr("disabled",true);
+			$("#rspType").val("");
+			$("#rspType").attr("disabled",true);
+			$("#keyRspType").get(0).selectedIndex=0;
+			changeRspType();
+			$("#keyRspType").attr("disabled",true);
+			$("#keyRspContent").val("");
+			$("#keyRspContent").attr("disabled",true);
+			$("#url").val("");
+			$("#url").attr("disabled",true);
+			$("#btn_setcm").attr("disabled",true);
+			$("#div_setmenu").attr("disabled",true);
+		}
+		function enableSetMenu(){
+			$("#selectedMenu").attr("disabled",false);
+			$("#rspType").attr("disabled",false);
+			$("#keyRspType").attr("disabled",false);
+			$("#keyRspContent").attr("disabled",false);
+			$("#url").attr("disabled",false);
+			$("#btn_setcm").attr("disabled",false);
+			$("#div_setmenu").attr("disabled",false);
+		}
+		function changeRspType(){
+			var rspValue = $("#rspType").val();
+			if(rspValue=='click'){
+				$("#div_keyRspType").show();
+				$("#div_keyRspContent").show();
+				$("#div_url").hide();
+			}else if(rspValue=='view'){
+				$("#div_keyRspType").hide();
+				$("#div_keyRspContent").hide();
+				$("#div_url").show();
+			}else{
+				$("#div_keyRspType").show();
+				$("#div_keyRspContent").show();
+				$("#div_url").show();
+			}
+		}
+		jQuery(document).ready(function() {
+		   	App.init();
+		   	//add your javascript here
+		});
+		$(document).ready(function(){
+			disableSetMenu();
+			$.fn.zTree.init($("#treeMenu"), setting, zNodes);
+		});
 </script>
+<style type="text/css">
+	.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+</style>
 </@layout>

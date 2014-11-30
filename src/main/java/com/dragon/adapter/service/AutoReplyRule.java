@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAnswerRule;
+import com.dragon.apps.utils.DateUtils;
 import com.dragon.apps.utils.StrUtils;
 import com.dragon.apps.web.module.wxautoreply.WxAnswerRuleService;
 import com.dragon.spider.message.BaseMsg;
@@ -64,7 +65,7 @@ public class AutoReplyRule {
 			}
 		}
 		if(msg!=null){
-			msg.setCreateTime(System.currentTimeMillis()/1000);//secs.
+			msg.setCreateTime(DateUtils.getCurrentTimeSeconds());
 			msg.setFromUserName(message.getToUserName());
 			msg.setToUserName(message.getFromUserName());
 		}
@@ -172,9 +173,6 @@ public class AutoReplyRule {
 					TextMsg txt = new TextMsg();
 					txt.setContent(answerRule.getStr(WxAnswerRule.ANSWER));
 					txt.setMsgType(ReqType.TEXT);
-					System.out.println("getMsgByAnswerRule:------------------------");
-					System.out.println("answerRule:"+answerRule.toString());
-					System.out.println("txt:"+txt.toString());
 					return txt;
 				}
 			}

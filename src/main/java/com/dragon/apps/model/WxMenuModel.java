@@ -12,6 +12,7 @@ public class WxMenuModel extends Model<WxMenuModel> {
 	private static final long serialVersionUID = 1L;
 	public static final WxMenuModel dao = new WxMenuModel();
 	
+	
 	//http://mp.weixin.qq.com/wiki/index.php?title=%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95%E5%88%9B%E5%BB%BA%E6%8E%A5%E5%8F%A3
 //	public static final class MenuType{
 	////refers to com.dragon.spider.api.entity.MenuType
@@ -31,6 +32,8 @@ public class WxMenuModel extends Model<WxMenuModel> {
 	public static final String name = "name";//String
 	public static final String key = "key";//String,菜单的key值，菜单为click时，该字段必须
 	public static final String url = "url";//String
+	public static final String keyRspType = "key_rsp_type";//Integer,对应key的回复消息类型
+	public static final String keyRspContent = "key_rsp_content";//String,对应key的回复消息内容，如果类型为文本，则为内容；类型为其它，则为关联id
 	public static final String accountId = "account_id";//Long关联到微信公众号的主键
 	/**
   `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -39,6 +42,8 @@ public class WxMenuModel extends Model<WxMenuModel> {
   `name` VARCHAR(20) NULL,
   `key` VARCHAR(64) NULL,
   `url` VARCHAR(1024) NULL,
+  key_rsp_type smallint,
+  key_rsp_content varchar(1024),
   'account_id' BIGINT NULL,
 	 */
 	

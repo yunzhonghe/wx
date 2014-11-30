@@ -33,27 +33,29 @@ public class MessageService implements MessageHandle{
 		if(WxHandleCache.getInstance().hasMessageBeenHandled(message)){
 			return null;
 		}
-		//消息处理
+		//获取自动回复内容
+		BaseMsg reply = AutoReplyRule.getInstance().autoReply(message);
+		//消息处理，持久化
 		if(message instanceof TextReqMsg){
 			TextReqMsg msg = (TextReqMsg)message;
-			hanleService.handleTextMsg(msg);
+			hanleService.handleTextMsg(msg,reply);
 		}else if(message instanceof ImageReqMsg){
 			ImageReqMsg msg = (ImageReqMsg)message;
-			hanleService.handleImageMsg(msg);
+			hanleService.handleImageMsg(msg,reply);
 		}else if(message instanceof VoiceReqMsg){
 			VoiceReqMsg msg = (VoiceReqMsg)message;
-			hanleService.handleVoiceMsg(msg);
+			hanleService.handleVoiceMsg(msg,reply);
 		}else if(message instanceof VideoReqMsg){
 			VideoReqMsg msg = (VideoReqMsg)message;
-			hanleService.handleVideoMsg(msg);
+			hanleService.handleVideoMsg(msg,reply);
 		}else if(message instanceof LocationReqMsg){
 			LocationReqMsg msg = (LocationReqMsg)message;
-			hanleService.handleLocationMsg(msg);
+			hanleService.handleLocationMsg(msg,reply);
 		}else if(message instanceof LinkReqMsg){
 			LinkReqMsg msg = (LinkReqMsg)message;
-			hanleService.handleLinkMsg(msg);
+			hanleService.handleLinkMsg(msg,reply);
 		}
-		return AutoReplyRule.getInstance().autoReply(message);
+		return reply;
 	}
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=发送客服消息
