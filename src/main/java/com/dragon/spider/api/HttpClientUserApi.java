@@ -34,11 +34,11 @@ public class HttpClientUserApi extends HttpClientBaseAPI {
 
 	
 	/**
-	 * 获得对应的粉丝的消息内容
+	 * 获得首页的粉丝的消息内容，用来在有新的用户关注的时候获得粉丝列表，然后刷新对应的页面
 	 * @param 
 	 * @return  粉丝列表
 	 * */
-	public List<WxFansModel> getUsers(){
+	public List<WxFansModel> getFirstPageUsers(){
 		
 		if (null == config.getToken()) {
 			refreshToken();
@@ -49,6 +49,102 @@ public class HttpClientUserApi extends HttpClientBaseAPI {
 		RequestModel model = new RequestModel();
 		Map<String,String> paras = new HashMap<String,String>();
 		paras.put("Referer", "https://mp.weixin.qq.com/cgi-bin/contactmanage?t=user/index&pagesize=10&pageidx=0&type=0&groupid=0&token="+config.getToken()+"&lang=zh_CN");
+		model.setHeaders(paras);
+		model.setUrl(url);
+		try {
+			String returnMsg = simpleGetInvoke(model);
+			Pattern p = Pattern.compile("{\"id\":[\\s\\S]{1,},\"nick_name\":\"[\\s\\S]{0,}\",\"remark_name\":\"[\\s\\S]{0,}\",\"group_id\":[\\s\\S]{0,}}");
+			Matcher m = p.matcher(returnMsg);
+			while(m.find()){
+				WxFansModel fansModel = new WxFansModel();
+				String temp = m.group();
+				JSONObject jOb =  JSON.parseObject(temp);
+				int id = jOb.getIntValue("id");
+				String name = jOb.getString("nick_name");
+				String remarkName = jOb.getString("remark_name");
+				int groupId = jOb.getIntValue("group_id");
+				fansModel.setOpenId(String.valueOf(id));
+				fansModel.setName(name);
+				fansModel.setMarkName(remarkName);
+				fansModel.setGroupId(groupId);
+				fans.add(fansModel);
+			}
+			System.out.println(returnMsg);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
+	
+	
+
+	/**
+	 * 获得所有的人，，10000以内的，超过一万需要自己额外的去获得指定的页面去处理
+	 * @param 
+	 * @return  粉丝列表
+	 * */
+	public List<WxFansModel> getAllPageUsers(){
+		
+		if (null == config.getToken()) {
+			refreshToken();
+		}
+		Logger.info(this, "begin to init fans list " + config.toString());
+		List<WxFansModel> fans = new ArrayList<WxFansModel>();
+		String url = UserListUrl+config.getToken();		
+		RequestModel model = new RequestModel();
+		Map<String,String> paras = new HashMap<String,String>();
+		paras.put("Referer", "https://mp.weixin.qq.com/cgi-bin/contactmanage?t=user/index&pagesize=10000&pageidx=0&type=0&groupid=0&token="+config.getToken()+"&lang=zh_CN");
+		model.setHeaders(paras);
+		model.setUrl(url);
+		try {
+			String returnMsg = simpleGetInvoke(model);
+			Pattern p = Pattern.compile("{\"id\":[\\s\\S]{1,},\"nick_name\":\"[\\s\\S]{0,}\",\"remark_name\":\"[\\s\\S]{0,}\",\"group_id\":[\\s\\S]{0,}}");
+			Matcher m = p.matcher(returnMsg);
+			while(m.find()){
+				WxFansModel fansModel = new WxFansModel();
+				String temp = m.group();
+				JSONObject jOb =  JSON.parseObject(temp);
+				int id = jOb.getIntValue("id");
+				String name = jOb.getString("nick_name");
+				String remarkName = jOb.getString("remark_name");
+				int groupId = jOb.getIntValue("group_id");
+				fansModel.setOpenId(String.valueOf(id));
+				fansModel.setName(name);
+				fansModel.setMarkName(remarkName);
+				fansModel.setGroupId(groupId);
+				fans.add(fansModel);
+			}
+			System.out.println(returnMsg);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
+	
+	/**
+	 * 获得首页的粉丝的消息内容
+	 * @param 
+	 * @return  粉丝列表
+	 * */
+	public List<WxFansModel> getFixedPageUsers(int pageNumber){
+		
+		if (null == config.getToken()) {
+			refreshToken();
+		}
+		Logger.info(this, "begin to init fans list " + config.toString());
+		List<WxFansModel> fans = new ArrayList<WxFansModel>();
+		String url = UserListUrl+config.getToken();		
+		RequestModel model = new RequestModel();
+		Map<String,String> paras = new HashMap<String,String>();
+		paras.put("Referer", "https://mp.weixin.qq.com/cgi-bin/contactmanage?t=user/index&pagesize=10&pageidx="+pageNumber+"&type=0&groupid=0&token="+config.getToken()+"&lang=zh_CN");
 		model.setHeaders(paras);
 		model.setUrl(url);
 		try {
