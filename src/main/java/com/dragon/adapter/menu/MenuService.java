@@ -21,10 +21,10 @@ public class MenuService {
 	 * @param menuModel 菜单总对象,包含所有一级菜单及子菜单
 	 * @return
 	 */
-	public boolean createMenu(Object menuModel){
+	public boolean createMenu(WxMenu wxMenu){
 		boolean result = true;
 		//FIXME 1, does service.createMenu should return error?
-		service.createMenu(MenuAdapter.getRequestByModel(menuModel));
+		service.createMenu(MenuAdapter.getRequestByModel(wxMenu));
 		return result;
 	}
 	/**
@@ -42,7 +42,7 @@ public class MenuService {
 			if(allMenus!=null && allMenus.size()>0){
 				Long account_id = NeedFix.getApiAccountId(service);
 				for(WxMenuModel wxMenuModel : allMenus){
-					wxMenuModel.set(WxMenuModel.accountId, account_id+"");
+					wxMenuModel.set(WxMenuModel.accountId, account_id);
 				}
 			}
 		}

@@ -10,9 +10,27 @@ import com.dragon.spider.api.request.MenuRequest;
 import com.dragon.spider.api.response.GetMenuResponse;
 
 public class MenuAdapter {
-	public static MenuRequest getRequestByModel(Object menuModel){
+	public static MenuRequest getRequestByModel(WxMenu wxMenu){
 		MenuRequest request = null;
-		//FIXME
+		if(wxMenu!=null){
+			request = new MenuRequest();
+			if(wxMenu.getWxMenuModels()!=null && wxMenu.getWxMenuModels().size()>0){
+				request.setButton(new ArrayList<MenuButton>());
+				for(WxMenuModel sup:wxMenu.getWxMenuModels()){
+					MenuButton button = new MenuButton();
+					setMenuButtonByWxMenuMode(button, sup);
+					request.getButton().add(button);
+					if(sup.getSubMenuModels()!=null && sup.getSubMenuModels().size()>0){
+						button.setSub_button(new ArrayList<MenuButton>());
+						for(WxMenuModel sub:sup.getSubMenuModels()){
+							MenuButton sub_button = new MenuButton();
+							setMenuButtonByWxMenuMode(sub_button, sub);
+							button.getSub_button().add(sub_button);
+						}
+					}
+				}
+			}
+		}
 		return request;
 	}
 	public static WxMenu getModelsByResponse(GetMenuResponse response){
@@ -44,6 +62,12 @@ public class MenuAdapter {
 		return wxMenu;
 	}
 	private static void setWxMenuModelByMenuButton(WxMenuModel wxMenuModel,MenuButton button){
+		wxMenuModel.set(WxMenuModel.type, button.getType());
+		wxMenuModel.set(WxMenuModel.name, button.getName());
+		wxMenuModel.set(WxMenuModel.key, button.getKey());
+		wxMenuModel.set(WxMenuModel.url, button.getUrl());
+	}
+	private static void setMenuButtonByWxMenuMode(MenuButton button,WxMenuModel wxMenuModel){
 		wxMenuModel.set(WxMenuModel.type, button.getType());
 		wxMenuModel.set(WxMenuModel.name, button.getName());
 		wxMenuModel.set(WxMenuModel.key, button.getKey());

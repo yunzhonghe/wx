@@ -2,6 +2,7 @@ package com.dragon.apps.model;
 
 import java.util.List;
 
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 
 /**
@@ -53,6 +54,13 @@ public class WxMenuModel extends Model<WxMenuModel> {
 		}
 		return find("select * from "+tableName+" where "+WxMenuModel.accountId+"="+accountId+" order by "+parentid);
 	}
+	public void deleteAllMenus(Long accountId){
+		if(accountId==null){
+			return;
+		}
+		String sql = "delete from "+tableName+" where "+WxMenuModel.accountId+"="+accountId+" order by "+parentid;
+		Db.update(sql);
+	}
 	/**
 	 * 子菜单对象
 	 */
@@ -62,5 +70,12 @@ public class WxMenuModel extends Model<WxMenuModel> {
 	}
 	public void setSubMenuModels(List<WxMenuModel> subMenuModels) {
 		this.subMenuModels = subMenuModels;
+	}
+	private Long _tempid;//在新增菜单时使用；页面新增菜单的id为负数与数据库的id作区别。
+	public Long get_tempid() {
+		return _tempid;
+	}
+	public void set_tempid(Long _tempid) {
+		this._tempid = _tempid;
 	}
 }
