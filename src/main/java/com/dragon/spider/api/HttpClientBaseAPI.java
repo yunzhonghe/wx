@@ -152,13 +152,7 @@ public abstract class HttpClientBaseAPI {
 		nvp.add(new BasicNameValuePair("pwd", MD5Encode(pwd)));
 		nvp.add(new BasicNameValuePair("username", name));
 		post.setEntity(new UrlEncodedFormEntity(nvp));
-		resultCont=EntityUtils.toString(client.execute(post).getEntity());	
-		
-		
-		 StringBuffer cookie = new StringBuffer();
-		 List<org.apache.http.cookie.Cookie> cookies =((AbstractHttpClient) client).getCookieStore().getCookies();
-        
-         
+		resultCont=EntityUtils.toString(client.execute(post).getEntity());         
 		String token = getToken(resultCont);		
 		//System.out.println(resultCont);		
 		return token;

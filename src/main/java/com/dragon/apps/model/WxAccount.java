@@ -1,5 +1,6 @@
 package com.dragon.apps.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.dragon.apps.utils.StrUtils;
@@ -34,6 +35,9 @@ public class WxAccount extends Model<WxAccount> {
 		return find("select * from " + tableName);
 	}
 
+	public WxAccount getByNameAndPwd(String name, String password){
+		return this.findFirst("select * from "+tableName +" where account ='" +name+"' and password = '"+password +"';");
+	}
 	// public WxAccount getWxAccountByOriginalId(String originalId){
 	// if(StrUtils.isEmpty(originalId)){
 	// return null;
@@ -59,6 +63,7 @@ public class WxAccount extends Model<WxAccount> {
 	private static final String FUNCTIONS = "functions";
 	private static final String QRCODE = "qrcode";
 	private static final String WXNUMBER = "wx_number";
+	private static final String MODIFYTIME ="last_modify_time";
 
 	public Long getId() {
 		return getLong(ID);
@@ -195,4 +200,14 @@ public class WxAccount extends Model<WxAccount> {
 	public WxAccount setWxNumber(String wxNumber) {
 		return set(WXNUMBER, wxNumber);
 	}
+	
+	
+	public Timestamp getModifyTime() {
+		return getTimestamp(MODIFYTIME);
+	}
+
+	public WxAccount setModifyTime(Timestamp modifyTime) {
+		return set(WXNUMBER, modifyTime);
+	}
+	
 }

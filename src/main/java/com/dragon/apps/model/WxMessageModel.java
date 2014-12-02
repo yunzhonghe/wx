@@ -20,21 +20,25 @@ public class WxMessageModel extends Model<WxMessageModel> {
 	private String from = "from";//string
 	private String to = "to";//string
 	private String contentId = "content_id";//long
-	private String type = "type";//int
+	private String contentType = "content_type";//int	
+	private String type = "type";//int 消息类型 1---用户发送消息   2:----客服主动消息   3-----群发的消息
 	private String createTime = "create_time";//long
 	private String rspContent = "rsp_content_id";//long
 	private String rspType = "rsp_type";//int
 	private String rspTime = "rsp_time";//long
 
-
-	public WxMessageModel getByToken(String token) throws ServiceException {
+	public WxMessageModel getByMsgId(String messageId){
+		return this.findFirst("select * from wx_message where message_id = " + messageId);
+	}
+	
+	/*public WxMessageModel getByToken(String token) throws ServiceException {
 		List<WxMessageModel> lists = this.find("select * from wx_account where token = " + token);
 		if (null == lists || lists.size() != 1 ) {
 			throw new ServiceException(ErrorCode.TOKENERROR);
 		} else {
 			return lists.get(0);
 		}
-	}
+	}*/
 
 	private WxMsgImageModel wxMsgImageModel = null;
 	private WxMsgLinkModel wxMsgLinkModel = null;
@@ -108,12 +112,21 @@ public class WxMessageModel extends Model<WxMessageModel> {
 	public WxMessageModel setContentId(Long contentId) {
 		return set(this.contentId,contentId);
 	}
+	public Integer getConentType() {
+		return getInt(contentType);
+	}
+	public WxMessageModel setContentType(Integer contentType) {
+		return set(this.contentType,contentType);
+	}
+	
+	
 	public Integer getType() {
 		return getInt(type);
 	}
 	public WxMessageModel setType(Integer type) {
 		return set(this.type,type);
 	}
+	
 	public Long getCreateTime() {
 		return getLong(createTime);
 	}

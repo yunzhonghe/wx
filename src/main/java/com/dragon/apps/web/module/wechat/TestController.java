@@ -27,13 +27,13 @@ public class TestController extends Controller{
 		/*HttpClientAccountApi account = new HttpClientAccountApi(config);
 		System.out.println(account.initAccount());*/
 		
-	HttpClientMsgApi msg = new HttpClientMsgApi(config);
+		/*HttpClientMsgApi msg = new HttpClientMsgApi(config);
 		 TextMsg tMsg = new  TextMsg();
-		tMsg.setContent("auto send ");
-		msg.rspMsg("1255063424", tMsg);
+		tMsg.setContent("【每日一笑】关羽：“大哥，我再也不想跟军师出去了。”刘备：“怎么了，二弟？”关羽：“每次军师出去都放屁。”刘备：“这有什么啊？”关羽：“每次他放完屁，都扇扇子装无辜，而旁边人一看我的脸色都以为是我放的。”【重庆隆盛服饰感谢您的关注】");
+		msg.sendAllMsg( tMsg);*/
 		
 		/*HttpClientMsgApi msg = new HttpClientMsgApi(config);
-		msg.getUserFirstPageMsgs("1255063424");*/
+		msg.getFirstPageMsgs();*/
 		renderText("helloworld");
 		
 	

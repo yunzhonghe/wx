@@ -24,7 +24,7 @@ public class HttpClientAccountApi extends HttpClientBaseAPI {
 	private String url = "https://mp.weixin.qq.com/cgi-bin/settingpage?t=setting/index&action=index&lang=zh_CN&token=";
 	private String domain = "https://mp.weixin.qq.com";
 
-	public WxAccount initAccount() {
+	public WxAccount getDetailAccount(WxAccount account) {
 		
 		if (null == config.getToken()) {
 			refreshToken();
@@ -44,7 +44,7 @@ public class HttpClientAccountApi extends HttpClientBaseAPI {
 			Elements eles = doc.getElementsByClass("meta_content");
 
 			if (null != eles && eles.size() == 11) {
-				WxAccount account = new WxAccount();
+				/*WxAccount account = new WxAccount();*/
 				account.setName(eles.get(0).html().trim());
 				account.setAvatar(eles.get(1).html().trim());
 				account.setAccount(eles.get(2).html().trim());
