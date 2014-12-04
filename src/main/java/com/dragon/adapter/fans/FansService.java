@@ -20,13 +20,17 @@ public class FansService {
 	//做粉丝初始化标记，防止同时间同微信的多次初始化.
 	static ConcurrentMap<Long,Boolean> initFansMap = new ConcurrentHashMap<Long,Boolean>();
 	
-	private UserHandleService service = null;
+//	private UserHandleService service = null;
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=获取关注者列表
 	 * 得到所有获取关注者列表
 	 * @return 返回对应关注着的openid字符串列表
 	 */
-	public List<String> getAllFans(){
+	public List<String> getAllFans(String originalId){
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
+		return getAllFans(service);
+	}
+	private List<String> getAllFans(UserHandleService service){
 		List<String> result = null;
 		String next_openid = "";
 		GetUsersResponse res = service.getUsers(next_openid);
@@ -57,8 +61,9 @@ public class FansService {
 	 * @param remark
 	 * @return
 	 */
-	public boolean setFansRemark(String openid, String remark){
+	public boolean setFansRemark(String openid, String remark,String originalId){
 		boolean result = true;
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
 		//FIXME 1, does service.createMenu should return error?
 		service.setUserRemark(openid, remark);
 		return result;
@@ -69,8 +74,9 @@ public class FansService {
 	 * @param groupName
 	 * @return 分组的id值
 	 */
-	public String createFansGroup(String groupName){
+	public String createFansGroup(String groupName,String originalId){
 		String result = null;
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
 		CreateGroupResponse res = service.createGroup(groupName);
 		if(res!=null){
 			result = res.getId();
@@ -82,8 +88,9 @@ public class FansService {
 	 * 获取粉丝的所有分组信息
 	 * @return
 	 */
-	public List<Map<String,String>> getAllFansGroups(){
+	public List<Map<String,String>> getAllFansGroups(String originalId){
 		List<Map<String,String>> result = null;
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
 		GetGroupsResponse res = service.getGroups();
 		if(res!=null){
 			result = new ArrayList<Map<String,String>>();
@@ -97,8 +104,9 @@ public class FansService {
 	 * @param fansOpenid
 	 * @return
 	 */
-	public String getGroupIdByFans(String fansOpenid){
+	public String getGroupIdByFans(String fansOpenid,String originalId){
 		String result = null;
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
 		result = service.getGroupIdByOpenid(fansOpenid);
 		return result;
 	}
@@ -109,8 +117,9 @@ public class FansService {
 	 * @param toUpdateName
 	 * @return
 	 */
-	public boolean updateGroupName(Integer groupId,String toUpdateName){
+	public boolean updateGroupName(Integer groupId,String toUpdateName,String originalId){
 		boolean result = true;
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
 		//FIXME 1, does service.updateGroup should return error?
 		service.updateGroup(groupId, toUpdateName);
 		return result;
@@ -122,8 +131,9 @@ public class FansService {
 	 * @param toGroupId
 	 * @return
 	 */
-	public boolean moveFansToAnotherGroup(String fansOpenid, String toGroupId){
+	public boolean moveFansToAnotherGroup(String fansOpenid, String toGroupId,String originalId){
 		boolean result = true;
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
 		//FIXME 1, does service.moveGroupUser should return error?
 		service.moveGroupUser(fansOpenid, toGroupId);
 		return result;
@@ -134,14 +144,19 @@ public class FansService {
 	 * @param fansOpenid
 	 * @return
 	 */
-	public WxFansModel getFansInfo(String fansOpenid){
+	public WxFansModel getFansInfo(String fansOpenid,String originalId){
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
+		return getFansInfo(fansOpenid, service);
+	}
+	private WxFansModel getFansInfo(String fansOpenid,UserHandleService service){
 		WxFansModel result = FansAdapter.getModelByResponse(service.getUserInfo(fansOpenid));
 		return result;
 	}
 	/**
 	 * 初始化粉丝信息
 	 */
-	public void initAllFansData(){
+	public void initAllFansData(String originalId){
+		UserHandleService service = new UserHandleService(NeedFix.getApiConfig(originalId));
 		Long account_id = NeedFix.getApiAccountId(service);
 		Boolean initIng = initFansMap.get(account_id);
 		if(initIng==null || !initIng){
@@ -150,10 +165,10 @@ public class FansService {
 			return;
 		}
 		try{
-			List<String> openids = getAllFans();
+			List<String> openids = getAllFans(service);
 			if(openids!=null && openids.size()>0){
 				for(String openid : openids){
-					WxFansModel wxFansModel = getFansInfo(openid);
+					WxFansModel wxFansModel = getFansInfo(openid,service);
 					try{
 						updateWxFansModelToDb(wxFansModel,account_id);
 					}catch(Exception e){
@@ -219,6 +234,6 @@ public class FansService {
 		return instance;
 	}
 	private FansService(){
-		service = new UserHandleService(NeedFix.getApiConfig());
+//		service = new UserHandleService(NeedFix.getApiConfig());
 	}
 }

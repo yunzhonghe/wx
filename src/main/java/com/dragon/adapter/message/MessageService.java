@@ -21,7 +21,7 @@ import com.dragon.spider.message.req.VoiceReqMsg;
  */
 public class MessageService implements MessageHandle{
 	private MessageHandleService hanleService = null;//接受消息、自动回复
-	private MessageRspHandleService service = null;//主动发送消息
+//	private MessageRspHandleService service = null;//主动发送消息
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=发送被动响应消息
 	 * 收到消息触发:
@@ -64,8 +64,9 @@ public class MessageService implements MessageHandle{
 	 * @param message
 	 * @return
 	 */
-	public boolean sendMessage(String toUserOpenid,WxMessageModel message){
+	public boolean sendMessage(String toUserOpenid,WxMessageModel message,String originalId){
 		boolean result = true;
+		MessageRspHandleService service = new MessageRspHandleService(NeedFix.getApiConfig(originalId));
 		//FIXME 1, does service.sendCustomMessage should return error?
 		service.sendCustomMessage(toUserOpenid, MessageAdapter.getMsgByModel(message));
 		return result;
@@ -83,6 +84,6 @@ public class MessageService implements MessageHandle{
 	}
 	private MessageService(){
 		hanleService = new MessageHandleService();
-		service = new MessageRspHandleService(NeedFix.getApiConfig());
+//		service = new MessageRspHandleService(NeedFix.getApiConfig());
 	}
 }

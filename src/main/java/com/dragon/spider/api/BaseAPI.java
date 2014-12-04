@@ -141,4 +141,8 @@ public abstract class BaseAPI {
         }
         return response;
     }
+
+	public ApiConfig getConfig() {
+		return config;
+	}
 }

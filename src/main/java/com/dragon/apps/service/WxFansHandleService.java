@@ -5,7 +5,6 @@ import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxFansInfo;
 import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.utils.ModelUtils;
-import com.dragon.spider.api.config.ApiConfig;
 import com.dragon.spider.message.BaseMsg;
 import com.dragon.spider.message.TextMsg;
 import com.dragon.spider.message.req.BaseEvent;
@@ -39,17 +38,16 @@ public class WxFansHandleService {
 			model.setSourceFrom(event.getTicket());
 			model.save();
 		}
-		handleWxFansInfo(openId);
+		handleWxFansInfo(openId,event.getToUserName());
 		return new TextMsg("感谢您通过二维码进行关注!");
 	}
 	/**
 	 * 加载粉丝的详细信息
 	 * @param openid
 	 */
-//	private void handleWxFansInfo(String openid,ApiConfig config){//FIXME //set api config info to get.
-	private void handleWxFansInfo(String openid){
+	private void handleWxFansInfo(String openid,String originalId){
 		System.out.println("handleWxFansInfo-openid:"+openid);
-		WxFansModel wfm = FansService.getInstance().getFansInfo(openid);
+		WxFansModel wfm = FansService.getInstance().getFansInfo(openid,originalId);
 		System.out.println("handleWxFansInfo-wfm:"+wfm.toJson());
 		WxFansInfo info = wfm.getWxFansInfo();
 		WxFansInfo exists = WxFansInfo.dao.findByOpenId(openid);
@@ -77,7 +75,7 @@ public class WxFansHandleService {
 		model.setSubscribe(ConstantWx.subscribe);
 		model.setWxAccountId(WxAccount.dao.getIdByOriginalId(event.getToUserName()));
 		model.save();
-		handleWxFansInfo(event.getFromUserName());
+		handleWxFansInfo(event.getFromUserName(),event.getToUserName());
 		return new TextMsg("感谢您的关注!");
 	}
 	/**

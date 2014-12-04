@@ -38,13 +38,12 @@ public class WxAccount extends Model<WxAccount> {
 	public WxAccount getByNameAndPwd(String name, String password){
 		return this.findFirst("select * from "+tableName +" where account ='" +name+"' and password = '"+password +"';");
 	}
-	// public WxAccount getWxAccountByOriginalId(String originalId){
-	// if(StrUtils.isEmpty(originalId)){
-	// return null;
-	// }
-	// return
-	// findFirst("select * from "+tableName+" where "+ORIGINALID+"='"+originalId+"'");
-	// }
+	 public WxAccount getWxAccountByOriginalId(String originalId){
+		 if(StrUtils.isEmpty(originalId)){
+			 return null;
+		 }
+	 	return findFirst("select * from "+tableName+" where "+ORIGINALID+"='"+originalId+"'");
+	 }
 
 	public static final String ID = "id";// bigint,pk
 	public static final String ACCOUNT = "account";

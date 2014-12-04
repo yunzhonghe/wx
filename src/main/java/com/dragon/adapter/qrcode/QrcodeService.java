@@ -5,7 +5,7 @@ import com.dragon.apps.service.QrcodeHandleService;
 import com.dragon.spider.api.response.QrcodeResponse;
 
 public class QrcodeService {
-	private QrcodeHandleService service = null;
+//	private QrcodeHandleService service = null;
 	
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=生成带参数的二维码
@@ -17,8 +17,9 @@ public class QrcodeService {
 	 * @param expireSeconds该二维码有效时间，以秒为单位。 最大不超过1800。
 	 * @return
 	 */
-	public Object createQrcode(String actionName, int scene_id, Integer expireSeconds){
+	public Object createQrcode(String actionName, int scene_id, Integer expireSeconds,String originalId){
 		Object result = true;
+		QrcodeHandleService service = new QrcodeHandleService(NeedFix.getApiConfig(originalId));
 		//FIXME 1, service.createQrcode has not been finished.
 		QrcodeResponse response = service.createQrcode(actionName, scene_id+"", expireSeconds);
 		result = QrcodeAdapter.getModelByResponse(response);
@@ -36,6 +37,6 @@ public class QrcodeService {
 		return instance;
 	}
 	private QrcodeService(){
-		service = new QrcodeHandleService(NeedFix.getApiConfig());
+//		service = new QrcodeHandleService(NeedFix.getApiConfig());
 	}
 }

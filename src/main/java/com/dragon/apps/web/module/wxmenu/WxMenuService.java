@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.dragon.adapter.menu.MenuService;
+import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxMenuModel;
 import com.dragon.apps.utils.RoleUtils;
 import com.dragon.apps.utils.StrUtils;
@@ -55,10 +56,11 @@ public class WxMenuService implements Serializable {
 //    	WxMenu wxMenu = new WxMenu();
 //    	wxMenu.setWxMenuModels(oneMenu);
     	
-    	Long accountId = RoleUtils.gerCurAccountId();
+    	WxAccount account = RoleUtils.getCurAccount();
+		Long accountId = account.getId();
     	WxMenu wxMenu = getWxMenu(accountId);
     	if(wxMenu==null){
-    		wxMenu = MenuService.getInstance().getMenu();
+    		wxMenu = MenuService.getInstance().getMenu(account.getOriginalid());
     		if(wxMenu!=null && wxMenu.getWxMenuModels()!=null && wxMenu.getWxMenuModels().size()>0){
     			boolean saveResult = saveMenuToDb(wxMenu);
     			if(wxMenu.getWxMenuModels().get(0).getLong(WxMenuModel.accountId)!=accountId){
@@ -115,15 +117,16 @@ public class WxMenuService implements Serializable {
     	if(checkName!=null){
     		return "菜单设置失败：<br/>"+checkName;
     	}
-    	Long accountId = RoleUtils.gerCurAccountId();
+    	WxAccount account = RoleUtils.getCurAccount();
+		Long accountId = account.getId();
     	WxMenu wxMenu = getWxMenu(accountId);
     	String result = null;
     	if(wxMenu==null || wxMenu.getWxMenuModels()==null){//尚无菜单
-    		result = createMenu(wxMenuModels, accountId);
+    		result = createMenu(wxMenuModels, accountId, account.getOriginalid());
     	}else{//已经有菜单，需要删除原有菜单，再新增现有菜单
-    		if(MenuService.getInstance().deleteMenu()){
+    		if(MenuService.getInstance().deleteMenu(account.getOriginalid())){
     			WxMenuModel.dao.deleteAllMenus(accountId);
-    			result = createMenu(wxMenuModels, accountId);
+    			result = createMenu(wxMenuModels, accountId, account.getOriginalid());
     			if(result==null){
     				result = "菜单删除成功";
     			}
@@ -133,7 +136,7 @@ public class WxMenuService implements Serializable {
     	}
     	return result;
     }
-    private String createMenu(List<WxMenuModel> wxMenuModels,Long accountId){
+    private String createMenu(List<WxMenuModel> wxMenuModels,Long accountId, String originalId){
     	String result = null;
     	if(wxMenuModels!=null && wxMenuModels.size()>0){
     		WxMenu wxMenu = new WxMenu();
@@ -171,7 +174,7 @@ public class WxMenuService implements Serializable {
 					continue;
 				}
 			}
-			if(MenuService.getInstance().createMenu(wxMenu)){
+			if(MenuService.getInstance().createMenu(wxMenu,originalId)){
 				result = "菜单创建成功";
 			}else{
 				result = "菜单创建失败";

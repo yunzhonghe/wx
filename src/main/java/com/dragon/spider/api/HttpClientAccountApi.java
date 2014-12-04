@@ -38,7 +38,7 @@ public class HttpClientAccountApi extends HttpClientBaseAPI {
 		model.setUrl(url);
 		try {
 			String returnMsg = simpleGetInvoke(model);
-			Test.writeNewUrlFile(returnMsg);
+//			Test.writeNewUrlFile(returnMsg);
 			System.out.println(returnMsg);		
 			Document doc = Jsoup.parse(returnMsg);
 			Elements eles = doc.getElementsByClass("meta_content");

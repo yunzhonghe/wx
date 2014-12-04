@@ -66,8 +66,9 @@ public class WxFansService implements Serializable{
 	 * @return
 	 */
 	public PageSet getFansSubList(WxFansListCon con ,PageSet pageSet){
-		Long accountId = RoleUtils.gerCurAccountId();
-		if(accountId!=null){
+		WxAccount account = RoleUtils.getCurAccount();
+		if(account!=null){
+			Long accountId = account.getId();
 			String select = "select wf.open_id,wf.mark_name,wfi.nickname,wfi.sex,wfi.city,wfi.country,wfi.province,wfi.headimgurl";
 			String center1 = " from wx_fans wf left join wx_fans_info wfi on wfi.openid=wf.open_id";
 			String center2 = " where wf.subscribe='"+ConstantWx.subscribe+"' and wf.wx_account_id="+accountId;
@@ -93,7 +94,7 @@ public class WxFansService implements Serializable{
 				List<Record> ls = Db.find(sql);
 				pageSet.setResultList(ls);
 			}else{
-				initFans();//call service to get fans in new thread.
+				initFans(account.getOriginalid());//call service to get fans in new thread.
 			}
 		}
 		return pageSet;
@@ -101,11 +102,11 @@ public class WxFansService implements Serializable{
 	/**
 	 * 内部调用，初始化当前微信号的粉丝信息
 	 */
-	private void initFans(){
+	private void initFans(final String originalid){
 		new Thread(){
 			public void run() {
 				super.run();
-				FansService.getInstance().initAllFansData();
+				FansService.getInstance().initAllFansData(originalid);
 			}
 		}.start();
 	}
@@ -467,7 +468,7 @@ public class WxFansService implements Serializable{
 			wmm.setCreateTime(create_time);
 //			wmm.save();
 			wmm.setWxMsgTextModel(wmtm);
-			if(!MessageService.getInstance().sendMessage(openid, wmm)){
+			if(!MessageService.getInstance().sendMessage(openid, wmm,originalId)){
 				return "发送失败";
 			}else{
 				//消息保存到其它表单中

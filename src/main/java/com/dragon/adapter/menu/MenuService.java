@@ -14,15 +14,16 @@ import com.dragon.apps.web.module.wxmenu.WxMenu;
  * @author LiuJian
  */
 public class MenuService {
-	private MenuHandleService service = null;
+//	private MenuHandleService service = null;
 	
 	/**
 	 * http://mp.weixin.qq.com/wiki/index.php?title=自定义菜单创建接口
 	 * @param menuModel 菜单总对象,包含所有一级菜单及子菜单
 	 * @return
 	 */
-	public boolean createMenu(WxMenu wxMenu){
+	public boolean createMenu(WxMenu wxMenu,String originalId){
 		boolean result = true;
+		MenuHandleService service = new MenuHandleService(NeedFix.getApiConfig(originalId));
 		//FIXME 1, does service.createMenu should return error?
 		service.createMenu(MenuAdapter.getRequestByModel(wxMenu));
 		return result;
@@ -31,12 +32,13 @@ public class MenuService {
 	 * http://mp.weixin.qq.com/wiki/index.php?title=自定义菜单查询接口
 	 * @return
 	 */
-	public WxMenu getMenu(){
+	public WxMenu getMenu(String originalId){
+		MenuHandleService service = new MenuHandleService(NeedFix.getApiConfig(originalId));
 		WxMenu wxMenu = MenuAdapter.getModelsByResponse(service.getMenu());
-		setAccountIdToWxMenu(wxMenu);
+		setAccountIdToWxMenu(wxMenu,service);
 		return wxMenu;
 	}
-	private void setAccountIdToWxMenu(WxMenu wxMenu){
+	private void setAccountIdToWxMenu(WxMenu wxMenu,MenuHandleService service){
 		if(wxMenu!=null){
 			List<WxMenuModel> allMenus = wxMenu.getAllWxMenuModels();
 			if(allMenus!=null && allMenus.size()>0){
@@ -51,8 +53,9 @@ public class MenuService {
 	 * http://mp.weixin.qq.com/wiki/index.php?title=自定义菜单删除接口
 	 * @return
 	 */
-	public boolean deleteMenu(){
+	public boolean deleteMenu(String originalId){
 		boolean result = true;
+		MenuHandleService service = new MenuHandleService(NeedFix.getApiConfig(originalId));
 		//FIXME 1, does service.deleteMenu should return error?
 		service.deleteMenu();
 		return result;
@@ -69,6 +72,6 @@ public class MenuService {
 		return instance;
 	}
 	private MenuService(){
-		service = new MenuHandleService(NeedFix.getApiConfig());
+//		service = new MenuHandleService(NeedFix.getApiConfig());
 	}
 }
