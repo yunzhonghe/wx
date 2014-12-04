@@ -2,6 +2,7 @@ package com.dragon.apps.model;
 
 import java.util.List;
 
+import com.dragon.apps.utils.StrUtils;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 
@@ -58,8 +59,14 @@ public class WxMenuModel extends Model<WxMenuModel> {
 		if(accountId==null){
 			return;
 		}
-		String sql = "delete from "+tableName+" where "+WxMenuModel.accountId+"="+accountId+" order by "+parentid;
+		String sql = "delete from "+tableName+" where "+WxMenuModel.accountId+"="+accountId;
 		Db.update(sql);
+	}
+	public WxMenuModel getMenuByKeyAndAccount(Long accountId,String key){
+		if(StrUtils.isEmpty(key)||accountId==null){
+			return null;
+		}
+		return findFirst("select * from "+tableName+" where "+WxMenuModel.accountId+"="+accountId+" and "+WxMenuModel.key+"='"+key+"'");
 	}
 	/**
 	 * 子菜单对象

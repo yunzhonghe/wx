@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxAnswerRule;
+import com.dragon.apps.model.WxMenuModel;
 import com.dragon.apps.utils.DateUtils;
 import com.dragon.apps.utils.StrUtils;
 import com.dragon.apps.web.module.wxautoreply.WxAnswerRuleService;
@@ -25,7 +26,6 @@ import com.dragon.spider.message.req.VoiceReqMsg;
 
 public class AutoReplyRule {
 	/**
-	 * FIXME
 	 * 1、获取当前管理员帐号信息
 	 * 2、获取超级管理员的关键字回复配置信息
 	 * 3、获取当前管理员的回复配置信息
@@ -80,8 +80,9 @@ public class AutoReplyRule {
 				MenuEvent evt = (MenuEvent)event;
 				String evtType = evt.getEvent();
 				if(evtType.equals(EventType.CLICK)){//点击菜单拉取消息时的事件推送
-					//FIXME 获取菜单设置
+					//获取菜单设置
 					//获取数据库中菜单click设置的消息返回
+					msg = getMenuKeyReply(event.getToUserName(), evt.getEventKey());
 				}else if(evtType.equals(EventType.VIEW)){//点击菜单跳转链接时的事件推送
 					//获取菜单设置
 				}
@@ -172,6 +173,26 @@ public class AutoReplyRule {
 				case ReqType.TEXTID:
 					TextMsg txt = new TextMsg();
 					txt.setContent(answerRule.getStr(WxAnswerRule.ANSWER));
+					txt.setMsgType(ReqType.TEXT);
+					return txt;
+				}
+			}
+		}
+		return null;
+	}
+	private BaseMsg getMenuKeyReply(String originalId,String eventKey){
+		Long accountId = WxAccount.dao.getIdByOriginalId(originalId);
+		WxMenuModel wxMenuModel = WxMenuModel.dao.getMenuByKeyAndAccount(accountId, eventKey);
+		return getMsgByWxMenuModelRsp(wxMenuModel);
+	}
+	private BaseMsg getMsgByWxMenuModelRsp(WxMenuModel wxMenuModel){
+		if(wxMenuModel!=null){
+			Integer rspType = wxMenuModel.getInt(WxMenuModel.keyRspType);
+			if(rspType!=null){
+				switch(rspType){
+				case ReqType.TEXTID:
+					TextMsg txt = new TextMsg();
+					txt.setContent(wxMenuModel.getStr(WxMenuModel.keyRspContent));
 					txt.setMsgType(ReqType.TEXT);
 					return txt;
 				}
