@@ -57,6 +57,6 @@ public class WxAdminController extends BaseController {
     	WxAdmin wxAdmin = WxAdmin.dao.findById(getParaToLong("id"));
         wxAdmin.delete();
         map.put("isOK",true);
-        this.renderJson(map);   
+        this.renderJson(map);
     }
 }
