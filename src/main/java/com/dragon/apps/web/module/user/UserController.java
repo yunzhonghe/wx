@@ -1,9 +1,14 @@
 package com.dragon.apps.web.module.user;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+
 import com.dragon.apps.model.WxAdmin;
-import com.dragon.apps.model.WxTag;
 import com.dragon.apps.utils.RoleUtils;
+import com.dragon.apps.utils.StrUtils;
 import com.dragon.apps.web.module.base.BaseController;
+import com.dragon.apps.web.module.wxaccount.WxAccountController;
 
 public class UserController extends BaseController{
 	public static String controlerKey = "/user";
@@ -64,5 +69,28 @@ public class UserController extends BaseController{
 		}
 		setAttr(OPERATION_RESULT, result);
 		render("modify_password.html");
+	}
+	/**
+	 * 切换帐号
+	 */
+	public void swapuser(){
+		String sid = getPara();
+		if(StrUtils.isNotEmpty(sid)){
+			WxAdmin admin = WxAdmin.dao.findById(sid);
+			if(admin!=null){
+				Subject subject = SecurityUtils.getSubject();
+				subject.logout();
+				
+				UsernamePasswordToken token = new UsernamePasswordToken(admin.getAdminId(),admin.getPassword(),false);
+				try {
+					subject.login(token);
+					this.redirect(WxAccountController.controlerKey);
+				} catch (Exception e) {
+					this.redirect("/");
+				}
+				return;
+			}
+		}
+		renderText("传入参数错误，请后退登出");
 	}
 }

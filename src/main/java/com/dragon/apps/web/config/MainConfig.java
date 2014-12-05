@@ -30,6 +30,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.ext.handler.ContextPathHandler;
+import com.jfinal.ext.interceptor.SessionInViewInterceptor;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
@@ -102,6 +103,7 @@ public class MainConfig extends JFinalConfig {
 	public void configInterceptor(Interceptors me) {
 		me.add(new LoginInterceptor());
 		me.add(new ShiroFreeMarkerInterceptor());
+		me.add(new SessionInViewInterceptor());
 	}
 	
 	/**
@@ -116,7 +118,7 @@ public class MainConfig extends JFinalConfig {
 	 * 运行此 main 方法可以启动项目，此main方法可以放置在任意的Class类定义中，不一定要放于此
 	 */
 	public static void main(String[] args) {
-		JFinal.start("src/main/webapp", 8090, "/", 5);
-//		JFinal.start("src/main/webapp", 81, "/", 5);
+//		JFinal.start("src/main/webapp", 8090, "/", 5);
+		JFinal.start("src/main/webapp", 81, "/", 5);
 	}
 }

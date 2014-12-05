@@ -23,6 +23,12 @@
 				<i class="fa fa-angle-down"></i>
 				</a>
 				<ul class="dropdown-menu">
+					<#if session["swap_users"]??>
+						<#list session["swap_users"] as swap_user>
+							<li><a href="${base}/user/swapuser/${swap_user.id}"><i class="fa fa-user"></i>${swap_user.value?default('')}</a></li>
+						</#list>
+					</#if>
+					<li class="divider"></li>
 					<li><a href="${base}/logout"><i class="fa fa-key"></i>退出</a></li>
 				</ul>
 			</li>
