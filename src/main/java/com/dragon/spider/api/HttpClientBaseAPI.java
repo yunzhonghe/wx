@@ -87,6 +87,7 @@ public abstract class HttpClientBaseAPI {
 					return;
 				}else{
 					 HttpClientBaseAPI.this.config.setToken(token);
+					 HttpClientBaseAPI.this.config.setClient(client);
 				}
 			} catch (Exception e) {			
 				e.printStackTrace();
@@ -172,7 +173,7 @@ public abstract class HttpClientBaseAPI {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	protected String simplePostInvoke(RequestModel request) throws URISyntaxException, ClientProtocolException, IOException {	
+	protected String simplePostInvoke(RequestModel request) throws URISyntaxException, ClientProtocolException, IOException {		
 		HttpPost postMethod = buildHttpPost(request.getUrl(), request.getParas());
 		if (null != request.getHeaders()) {
 			Iterator<String> headIt = request.getHeaders().keySet().iterator();
@@ -183,7 +184,7 @@ public abstract class HttpClientBaseAPI {
 			}
 		}
 
-		HttpResponse response = client.execute(postMethod);		
+		HttpResponse response = this.config.getClient().execute(postMethod);		
 		HttpEntity entity = response.getEntity();
 		if (entity != null) {
 			String returnStr = EntityUtils.toString(entity, request.getCharset());
@@ -205,11 +206,48 @@ public abstract class HttpClientBaseAPI {
 	 */
 	protected String simpleGetInvoke(RequestModel request) throws ClientProtocolException, IOException, URISyntaxException {
 		//HttpClient client = buildHttpClient(false, request.getHost());
+		if(null==request){
+			return null;
+		}
+		String url = request.getUrl();
+		url = url.replace("#token", config.getToken());
 		HttpGet get = buildHttpGet(request.getUrl(), request.getParas());
-		HttpResponse response = client.execute(get);	
+		HttpResponse response = this.config.getClient().execute(get);	
 		HttpEntity entity = response.getEntity();
 		if (entity != null) {
 			String returnStr = EntityUtils.toString(entity, request.getCharset());
+			if(returnStr.contains(" <h2>登录超时，请重新<a href='/'>登录</a></h2>")){
+				refreshToken();
+				return simpleLastGetInvoke(request);
+			}
+			return returnStr;
+		}
+		return null;
+	}
+	
+	
+	/**
+	 *最后一次的调用
+	 * 
+	 * @param url
+	 * @param params
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
+	private String simpleLastGetInvoke(RequestModel request) throws ClientProtocolException, IOException, URISyntaxException {
+		//HttpClient client = buildHttpClient(false, request.getHost());
+		if(null==request){
+			return null;
+		}
+		String url = request.getUrl();
+		url = url.replace("#token", config.getToken());
+		HttpGet get = buildHttpGet(request.getUrl(), request.getParas());
+		HttpResponse response = this.config.getClient().execute(get);	
+		HttpEntity entity = response.getEntity();
+		if (entity != null) {
+			String returnStr = EntityUtils.toString(entity, request.getCharset());			
 			return returnStr;
 		}
 		return null;

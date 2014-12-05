@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dragon.apps.model.WxFansModel;
 import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.model.WxMsgTextModel;
+import com.dragon.apps.utils.ConstantsUtils;
 import com.dragon.apps.utils.Logger;
 import com.dragon.spider.api.config.HttpClientApiConfig;
 import com.dragon.spider.api.response.BaseResponse;
@@ -36,15 +37,15 @@ import com.dragon.spider.util.StrUtil;
 
 public class HttpClientMsgApi extends HttpClientBaseAPI {
 
-	private static String msgListUrl = "https://mp.weixin.qq.com/cgi-bin/message?t=message/list&count=#1&day=7&lang=zh_CN&token=";
+	private static String msgListUrl = "https://mp.weixin.qq.com/cgi-bin/message?t=message/list&count=#1&day=7&lang=zh_CN&token=#token";
 
-	private static String uMsgListUrl = "https://mp.weixin.qq.com/cgi-bin/singlesendpage?tofakeid=#1&t=message/send&action=index&token=#2&lang=zh_CN";
+	private static String uMsgListUrl = "https://mp.weixin.qq.com/cgi-bin/singlesendpage?tofakeid=#1&t=message/send&action=index&token=#token&lang=zh_CN";
 
-	private static String msgRspUrl = "https://mp.weixin.qq.com/cgi-bin/singlesend?t=ajax-response&f=json&token=#1&lang=zh_CN";
+	private static String msgRspUrl = "https://mp.weixin.qq.com/cgi-bin/singlesend?t=ajax-response&f=json&token=#token&lang=zh_CN";
 	
-	private static String msgAllSendUrl = "https://mp.weixin.qq.com/cgi-bin/masssend?t=ajax-response&token=#1&lang=zh_CN";
+	private static String msgAllSendUrl = "https://mp.weixin.qq.com/cgi-bin/masssend?t=ajax-response&token=#token&lang=zh_CN";
 	
-	private static String msgAllUrl = "https://mp.weixin.qq.com/cgi-bin/masssendpage?t=mass/list&action=history&begin=0&count=#2&token=#1&lang=zh_CN";
+	private static String msgAllUrl = "https://mp.weixin.qq.com/cgi-bin/masssendpage?t=mass/list&action=history&begin=0&count=#2&token=#token&lang=zh_CN";
 
 	// private static String UserListUrl =
 	// "https://mp.weixin.qq.com/cgi-bin/contactmanage?t=user/index&pagesize=10&pageidx=0&type=0&lang=zh_CN&token=";
@@ -54,7 +55,7 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 	}
 
 	/**
-	 * 获得首页的消息列表，用来在有新消息的会后，获得该页的消息内容
+	 * 获得首页的消息列表，用来在有新消息的会后，获得该页的消息内容，只能获得7天之内的消息列表
 	 * 
 	 * @param
 	 * @return 消息列表
@@ -66,7 +67,7 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 		}
 		Logger.info(this, "begin to get msg list " + config.toString());
 		List<WxMessageModel> fans = new ArrayList<WxMessageModel>();
-		String url = (msgListUrl + config.getToken()).replace("#1", String.valueOf(pageSize));
+		String url = (msgListUrl).replace("#1", String.valueOf(pageSize));
 		RequestModel model = new RequestModel();
 		Map<String, String> paras = new HashMap<String, String>();
 		model.setHeaders(paras);
@@ -90,8 +91,9 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 					String toUid = jOb.getString("to_uin");
 					msgModel.setMessageId(id);
 					msgModel.setFrom(openId);
-					msgModel.setType(type);
+					msgModel.setContentType(type);
 					msgModel.setTo(toUid);
+					msgModel.setType(ConstantsUtils.USERMSG);
 					switch (type) {
 					case 1: {
 						WxMsgTextModel textModel = new WxMsgTextModel();
@@ -121,9 +123,9 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 	}
 
 	/**
-	 * 获得用户的消息列表
+	 * 获得群发的消息列表
 	 * 
-	 * @param
+	 * @param  希望返回的条数
 	 * @return 消息列表
 	 * */
 	public List<WxMessageModel> getAllSendMsgs(int pageSize) {
@@ -133,7 +135,7 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 		}
 		Logger.info(this, "begin to get msg list " + config.toString());
 		List<WxMessageModel> fans = new ArrayList<WxMessageModel>();
-		String url = msgAllUrl.replace("#1",config.getToken()).replace("#2", String.valueOf(pageSize));
+		String url = msgAllUrl.replace("#2", String.valueOf(pageSize));
 		RequestModel model = new RequestModel();
 		Map<String, String> paras = new HashMap<String, String>();
 		model.setHeaders(paras);
@@ -159,7 +161,8 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 					String toUid = jOb.getString("to_uin");
 					msgModel.setMessageId(id);
 					msgModel.setFrom(openId);
-					msgModel.setType(type);
+					msgModel.setContentType(type);
+					msgModel.setType(ConstantsUtils.ALLSENDMSG);
 					msgModel.setTo(toUid);
 					switch (type) {
 					case 1: {
@@ -202,7 +205,7 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 		}
 		Logger.info(this, "begin to get msg list " + config.toString());
 		List<WxMessageModel> fans = new ArrayList<WxMessageModel>();
-		String url = uMsgListUrl.replace("#1", fakeId).replace("#2", config.getToken());
+		String url = uMsgListUrl.replace("#1", fakeId);
 		RequestModel model = new RequestModel();
 		Map<String, String> paras = new HashMap<String, String>();
 		model.setHeaders(paras);
@@ -269,7 +272,7 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 		WxMessageModel dao = new WxMessageModel();
 		WxMessageModel wxMsgModel = dao.getByMsgId(messageId);
 		
-		String url = msgRspUrl.replace("#1", config.getToken());
+		String url = msgRspUrl;
 		RequestModel model = new RequestModel();
 		model.setUrl(url);
 
@@ -366,7 +369,7 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 		if (null == config.getToken()) {
 			refreshToken();
 		}
-		String url = msgRspUrl.replace("#1", config.getToken());
+		String url = msgRspUrl;
 		RequestModel model = new RequestModel();
 		model.setUrl(url);
 
@@ -464,7 +467,7 @@ public class HttpClientMsgApi extends HttpClientBaseAPI {
 		if (null == config.getToken()) {
 			refreshToken();
 		}
-		String url = msgAllSendUrl.replace("#1", config.getToken());
+		String url = msgAllSendUrl;
 		RequestModel model = new RequestModel();
 		model.setUrl(url);
 

@@ -21,16 +21,16 @@ public class HttpClientAccountApi extends HttpClientBaseAPI {
 		super(config);
 	}
 
-	private String url = "https://mp.weixin.qq.com/cgi-bin/settingpage?t=setting/index&action=index&lang=zh_CN&token=";
+	private String url = "https://mp.weixin.qq.com/cgi-bin/settingpage?t=setting/index&action=index&lang=zh_CN&token=#token";
 	private String domain = "https://mp.weixin.qq.com";
 
 	public WxAccount getDetailAccount(WxAccount account) {
-		
+
 		if (null == config.getToken()) {
 			refreshToken();
 		}
 		Logger.info(this, "begin to init wx account " + config.toString());
-		String url = this.url + config.getToken();
+		String url = this.url;
 		RequestModel model = new RequestModel();
 		Map<String, String> paras = new HashMap<String, String>();
 		paras.put("Referer", "https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token=" + config.getToken());
@@ -38,18 +38,31 @@ public class HttpClientAccountApi extends HttpClientBaseAPI {
 		model.setUrl(url);
 		try {
 			String returnMsg = simpleGetInvoke(model);
-//			Test.writeNewUrlFile(returnMsg);
-			System.out.println(returnMsg);		
+			Test.writeNewUrlFile(returnMsg);
+			System.out.println(returnMsg);
 			Document doc = Jsoup.parse(returnMsg);
 			Elements eles = doc.getElementsByClass("meta_content");
 
 			if (null != eles && eles.size() == 11) {
-				/*WxAccount account = new WxAccount();*/
+				/* WxAccount account = new WxAccount(); */
 				account.setName(eles.get(0).html().trim());
 				account.setAvatar(eles.get(1).html().trim());
 				account.setAccount(eles.get(2).html().trim());
-				account.setOriginalid(eles.get(3).html().trim());
-				account.setWxNumber(eles.get(4).html().trim());
+
+				// ID
+				String originalidStr = eles.get(3).html().trim();
+				if (null != originalidStr) {
+					String originalid = originalidStr.replace("<span>", "").replace("</span>", "");
+					account.setOriginalid(originalid);
+				}
+
+				// wx号
+				String wxNumberStr = eles.get(4).html().trim();
+				if (null != wxNumberStr) {
+					String wxNumber = wxNumberStr.replace("<span>", "").replace("</span>", "");
+					account.setWxNumber(wxNumber);
+				}
+
 				// Type 设置，订阅号Or服务号
 				String type = eles.get(5).html().trim();
 				WxAccType accType = new WxAccType();

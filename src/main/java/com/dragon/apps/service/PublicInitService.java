@@ -7,6 +7,7 @@ import com.dragon.apps.exception.ErrorCode;
 import com.dragon.apps.exception.ServiceException;
 import com.dragon.apps.model.WxAccount;
 import com.dragon.apps.model.WxFansModel;
+import com.dragon.apps.model.WxGroup;
 import com.dragon.apps.model.WxMessageModel;
 import com.dragon.apps.utils.DateUtils;
 import com.dragon.spider.api.HttpClientAccountApi;
@@ -14,6 +15,7 @@ import com.dragon.spider.api.HttpClientMsgApi;
 import com.dragon.spider.api.HttpClientUserApi;
 import com.dragon.spider.api.PublicWxManager;
 import com.dragon.spider.api.config.HttpClientApiConfig;
+import com.dragon.spider.model.WxFansAndGroupModel;
 
 /**
  * 实现微信公众号的初始化动作，包含有微信的内容，微信粉丝，微信消息， 群发消息列表等初始化
@@ -52,13 +54,15 @@ public class PublicInitService {
 			HttpClientAccountApi api = new HttpClientAccountApi(config);
 			api.getDetailAccount(account);
 			account.save();
-
+			final long accountId = account.getId();
 			// 实现微信粉丝的基本信息的录入.包含微信的列表和详细信息的录入
 			final HttpClientUserApi uApi = new HttpClientUserApi(config);
-			final List<WxFansModel> uModels = uApi.getAllPageUsers();
+			final WxFansAndGroupModel mixModel = uApi.getAllPageUsers();
 
+			final List<WxFansModel> uModels = mixModel.getFans();
 			if (null != uModels) {
 				for (int i = 0; i < uModels.size(); i++) {
+					uModels.get(i).setWxAccountId(accountId);
 					uModels.get(i).save();
 				}
 			}
@@ -76,7 +80,14 @@ public class PublicInitService {
 					}
 				}
 			}).start();
-
+			
+			//实现用户组信息的导入
+            List<WxGroup> groups = mixModel.getGroups();
+            for(int i=0;i<groups.size();i++){
+            	groups.get(i).set(WxGroup.accountId, accountId);
+            	groups.get(i).save();
+            }
+			
 			// 实现微信个人交互的消息的导入
 			HttpClientMsgApi mApi = new HttpClientMsgApi(config);
 			List<WxMessageModel> msgModels = mApi.getFirstPageMsgs(10000);
@@ -93,6 +104,9 @@ public class PublicInitService {
 					msgAllModels.get(i).save();
 				}
 			}
+			
+			
+			return true;
 
 		} else {
 			// 一周的之外的需要更新对应的内容
@@ -101,10 +115,15 @@ public class PublicInitService {
 				HttpClientAccountApi api = new HttpClientAccountApi(config);
 				api.getDetailAccount(account);
 				account.update();
+				return true;
+				// 消息等都不在更新。。。。
+			} else {
+				// 如果是一周之内的，不继续管理
+				return true;
 			}
+
 		}
 
-		return false;
 	}
 
 }

@@ -17,6 +17,7 @@ public class WxGroup extends Model<WxGroup> {
 	public static final String name = "name";//String
 	public static final String groupid = "groupid";//String,微信服务器上的组id
 	public static final String accountId = "account_id";//Long关联到微信公众号的主键
+	public static final String fansNumber = "fans_number";//int 粉丝的数量
 	
 	public List<WxGroup> getList(Long accountId){
 		if(accountId==null){
